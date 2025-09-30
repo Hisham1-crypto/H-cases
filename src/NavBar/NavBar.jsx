@@ -65,9 +65,9 @@ const NavBar = ({ onSearch }) => {
 
   {/* السيرش نفسه */}
   <div
-    className={`absolute left-10 top-0 flex items-center gap-2 bg-white/10 
-    rounded-full px-3 py-2 w-64 transition-all duration-500
-    ${showSearch ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-64 pointer-events-none"}`}
+    className={`absolute left-12 top-0 flex items-center gap-3 bg-white/10 
+rounded-full px-3 py-2 w-[125px] sm:w-64 transition-all duration-500
+    ${showSearch ? "opacity-50 translate-x-0" : "opacity-0 -translate-x-60 pointer-events-none"}`}
     style={{ zIndex: showSearch ? 10 : -1 }}
   >
     <Search className="text-gray-200 shrink-0" />

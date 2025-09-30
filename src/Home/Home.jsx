@@ -5,83 +5,30 @@ import { FavoritesContext } from "../FavoritesProvider";
 import { AuthContext } from "../AuthProvider";
 import { useNavigate, Link } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
-
 import {
   FooterCopyright,
   FooterDivider,
-  FooterIcon,
   FooterLink,
   FooterLinkGroup,
   FooterTitle,
   Footer,
+  FooterIcon,
 } from "flowbite-react";
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
-
-// Swiper
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/pagination";
-import { Pagination } from "swiper/modules";
-
-// Phone types
-const allPhoneTypes = [
-  "iPhone 14",
-  "iPhone 14 Pro",
-  "iPhone 13",
-  "iPhone 13 Pro",
-  "iPhone 12",
-  "iPhone 12 Pro",
-  "Samsung S23",
-  "Samsung S23 Ultra",
-  "Samsung S22",
-  "Samsung S22 Plus",
-  "Samsung S21",
-  "Samsung S21 Ultra",
-  "Google Pixel 8",
-  "Google Pixel 7",
-];
-
-// Provinces + shipping price
-const allProvinces = [
-  { name: "Cairo", shipping: 60 },
-  { name: "Giza", shipping: 60 },
-  { name: "Alexandria", shipping: 63 },
-  { name: "Beheira", shipping: 63 },
-  { name: "Kafr El-Sheikh", shipping: 70 },
-  { name: "Damietta", shipping: 70 },
-  { name: "Port Said", shipping: 70 },
-  { name: "Monufia", shipping: 70 },
-  { name: "Qalyubia", shipping: 70 },
-  { name: "Gharbia", shipping: 70 },
-  { name: "Sharqia", shipping: 70 },
-  { name: "Suez", shipping: 70 },
-  { name: "Dakahlia", shipping: 70 },
-  { name: "Ismailia", shipping: 70 },
-  { name: "Sohag", shipping: 81 },
-  { name: "Beni Suef", shipping: 81 },
-  { name: "Minya", shipping: 81 },
-  { name: "Fayoum", shipping: 81 },
-  { name: "Assiut", shipping: 81 },
-  { name: "Marsa Matrouh", shipping: 92 },
-  { name: "Qena", shipping: 92 },
-  { name: "Red Sea", shipping: 92 },
-  { name: "Luxor", shipping: 92 },
-  { name: "Aswan", shipping: 92 },
-  { name: "North Coast", shipping: 95 },
-  { name: "South Sinai", shipping: 110 },
-  { name: "New Valley", shipping: 110 },
-  { name: "North Sinai", shipping: 110 },
-  { name: "Other", shipping: 100 },
-];
 
 // Products
 const products = [
   { id: 1, name: "Case - Abstract Orange", price: 150, image: "/case1.jpg" },
   { id: 2, name: "Case - Pink Minimal", price: 180, image: "/case2.jpg" },
   { id: 3, name: "Case - Black Marble", price: 200, image: "/case3.jpg" },
-  { id: 4, name: "Case - Blue Galaxy", price: 220, image: "/case2.jpg" },
-  { id: 5, name: "Case - White Marble", price: 190, image: "/case1.jpg" },
 ];
+
+// Phone Brands & Models
+const phoneData = {
+  iPhone: ["iPhone 14 Pro", "iPhone 14", "iPhone 13"],
+  Samsung: ["Samsung S23", "Samsung S22", "Samsung A72"],
+  Xiaomi: ["Xiaomi 13", "Xiaomi 12", "Xiaomi Note 11"],
+};
 
 const Home = () => {
   const { addToCart } = useContext(CartContext);
@@ -95,45 +42,38 @@ const Home = () => {
   );
 
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [selectedPhoneType, setSelectedPhoneType] = useState("");
-  const [selectedProvince, setSelectedProvince] = useState("");
-  const [address, setAddress] = useState("");
-  const [phone, setPhone] = useState("");
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
-  // Validation before opening modal
-  const handleAddToCartFromCard = (product) => {
+  // Modal state
+  const [modalProduct, setModalProduct] = useState(null);
+
+  // بيانات الموبايل
+  const [phoneForm, setPhoneForm] = useState({
+    brand: "",
+    model: "",
+    quantity: 1,
+  });
+
+  // 🟡 Add to Cart Click
+  const handleAddToCartClick = (product) => {
     if (!user) {
       alert("You must log in first to add products to the cart.");
       navigate("/login");
       return;
     }
     setSelectedProduct(product);
-    setSelectedPhoneType("");
-    setSelectedProvince("");
-    setAddress("");
-    setPhone("");
+    setDrawerOpen(true);
   };
 
-  const handleAddToCartFromModal = () => {
-    if (!phone.trim()) return alert("Please enter your phone number.");
-    if (!/^\d+$/.test(phone) || phone.length !== 11)
-      return alert("Invalid phone number. Must be 11 digits.");
-    if (!selectedPhoneType) return alert("Please choose your phone model.");
-    if (!selectedProvince) return alert("Please choose your province.");
-    if (!address.trim()) return alert("Please enter your address.");
-
-    const provinceData = allProvinces.find((p) => p.name === selectedProvince);
-
-    addToCart(
-      selectedProduct,
-      selectedPhoneType,
-      selectedProvince,
-      provinceData?.shipping || 0,
-      address,
-      phone
-    );
-
-    setSelectedProduct(null);
+  // 🟡 Confirm Add
+  const handleConfirmAdd = () => {
+    if (!phoneForm.brand || !phoneForm.model) {
+      alert("Please select brand and model.");
+      return;
+    }
+    addToCart({ ...selectedProduct, ...phoneForm });
+    setDrawerOpen(false);
+    setPhoneForm({ brand: "", model: "", quantity: 1 });
   };
 
   return (
@@ -177,16 +117,18 @@ const Home = () => {
         </h2>
 
         {filteredProducts.length === 0 ? (
-      <p className="text-center text-gray-600 text-lg">
-     There is no result for <span className="font-semibold text-gray-900">"{searchQuery}"</span>
-  </p>
+          <p className="text-center text-gray-600 text-lg">
+            There is no result for{" "}
+            <span className="font-semibold">{searchQuery}</span>
+          </p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProducts.slice(0, 3).map((product) => (
+            {filteredProducts.map((product) => (
               <div
                 key={product.id}
                 className="relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition transform hover:-translate-y-1 p-5 flex flex-col items-center group"
               >
+                {/* Add to Favorites */}
                 <button
                   onClick={() => addToFavorites(product)}
                   className="absolute top-3 left-3 p-2 bg-gray-100 rounded-full shadow hover:scale-110 transition"
@@ -194,19 +136,22 @@ const Home = () => {
                   <Heart className="w-5 h-5 text-pink-500" />
                 </button>
 
+                {/* Product Image */}
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="w-40 h-40 object-contain mb-4 transform group-hover:scale-105 transition"
-                  onClick={() => setSelectedProduct(product)}
+                  onClick={() => setModalProduct(product)}
+                  className="w-40 h-40 object-contain mb-4 transform group-hover:scale-105 transition cursor-pointer"
                 />
+
                 <h3 className="text-lg font-semibold text-gray-900 mb-1">
                   {product.name}
                 </h3>
                 <p className="text-gray-600 mb-3">{product.price} EGP</p>
 
+                {/* Add to Cart */}
                 <button
-                  onClick={() => handleAddToCartFromCard(product)}
+                  onClick={() => handleAddToCartClick(product)}
                   className="mt-auto w-full bg-gradient-to-r from-[#D4AF37] to-yellow-400 text-black px-4 py-2 rounded-full shadow hover:opacity-90 transition flex items-center justify-center gap-2 font-medium"
                 >
                   <ShoppingBag className="w-5 h-5" /> Add to Cart
@@ -217,147 +162,184 @@ const Home = () => {
         )}
       </div>
 
-      {/* Swiper */}
-      <div className="p-6 max-w-6xl mx-auto mt-16">
-        <Swiper
-          modules={[Pagination]}
-          spaceBetween={20}
-          slidesPerView={1}
-          pagination={{ clickable: true }}
-          breakpoints={{
-            640: { slidesPerView: 2 },
-            1024: { slidesPerView: 3 },
-          }}
-        >
-          {filteredProducts.map((product) => (
-            <SwiperSlide key={product.id}>
-  <div className="relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition transform hover:-translate-y-1 p-5 flex flex-col items-center group">
-
-    {/* Favorite Button */}
-    <button
-      onClick={() => addToFavorites(product)}
-      className="absolute top-3 left-3 p-3 bg-white rounded-full shadow-md hover:bg-pink-100 transition"
-    >
-      <Heart className="w-5 h-5 text-pink-500" />
-    </button>
-
-    {/* Cart Button */}
-    <button
-      onClick={() => handleAddToCartFromCard(product)}
-      className="absolute top-3 right-3 p-3 bg-white rounded-full shadow-md hover:bg-yellow-100 transition"
-    >
-      <ShoppingBag className="w-5 h-5 text-yellow-600" />
-    </button>
-
-    {/* Product Image */}
-    <img
-      src={product.image}
-      alt={product.name}
-      className="w-48 h-48 object-contain mb-4 transform group-hover:scale-105 transition"
-      onClick={() => setSelectedProduct(product)}
-    />
-
-    {/* Product Info */}
-    <h3 className="text-lg font-semibold text-gray-900 mb-1">
-      {product.name}
-    </h3>
-    <p className="text-gray-600 mb-3">{product.price} EGP</p>
-  </div>
-</SwiperSlide>
-
-          ))}
-        </Swiper>
-      </div>
-
-      {/* Modal */}
-      {selectedProduct && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-2xl p-6 w-full max-w-md relative shadow-lg">
-            {/* Close Button */}
+      {/* Image Modal */}
+      {modalProduct && (
+        <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg shadow-lg max-w-lg w-full relative">
             <button
-              onClick={() => setSelectedProduct(null)}
-              className="absolute top-4 right-4 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition"
+              onClick={() => setModalProduct(null)}
+              className="absolute top-2 right-2 bg-gray-100 p-2 rounded-full hover:bg-gray-200"
             >
-              <X className="w-5 h-5 text-gray-600" />
+              <X className="w-6 h-6" />
+            </button>
+
+            <div className="p-6 flex flex-col items-center">
+              <img
+                src={modalProduct.image}
+                alt={modalProduct.name}
+                className="w-60 h-60 object-contain mb-4"
+              />
+              <h3 className="text-xl font-bold mb-2">{modalProduct.name}</h3>
+              <p className="text-gray-600 text-lg mb-4">
+                {modalProduct.price} EGP
+              </p>
+
+              <div className="flex gap-4 w-full">
+                <button
+                  onClick={() => {
+                    addToFavorites(modalProduct);
+                    setModalProduct(null);
+                  }}
+                  className="flex-1 border-2 border-pink-500 text-pink-500 py-2 rounded-lg font-semibold hover:bg-pink-500 hover:text-white transition"
+                >
+                  Add to Favourites
+                </button>
+                <button
+                  onClick={() => {
+                    handleAddToCartClick(modalProduct);
+                    setModalProduct(null);
+                  }}
+                  className="flex-1 bg-gradient-to-r from-[#D4AF37] to-yellow-400 text-black font-semibold py-2 rounded-lg shadow-md hover:scale-105 transition"
+                >
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Drawer */}
+      {drawerOpen && selectedProduct && (
+        <div className="fixed inset-0 z-50 flex">
+          <div
+            className="fixed inset-0 bg-black/50"
+            onClick={() => setDrawerOpen(false)}
+          ></div>
+
+          <div className="bg-white w-96 h-full p-6 shadow-2xl transform transition-transform duration-500 fixed right-0 top-0 flex flex-col">
+            <button
+              onClick={() => setDrawerOpen(false)}
+              className="absolute top-4 left-4 p-2 rounded-full hover:bg-gray-100"
+            >
+              <X className="w-6 h-6" />
             </button>
 
             {/* Product Info */}
-            <div className="flex flex-col items-center mb-4">
+            <div className="flex flex-col items-center text-center mb-6">
               <img
                 src={selectedProduct.image}
                 alt={selectedProduct.name}
-                className="w-32 h-32 object-contain mb-3"
+                className="w-40 h-40 object-contain mb-4"
               />
-              <h3 className="text-lg font-bold text-gray-900">
-                {selectedProduct.name}
-              </h3>
+              <h3 className="text-lg font-semibold">{selectedProduct.name}</h3>
               <p className="text-gray-600">{selectedProduct.price} EGP</p>
             </div>
 
-            {/* Phone Type */}
-            <label className="block mb-2 text-sm font-medium text-gray-700">
-              Phone Model
-            </label>
-            <select
-              value={selectedPhoneType}
-              onChange={(e) => setSelectedPhoneType(e.target.value)}
-              className="w-full mb-4 border rounded-lg p-2 focus:ring-2 focus:ring-yellow-400"
-            >
-              <option value="">Choose phone model</option>
-              {allPhoneTypes.map((type) => (
-                <option key={type} value={type}>
-                  {type}
-                </option>
-              ))}
-            </select>
+           {/* Phone Selection */}
+<h2 className="text-xl font-bold mb-5 text-gray-800">  Choose your phone model</h2>
 
-            {/* Province */}
-            <label className="block mb-2 text-sm font-medium text-gray-700">
-              Province
-            </label>
-            <select
-              value={selectedProvince}
-              onChange={(e) => setSelectedProvince(e.target.value)}
-              className="w-full mb-4 border rounded-lg p-2 focus:ring-2 focus:ring-yellow-400"
-            >
-              <option value="">Choose your province</option>
-              {allProvinces.map((province) => (
-                <option key={province.name} value={province.name}>
-                  {province.name} (+{province.shipping} EGP)
-                </option>
-              ))}
-            </select>
+{/* Brand */}
+<div className="mb-5">
+  <label className="block text-sm font-semibold text-gray-600 mb-2">
+Brand  </label>
+  <div className="relative">
+    <select
+      value={phoneForm.brand}
+      onChange={(e) =>
+        setPhoneForm({ ...phoneForm, brand: e.target.value, model: "" })
+      }
+      className="w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-10 text-gray-800 shadow-md focus:border-yellow-400 focus:ring-2 focus:ring-yellow-300 transition-all outline-none"
+    >
+      <option value="">Choose your phone brand </option>
+      {Object.keys(phoneData).map((brand) => (
+        <option key={brand} value={brand}>
+          {brand}
+        </option>
+      ))}
+    </select>
+    {/* سهم منسدل */}
+    <span className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+      ▼
+    </span>
+  </div>
+</div>
 
-            {/* Address */}
-            <label className="block mb-2 text-sm font-medium text-gray-700">
-              Address
-            </label>
-            <input
-              type="text"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              placeholder="Enter your address"
-              className="w-full mb-4 border rounded-lg p-2 focus:ring-2 focus:ring-yellow-400"
-            />
+{/* Model */}
+{phoneForm.brand && (
+  <div className="mb-5">
+    <label className="block text-sm font-semibold text-gray-600 mb-2">
+Model    </label>
+    <div className="relative">
+      <select
+        value={phoneForm.model}
+        onChange={(e) =>
+          setPhoneForm({ ...phoneForm, model: e.target.value })
+        }
+        className="w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-10 text-gray-800 shadow-md focus:border-yellow-400 focus:ring-2 focus:ring-yellow-300 transition-all outline-none"
+      >
+        <option value=""> Phone model</option>
+        {phoneData[phoneForm.brand].map((model) => (
+          <option key={model} value={model}>
+            {model}
+          </option>
+        ))}
+      </select>
+      {/* سهم منسدل */}
+      <span className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+        ▼
+      </span>
+    </div>
+  </div>
+)}
 
-            {/* Phone Number */}
-            <label className="block mb-2 text-sm font-medium text-gray-700">
-              Phone Number
-            </label>
-            <input
-              type="text"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              placeholder="01XXXXXXXXX"
-              className="w-full mb-6 border rounded-lg p-2 focus:ring-2 focus:ring-yellow-400"
-            />
 
-            {/* Add to Cart Button */}
+ {/* Quantity */}
+<div className="mb-5">
+  <label className="block text-sm font-medium text-gray-700 mb-2">
+    Quantity
+  </label>
+  <div className="flex items-center gap-3">
+    <button
+      type="button"
+      onClick={() =>
+        setPhoneForm({
+          ...phoneForm,
+          quantity: Math.max(1, phoneForm.quantity - 1),
+        })
+      }
+      className="w-9 h-9 flex items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:bg-gray-100 transition"
+    >
+      -
+    </button>
+    <input
+      type="number"
+      min="1"
+      value={phoneForm.quantity}
+      onChange={(e) =>
+        setPhoneForm({ ...phoneForm, quantity: Number(e.target.value) })
+      }
+      className="w-16 text-center border border-gray-300 rounded-lg py-2 focus:ring-2 focus:ring-yellow-400 outline-none"
+    />
+    <button
+      type="button"
+      onClick={() =>
+        setPhoneForm({ ...phoneForm, quantity: phoneForm.quantity + 1 })
+      }
+      className="w-9 h-9 flex items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:bg-gray-100 transition"
+    >
+      +
+    </button>
+  </div>
+</div>
+
+
+            {/* Add to Cart */}
             <button
-              onClick={handleAddToCartFromModal}
-              className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-black py-3 rounded-lg font-semibold shadow hover:opacity-90 transition"
+              onClick={handleConfirmAdd}
+              className="mt-auto w-full bg-gradient-to-r from-[#D4AF37] to-yellow-400 text-black font-semibold py-3 rounded-lg shadow-md hover:scale-105 transition"
             >
-              Confirm Order
+              Confirm Add to Cart
             </button>
           </div>
         </div>
@@ -385,7 +367,7 @@ const Home = () => {
             </div>
           </div>
           <FooterDivider />
-          <div className="w-full sm:flex sm:items-center sm:justify-between " >
+          <div className="w-full sm:flex sm:items-center sm:justify-between">
             <FooterCopyright
               href="#"
               by="H-Cases"

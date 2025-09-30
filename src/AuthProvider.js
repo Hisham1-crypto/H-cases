@@ -26,7 +26,7 @@ const AuthProvider = ({ children }) => {
 
     const docRef = doc(db, "users", result.user.uid);
     await setDoc(docRef, {
-      name: displayName,
+      name: displayName || "",
       email,
       cart: [],
       wishlist: [],
@@ -35,7 +35,7 @@ const AuthProvider = ({ children }) => {
     setUser({
       uid: result.user.uid,
       email,
-      displayName,
+      displayName: displayName || "",
       cart: [],
       wishlist: [],
     });
@@ -54,7 +54,7 @@ const AuthProvider = ({ children }) => {
       setUser({
         uid: result.user.uid,
         email: result.user.email,
-        displayName: result.user.displayName,
+        displayName: result.user.displayName || "",
         cart: data.cart || [],
         wishlist: data.wishlist || [],
       });
@@ -68,7 +68,7 @@ const AuthProvider = ({ children }) => {
       setUser({
         uid: result.user.uid,
         email: result.user.email,
-        displayName: result.user.displayName,
+        displayName: result.user.displayName || "",
         cart: [],
         wishlist: [],
       });
@@ -78,27 +78,25 @@ const AuthProvider = ({ children }) => {
   };
 
   // 🟢 Logout
-  const logout = () => {
+  const logout = async () => {
+    await signOut(auth);
     setUser(null);
-    return signOut(auth);
   };
 
   // 🟢 Update Cart
   const updateCart = async (cart) => {
-    if (user) {
-      const docRef = doc(db, "users", user.uid);
-      await updateDoc(docRef, { cart });
-      setUser((prev) => ({ ...prev, cart }));
-    }
+    if (!user?.uid) return;
+    const docRef = doc(db, "users", user.uid);
+    await updateDoc(docRef, { cart });
+    setUser((prev) => ({ ...prev, cart }));
   };
 
   // 🟢 Update Wishlist
   const updateWishlist = async (wishlist) => {
-    if (user) {
-      const docRef = doc(db, "users", user.uid);
-      await updateDoc(docRef, { wishlist });
-      setUser((prev) => ({ ...prev, wishlist }));
-    }
+    if (!user?.uid) return;
+    const docRef = doc(db, "users", user.uid);
+    await updateDoc(docRef, { wishlist });
+    setUser((prev) => ({ ...prev, wishlist }));
   };
 
   // 🟢 Auth State Listener
@@ -112,7 +110,7 @@ const AuthProvider = ({ children }) => {
           setUser({
             uid: currentUser.uid,
             email: currentUser.email,
-            displayName: currentUser.displayName,
+            displayName: currentUser.displayName || "",
             cart: data.cart || [],
             wishlist: data.wishlist || [],
           });

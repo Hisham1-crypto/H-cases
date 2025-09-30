@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { CartContext } from "../CartContext";
 import { FavoritesContext } from "../FavoritesProvider";
 import { HeartIcon, ShoppingBasketIcon, Trash, X, ShoppingBag } from "lucide-react";
+import NavBar from "../NavBar/NavBar";
 
 // أنواع الموبايلات
 const allPhoneTypes = [
@@ -109,7 +110,10 @@ const Favorites = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+        <div className="mb-20">
+<div><NavBar /></div>
+<div className="h-8"></div>
+    <div className="mt-20 min-h-screen bg-gray-100 p-6">
       <div className="max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow-md">
         <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center flex justify-center">
           Your Favorites <HeartIcon className="m-1 text-pink-500" />
@@ -280,7 +284,10 @@ const Favorites = () => {
         </div>
       )}
     </div>
+        </div>
+
   );
 };
+
 
 export default Favorites;

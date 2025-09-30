@@ -2,6 +2,8 @@ import React, { useContext, useState } from "react";
 import { CartContext } from "../CartContext";
 import { Link } from "react-router-dom";
 import { ShoppingCart, Trash2 } from "lucide-react";
+import { ChevronDown } from "lucide-react";
+import NavBar from "../NavBar/NavBar";
 
 const ShoppingBag = () => {
   const { cart, addToCart, removeFromCart, deleteFromCart, discount, setDiscount } = useContext(CartContext);
@@ -33,7 +35,10 @@ const ShoppingBag = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+        <div className="mb-20">
+          <div><NavBar /></div>
+<div className="h-8"></div>
+    <div className="mt-20 min-h-screen bg-gray-100 p-6">
       <div className="max-w-5xl mx-auto bg-white p-6 rounded-2xl shadow-md grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Products */}
         <div className="md:col-span-2">
@@ -59,25 +64,25 @@ const ShoppingBag = () => {
                     <div>
                       <h3 className="text-lg font-semibold">{item.name}</h3>
 
-                      <p className="text-sm text-gray-500 mb-1">
+                      {/* <p className="text-sm text-gray-500 mb-1">
                         Phone Model: <span className="font-medium">{item.phoneModel}</span>
                       </p>
 
                       <p className="text-sm text-gray-500 mb-1">
                         Goverment: <span className="font-medium">{item.province}</span> (
                         {item.shipping} EGP Shipping)
-                      </p>
+                      </p> */}
 
-                      {item.address && (
+                      {/* {item.address && (
                         <p className="text-sm text-gray-500 mb-1">
                           Address: <span className="font-medium">{item.address}</span>
                         </p>
-                      )}
-                      {item.phone && (
+                      )} */}
+                      {/* {item.phone && (
                         <p className="text-sm text-gray-500 mb-1">
                           Phone: <span className="font-medium">{item.phone}</span>
                         </p>
-                      )}
+                      )} */}
 
                       <p className="text-gray-600">
                         {item.price} EGP x {item.quantity} = {item.price * item.quantity} EGP
@@ -85,12 +90,22 @@ const ShoppingBag = () => {
 
                       {/* Quantity controls */}
                       <div className="flex items-center gap-2 mt-2">
-                        <button
-                          onClick={() => removeFromCart(item.id, item.phoneModel, item.province)}
-                          className="px-2 py-1 bg-red-100 text-red-500 rounded hover:bg-red-200 transition"
-                        >
-                          -
-                        </button>
+                   <button
+  onClick={() => {
+    if (item.quantity > 1) {
+      removeFromCart(item.id, item.phoneModel, item.province);
+    }
+  }}
+  disabled={item.quantity <= 1}
+  className={`px-2 py-1 rounded transition
+    ${
+      item.quantity <= 1
+        ? "bg-gray-300 text-gray-500 cursor-not-allowed" // 🔒 غامق ومقفول
+        : "bg-red-100 text-red-500 hover:bg-red-200"
+    }`}
+>
+  -
+</button>
                         <span>{item.quantity}</span>
                         <button
                           onClick={() => addToCart(item)}
@@ -118,14 +133,14 @@ const ShoppingBag = () => {
         <div className="bg-gray-50 p-6 rounded-xl shadow-inner flex flex-col justify-between">
           <h3 className="text-xl font-semibold text-gray-800 mb-4">Order Summary</h3>
 
-          <div className="flex justify-between text-gray-700 mb-2">
+          {/* <div className="flex justify-between text-gray-700 mb-2">
             <span>Subtotal</span>
             <span>{subtotal} EGP</span>
-          </div>
-          <div className="flex justify-between text-gray-700 mb-2">
+          </div> */}
+          {/* <div className="flex justify-between text-gray-700 mb-2">
             <span>Shipping</span>
             <span>{shippingTotal} EGP</span>
-          </div>
+          </div> */}
 
           {discount > 0 && (
             <div className="flex justify-between text-green-600 font-semibold mb-2">
@@ -139,33 +154,44 @@ const ShoppingBag = () => {
             <span>{total} EGP</span>
           </div>
 
-          {/* Promo Code Section */}
-          <div className="mt-6">
-            {!showPromo ? (
-              <button
-                className="text-blue-600 hover:underline"
-                onClick={() => setShowPromo(true)}
-              >
-                Do you have a promo code?
-              </button>
-            ) : (
-              <div className="space-y-3">
-                <input
-                  type="text"
-                  value={promoCode}
-                  onChange={(e) => setPromoCode(e.target.value)}
-                  placeholder="Enter promo code"
-                  className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500"
-                />
-                <button
-                  onClick={handleApplyPromo}
-                  className="w-full bg-pink-500 text-white font-semibold py-2 rounded-lg hover:bg-pink-600 transition"
-                >
-                  Apply Promo
-                </button>
-              </div>
-            )}
-          </div>
+{/* Promo Code Section */}
+<div className="mt-6">
+  <button
+    className="flex items-center gap-2 text-blue-600 hover:underline focus:outline-none"
+    onClick={() => setShowPromo(!showPromo)}
+  >
+    <span>Do you have a promo code?</span>
+    <ChevronDown
+      className={`h-5 w-5 transform transition-transform duration-300 ${
+        showPromo ? "rotate-180" : "rotate-0"
+      }`}
+    />
+  </button>
+
+  {/* Animated input */}
+  <div
+    className={`transition-all duration-500 overflow-hidden ${
+      showPromo ? "max-h-40 opacity-100 mt-3" : "max-h-0 opacity-0"
+    }`}
+  >
+    <div className="space-y-3">
+      <input
+        type="text"
+        value={promoCode}
+        onChange={(e) => setPromoCode(e.target.value)}
+        placeholder="Enter promo code"
+        className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500"
+      />
+      <button
+        onClick={handleApplyPromo}
+        className="w-full bg-pink-500 text-white font-semibold py-2 rounded-lg hover:bg-pink-600 transition"
+      >
+        Apply Promo
+      </button>
+    </div>
+  </div>
+</div>
+
 
           {/* Checkout Button */}
           <Link
@@ -183,6 +209,8 @@ const ShoppingBag = () => {
         </div>
       </div>
     </div>
+        </div>
+
   );
 };
 

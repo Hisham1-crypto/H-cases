@@ -18,14 +18,6 @@ import {
 } from "flowbite-react";
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
 
-// Phone types
-const allPhoneTypes = [
-  "iPhone 14", "iPhone 14 Pro", "iPhone 13", "iPhone 13 Pro",
-  "iPhone 12", "iPhone 12 Pro", "Samsung S23", "Samsung S23 Ultra",
-  "Samsung S22", "Samsung S22 Plus", "Samsung S21", "Samsung S21 Ultra",
-  "Google Pixel 8", "Google Pixel 7",
-];
-
 // Provinces + shipping
 const allProvinces = [
   { name: "Cairo", shipping: 60 }, { name: "Giza", shipping: 60 },
@@ -47,20 +39,27 @@ const allProvinces = [
 
 // BabeShark images
 const imagesPage1 = [
-  "/babesharkcase/shark1.jpg",
-  "/babesharkcase/shark2.jpg",
-  "/babesharkcase/shark3.jpg",
-  "/babesharkcase/shark4.jpg",
-  "/babesharkcase/shark5.jpg",
+  { src: "/babesharkcase/shark1.jpg", price: 200 },
+  { src: "/babesharkcase/shark2.jpg", price: 220 },
+  { src: "/babesharkcase/shark3.jpg", price: 250 },
+  { src: "/babesharkcase/shark4.jpg", price: 230 },
+  { src: "/babesharkcase/shark5.jpg", price: 210 },
 ];
 
 const imagesPage2 = [
-  "/babesharkcase/shark6.jpg",
-  "/babesharkcase/shark7.jpg",
-  "/babesharkcase/shark8.jpg",
-  "/babesharkcase/shark9.jpg",
-  "/babesharkcase/shark10.jpg",
+  { src: "/babesharkcase/shark6.jpg", price: 200 },
+  { src: "/babesharkcase/shark7.jpg", price: 220 },
+  { src: "/babesharkcase/shark8.jpg", price: 250 },
+  { src: "/babesharkcase/shark9.jpg", price: 230 },
+  { src: "/babesharkcase/shark10.jpg", price: 210 },
 ];
+
+// Phone Brands & Models
+const phoneBrands = {
+  "Apple": ["iPhone 14", "iPhone 14 Pro", "iPhone 13", "iPhone 13 Pro", "iPhone 12", "iPhone 12 Pro"],
+  "Samsung": ["Samsung S23", "Samsung S23 Ultra", "Samsung S22", "Samsung S22 Plus", "Samsung S21", "Samsung S21 Ultra"],
+  "Google": ["Google Pixel 8", "Google Pixel 7"]
+};
 
 const BabeShark = () => {
   const { addToCart } = useContext(CartContext);
@@ -69,64 +68,55 @@ const BabeShark = () => {
   const navigate = useNavigate();
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedPhoneType, setSelectedPhoneType] = useState("");
-  const [selectedProvince, setSelectedProvince] = useState("");
-  const [address, setAddress] = useState("");
-  const [phone, setPhone] = useState("");
+  const [quantity, setQuantity] = useState(1);
 
   const currentImages = currentPage === 1 ? imagesPage1 : imagesPage2;
 
-  const handleAddToCartClick = (img) => {
+  const handleAddToCartClick = (product) => {
     if (!user) {
       alert("You must log in first to add products to the cart.");
       navigate("/login");
       return;
     }
-    setSelectedImage(img);
-    // ❌ مش هنمسح القيم الموجودة
-    // setSelectedPhoneType("");
-    // setSelectedProvince("");
-    // setAddress("");
-    // setPhone("");
+    setSelectedProduct(product);
+    setDrawerOpen(true);
   };
 
-const handleConfirmOrder = () => {
-  const phoneTrimmed = phone.trim();
-  const phoneTypeTrimmed = selectedPhoneType.trim();
-  const provinceTrimmed = selectedProvince.trim();
-  const addressTrimmed = address.trim();
+  const handleConfirmOrder = () => {
+    if (!selectedBrand) return alert("Please choose a brand.");
+    if (!selectedPhoneType) return alert("Please choose your phone model.");
 
-  if (!phoneTrimmed) return alert("Please enter your phone number.");
-  if (!/^\d+$/.test(phoneTrimmed) || phoneTrimmed.length !== 11)
-    return alert("Invalid phone number. Must be 11 digits.");
-  if (!phoneTypeTrimmed) return alert("Please choose your phone model.");
-  if (!provinceTrimmed) return alert("Please choose your province.");
-  if (!addressTrimmed) return alert("Please enter your address.");
-
-    const provinceData = allProvinces.find((p) => p.name === selectedProvince);
 
     addToCart({
       name: "BabeShark Case",
-      price: 200,
-      image: selectedImage,
+      price: selectedProduct.price,
+      image: selectedProduct.src,
+      brand: selectedBrand,
       phoneModel: selectedPhoneType,
-      province: selectedProvince,
-      shipping: provinceData?.shipping || 0,
-      address,
-      phone,
+
+      quantity,
     });
 
-    setSelectedImage(null);
+    // Reset drawer state
+    setDrawerOpen(false);
+    setSelectedProduct(null);
+    setSelectedBrand("");
+    setSelectedPhoneType("");
+
+    setQuantity(1);
   };
 
   return (
     <div className="bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 min-h-screen text-gray-900 font-sans">
-      {/* Navbar */}
       <div className="mb-20">
         <NavBar />
       </div>
-<div className="h-20"></div>
+
       <div className="max-w-6xl mx-auto p-6">
         <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">
           BabeShark Cases
@@ -134,25 +124,23 @@ const handleConfirmOrder = () => {
 
         {/* Images Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          {currentImages.map((img, idx) => (
+          {currentImages.map((product, idx) => (
             <div key={idx} className="relative border rounded-lg overflow-hidden shadow hover:shadow-lg transition cursor-pointer">
               <img
-                src={img}
+                src={product.src}
                 alt={`BabeShark ${idx + 1}`}
                 className="w-full h-auto object-cover transition-transform duration-300 hover:scale-105"
-                onClick={() => setSelectedImage(img)}
+                onClick={() => handleAddToCartClick(product)}
               />
-
-              {/* Cart & Favorite Buttons */}
               <div className="absolute top-2 right-2 flex flex-col gap-2">
                 <button
-                  onClick={() => handleAddToCartClick(img)}
+                  onClick={() => handleAddToCartClick(product)}
                   className="bg-white p-2 rounded-full shadow hover:bg-gray-100"
                 >
                   <ShoppingBag size={18} />
                 </button>
                 <button
-                  onClick={() => addToFavorites({ name: "BabeShark Case", image: img, price: 200 })}
+                  onClick={() => addToFavorites({ name: "BabeShark Case", image: product.src, price: product.price })}
                   className="bg-white p-2 rounded-full shadow hover:bg-gray-100"
                 >
                   <Heart size={18} />
@@ -175,78 +163,91 @@ const handleConfirmOrder = () => {
           ))}
         </div>
 
-        {/* Modal for Cart */}
-        {selectedImage && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
-            onClick={() => setSelectedImage(null)}
-          >
-            <div
-              className="bg-white rounded-2xl p-6 w-full max-w-md relative shadow-lg overflow-y-auto max-h-[90vh]"
-              onClick={(e) => e.stopPropagation()}
-            >
+        {/* Drawer */}
+        {drawerOpen && selectedProduct && (
+          <div className="fixed inset-0 z-50 flex">
+            <div className="fixed inset-0 bg-black/50" onClick={() => setDrawerOpen(false)}></div>
+            <div className="bg-white w-96 h-full p-6 shadow-2xl transform transition-transform duration-500 fixed right-0 top-0 flex flex-col">
               <button
-                onClick={() => setSelectedImage(null)}
-                className="absolute top-4 right-4 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition"
+                onClick={() => setDrawerOpen(false)}
+                className="absolute top-4 left-4 p-2 rounded-full hover:bg-gray-100"
               >
-                <X className="w-5 h-5 text-gray-600" />
+                <X className="w-6 h-6" />
               </button>
 
-              <div className="flex flex-col items-center mb-4">
-                <img src={selectedImage} alt="BabeShark Case" className="w-32 h-32 object-contain mb-3" />
-                <h3 className="text-lg font-bold text-gray-900">BabeShark Case</h3>
-                <p className="text-gray-600">200 EGP</p>
+              {/* Product Info */}
+              <div className="flex flex-col items-center text-center mb-6">
+                <img src={selectedProduct.src} alt="BabeShark Case" className="w-40 h-40 object-contain mb-4" />
+                <h3 className="text-lg font-semibold">BabeShark Case</h3>
+                <p className="text-gray-600">{selectedProduct.price} EGP</p>
               </div>
 
-              {/* Phone model */}
-              <label className="block mb-2 text-sm font-medium text-gray-700">Phone Model</label>
+              {/* Brand Selector */}
+              <label className="block mb-2 text-sm font-medium text-gray-700">Brand</label>
               <select
-                value={selectedPhoneType}
-                onChange={(e) => setSelectedPhoneType(e.target.value)}
+                value={selectedBrand}
+                onChange={(e) => {
+                  setSelectedBrand(e.target.value);
+                  setSelectedPhoneType("");
+                }}
                 className="w-full mb-4 border rounded-lg p-2 focus:ring-2 focus:ring-yellow-400"
               >
-                <option value="">Choose phone model</option>
-                {allPhoneTypes.map((type) => (
-                  <option key={type} value={type}>{type}</option>
+                <option value="">Choose brand</option>
+                {Object.keys(phoneBrands).map(brand => (
+                  <option key={brand} value={brand}>{brand}</option>
                 ))}
               </select>
 
-              {/* Province */}
-              <label className="block mb-2 text-sm font-medium text-gray-700">Province</label>
-              <select
-                value={selectedProvince}
-                onChange={(e) => setSelectedProvince(e.target.value)}
-                className="w-full mb-4 border rounded-lg p-2 focus:ring-2 focus:ring-yellow-400"
-              >
-                <option value="">Choose your province</option>
-                {allProvinces.map((p) => (
-                  <option key={p.name} value={p.name}>{p.name} (+{p.shipping} EGP)</option>
-                ))}
-              </select>
+              {/* Model Selector - يظهر فقط بعد اختيار البراند */}
+              {selectedBrand && (
+                <>
+                  <label className="block mb-2 text-sm font-medium text-gray-700">Phone Model</label>
+                  <select
+                    value={selectedPhoneType}
+                    onChange={(e) => setSelectedPhoneType(e.target.value)}
+                    className="w-full mb-4 border rounded-lg p-2 focus:ring-2 focus:ring-yellow-400"
+                  >
+                    <option value="">Choose phone model</option>
+                    {phoneBrands[selectedBrand].map(model => (
+                      <option key={model} value={model}>{model}</option>
+                    ))}
+                  </select>
+                </>
+              )}
 
-              {/* Address */}
-              <input
-                type="text"
-                placeholder="Enter your address"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                className="w-full mb-4 border rounded-lg p-2 focus:ring-2 focus:ring-yellow-400"
-              />
-
-              {/* Phone */}
-              <input
-                type="text"
-                placeholder="01XXXXXXXXX"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                className="w-full mb-6 border rounded-lg p-2 focus:ring-2 focus:ring-yellow-400"
-              />
+              {/* Quantity */}
+              <div className="mb-5">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Quantity</label>
+                <div className="flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    className="w-9 h-9 flex items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:bg-gray-100 transition"
+                  >
+                    -
+                  </button>
+                  <input
+                    type="number"
+                    min="1"
+                    value={quantity}
+                    onChange={(e) => setQuantity(Number(e.target.value))}
+                    className="w-16 text-center border border-gray-300 rounded-lg py-2 focus:ring-2 focus:ring-yellow-400 outline-none"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setQuantity(quantity + 1)}
+                    className="w-9 h-9 flex items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:bg-gray-100 transition"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
 
               <button
                 onClick={handleConfirmOrder}
-                className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-black py-3 rounded-lg font-semibold shadow hover:opacity-90 transition"
+                className="mt-auto w-full bg-gradient-to-r from-[#D4AF37] to-yellow-400 text-black font-semibold py-3 rounded-lg shadow-md hover:scale-105 transition"
               >
-                Confirm Order
+                Confirm Add to Cart
               </button>
             </div>
           </div>

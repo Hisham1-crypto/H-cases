@@ -22,8 +22,8 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-600 to-indigo-700">
-      <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
+    <div className="flex items-center justify-center min-h-screen  bg-gray-50">
+      <div className="bg-white p-8 rounded-2xl w-full max-w-md">
         {/* Title */}
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
           Create Account{" "}
@@ -89,7 +89,7 @@ const Signup = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-2 rounded-lg shadow-md hover:from-blue-700 hover:to-indigo-700 transition-transform transform hover:scale-105"
+            className="w-full bg-[#56cfe1] text-white font-semibold py-2 rounded-lg shadow-md hover:from-blue-700 hover:to-indigo-700 transition-transform transform hover:scale-105"
           >
             Sign Up
           </button>

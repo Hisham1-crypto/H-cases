@@ -20,7 +20,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-600 to-indigo-700">
+    <div className="flex items-center justify-center min-h-screen bg-white">
       <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
         <Link to="/" className="flex justify-center">
           <img
@@ -65,7 +65,7 @@ const Login = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-2 rounded-lg shadow-md hover:from-blue-700 hover:to-indigo-700 transition-transform transform hover:scale-105"
+            className="w-full bg-[#56cfe1] text-white font-semibold py-2 rounded-lg shadow-md hover:from-blue-700 hover:to-indigo-700 transition-transform transform hover:scale-105"
           >
             Login
           </button>
@@ -73,7 +73,7 @@ const Login = () => {
 
         {/* New Signup */}
         <p className="text-sm text-gray-600 text-center mt-6">
-          Don’t have an account?{" "}
+          Don’t have account?{" "}
           <Link to="/signup" className="text-blue-600 hover:underline">
             Sign up
           </Link>

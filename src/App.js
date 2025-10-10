@@ -22,6 +22,11 @@ import RapScene from "./RapScene/RapScene"
 import BabeShark from "./BabeShark/BabeShark"
 import TigerCase from "./TigerCase/TigerCase"
 import CarCase from "./CarCase/CarCase"
+import LvCase from "./LvCase/LvCase";
+import EvileEye from "./EvileEye/EvileEye";
+import Porche911 from "./Porche911/Porche911";
+import LufiCase from "./LufiCase/LufiCase";
+import LabubuCase from "./LabubuCase/LabubuCase";
 
 
 
@@ -49,9 +54,14 @@ const App = () => {
               <Route path="/signup" element={<Signup />} />
               <Route path="/payment" element={<Payment />} />
               <Route path="/rapscene" element={<RapScene/>}/>
-                            <Route path="/babeshark" element={<BabeShark/>}/>
-                                          <Route path="/tigercase" element={<TigerCase/>}/>
-                                                        <Route path="/carcase" element={<CarCase/>}/>
+              <Route path="/babeshark" element={<BabeShark/>}/>
+              <Route path="/tigercase" element={<TigerCase/>}/>
+              <Route path="/evileeye" element={<EvileEye/>}/>
+              <Route path="/lvcase" element={<LvCase/>}/>
+              <Route path="/porsche911" element={<Porche911/>}/>
+              <Route path="/luficase" element={<LufiCase/>}/>
+              <Route path="/labubu" element={<LabubuCase/>}/>
+
               <Route
                 path="/checkout"
                 element={

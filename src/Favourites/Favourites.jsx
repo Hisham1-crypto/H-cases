@@ -200,7 +200,7 @@ const handleConfirmAdd = () => {
                         model: "",
                       })
                     }
-                    className="w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-10 text-gray-800 shadow-md focus:border-yellow-400 focus:ring-2 focus:ring-yellow-300 transition-all outline-none"
+                    className="w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-10 text-gray-800 shadow-md  focus:ring-2  transition-all outline-none"
                   >
                     <option value="">Choose your phone brand</option>
                     {Object.keys(phoneData).map((brand) => (
@@ -227,7 +227,7 @@ const handleConfirmAdd = () => {
                       onChange={(e) =>
                         setPhoneForm({ ...phoneForm, model: e.target.value })
                       }
-                      className="w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-10 text-gray-800 shadow-md focus:border-yellow-400 focus:ring-2 focus:ring-yellow-300 transition-all outline-none"
+                      className="w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-10 text-gray-800 shadow-md focus:ring-2  transition-all outline-none"
                     >
                       <option value="">Phone model</option>
                       {phoneData[phoneForm.brand].map((model) => (
@@ -271,7 +271,7 @@ const handleConfirmAdd = () => {
                         quantity: Number(e.target.value),
                       })
                     }
-                    className="w-16 text-center border border-gray-300 rounded-lg py-2 focus:ring-2 focus:ring-yellow-400 outline-none"
+                    className="w-16 text-center border border-gray-300 rounded-lg py-2 focus:ring-2 outline-none"
                   />
                   <button
                     type="button"

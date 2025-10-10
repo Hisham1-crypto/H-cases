@@ -1,4 +1,3 @@
-// src/BabeShark/BabeShark.jsx
 import React, { useContext, useState } from "react";
 import { Heart, ShoppingBag, X } from "lucide-react";
 import { CartContext } from "../CartContext";
@@ -39,11 +38,11 @@ import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
 
 // BabeShark images
 const imagesPage1 = [
-  { src: "/tigercase/tiger1.jpg", price: 130 },
-  { src: "/tigercase/tiger2.jpg", price: 130 },
-  { src: "/tigercase/tiger3.jpg", price: 130 },
-  { src: "/tigercase/tiger4.jpg", price: 130 },
-  { src: "/tigercase/tiger5.jpg", price: 130 },
+  { src: "/tigercase/tiger1.jpg", name:"Cheetah case", price: 130 },
+  { src: "/tigercase/tiger2.jpg", name:"Brown Tiger case", price: 130 },
+  { src: "/tigercase/tiger3.jpg", name:"Cheetah 2 case", price: 130 },
+  { src: "/tigercase/tiger4.jpg", name:"Brown tiger case", price: 130 },
+  { src: "/tigercase/tiger5.jpg", name:"Black tiger case", price: 130 },
 ];
 
 // const imagesPage2 = [
@@ -120,34 +119,41 @@ const TigerCase = () => {
         <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">
           Tiger Cases
         </h1>
+{/* Images Grid */}
+<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+  {currentImages.map((product, idx) => (
+    <div key={idx} className="relative border rounded-lg overflow-hidden shadow hover:shadow-lg transition cursor-pointer">
+      <img
+        src={product.src}
+        alt={`BabeShark ${idx + 1}`}
+        className="w-full h-auto object-cover transition-transform duration-300 hover:scale-105"
+        onClick={() => handleAddToCartClick(product)}
+      />
 
-        {/* Images Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          {currentImages.map((product, idx) => (
-            <div key={idx} className="relative border rounded-lg overflow-hidden shadow hover:shadow-lg transition cursor-pointer">
-              <img
-                src={product.src}
-                alt={`BabeShark ${idx + 1}`}
-                className="w-full h-auto object-cover transition-transform duration-300 hover:scale-105"
-                onClick={() => handleAddToCartClick(product)}
-              />
-              <div className="absolute top-2 right-2 flex flex-col gap-2">
-                <button
-                  onClick={() => handleAddToCartClick(product)}
-                  className="bg-white p-2 rounded-full shadow hover:bg-gray-100"
-                >
-                  <ShoppingBag size={18} />
-                </button>
-                <button
-                  onClick={() => addToFavorites({ name: "BabeShark Case", image: product.src, price: product.price })}
-                  className="bg-white p-2 rounded-full shadow hover:bg-gray-100"
-                >
-                  <Heart size={18} />
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
+      {/* اسم وسعر المنتج */}
+      <div className="p-2 text-center bg-white">
+        <h3 className="text-sm font-semibold text-gray-800">{product.name}</h3>
+        <p className="text-gray-600">{product.price} EGP</p>
+      </div>
+
+      <div className="absolute top-2 right-2 flex flex-col gap-2">
+        <button
+          onClick={() => handleAddToCartClick(product)}
+          className="bg-white p-2 rounded-full shadow hover:bg-gray-100"
+        >
+          <ShoppingBag size={18} />
+        </button>
+        <button
+          onClick={() => addToFavorites({ name: "BabeShark Case", image: product.src, price: product.price })}
+          className="bg-white p-2 rounded-full shadow hover:bg-gray-100"
+        >
+          <Heart size={18} />
+        </button>
+      </div>
+    </div>
+  ))}
+</div>
+
 
         {/* Pagination */}
         {/* <div className="flex justify-center mt-10 mb-10 gap-3">
@@ -187,7 +193,7 @@ const TigerCase = () => {
           alt="BabeShark Case"
           className="w-40 h-40 object-contain mb-4"
         />
-        <h3 className="text-lg font-semibold">BabeShark Case</h3>
+        <h3 className="text-lg font-semibold">{selectedProduct.name}</h3>
         <p className="text-gray-600">{selectedProduct.price} EGP</p>
       </div>
 
@@ -207,7 +213,7 @@ const TigerCase = () => {
               setSelectedBrand(e.target.value);
               setSelectedPhoneType("");
             }}
-            className="w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-10 text-gray-800 shadow-md focus:border-yellow-400 focus:ring-2 focus:ring-yellow-300 transition-all outline-none"
+            className="w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-10 text-gray-800 shadow-md  focus:ring-2  transition-all outline-none"
           >
             <option value="">Choose your phone brand</option>
             {Object.keys(phoneBrands).map((brand) => (
@@ -232,7 +238,7 @@ const TigerCase = () => {
             <select
               value={selectedPhoneType}
               onChange={(e) => setSelectedPhoneType(e.target.value)}
-              className="w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-10 text-gray-800 shadow-md focus:border-yellow-400 focus:ring-2 focus:ring-yellow-300 transition-all outline-none"
+              className="w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-10 text-gray-800 shadow-md focus:ring-2  transition-all outline-none"
             >
               <option value="">Choose phone model</option>
               {phoneBrands[selectedBrand].map((model) => (
@@ -266,7 +272,7 @@ const TigerCase = () => {
             min="1"
             value={quantity}
             onChange={(e) => setQuantity(Number(e.target.value))}
-            className="w-16 text-center border border-gray-300 rounded-lg py-2 focus:ring-2 focus:ring-yellow-400 outline-none"
+            className="w-16 text-center border border-gray-300 rounded-lg py-2 focus:ring-2 outline-none"
           />
           <button
             type="button"
@@ -299,7 +305,7 @@ const TigerCase = () => {
           setSelectedPhoneType("");
           setQuantity(1);
         }}
-        className="mt-auto w-full bg-gradient-to-r from-[#D4AF37] to-yellow-400 text-black font-semibold py-3 rounded-lg shadow-md hover:scale-105 transition"
+                className="mt-auto w-full bg-black font-thin text-white font-semibold py-3 rounded-lg shadow-md hover:scale-105 transition"
       >
         Confirm Add to Cart
       </button>
@@ -307,7 +313,7 @@ const TigerCase = () => {
   </div>
 )}
         {/* Footer */}
-        <Footer container>
+        <Footer container className="mt-20">
           <div className="w-full">
             <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
               <div className="grid grid-cols-2 gap-8 sm:mt-4 sm:grid-cols-3 sm:gap-6">

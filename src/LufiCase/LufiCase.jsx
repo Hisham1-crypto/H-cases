@@ -1,4 +1,3 @@
-// src/BabeShark/BabeShark.jsx
 import React, { useContext, useState } from "react";
 import { Heart, ShoppingBag, X } from "lucide-react";
 import { CartContext } from "../CartContext";
@@ -18,24 +17,15 @@ import {
 } from "flowbite-react";
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
 
-
-
 // BabeShark images
 const imagesPage1 = [
-  { src: "/babesharkcase/shark1.jpg", name: "Red babe shark" , price: 130 },
-  { src: "/babesharkcase/shark2.jpg",name: "Militairy - black babe shark" , price: 130 },
-  { src: "/babesharkcase/shark3.jpg",name: "Blue - purple babe shark" , price: 130 },
-  { src: "/babesharkcase/shark4.jpg",name: "White military babe shark" , price: 130 },
-  { src: "/babesharkcase/shark5.jpg",name: "Dark militairy babe shark" , price: 130 },
+  { src: "/Lufi cases/photo_1_2025-10-10_17-44-28.jpg", name:"Lufi", price: 130 },
+  { src: "/Lufi cases/photo_2_2025-10-10_17-44-28.jpg", name:"Lufi", price: 130 },
+  { src: "/Lufi cases/photo_3_2025-10-10_17-44-28.jpg", name:"Lufi", price: 130 },
+  { src: "/Lufi cases/photo_4_2025-10-10_17-44-28.jpg", name:"Lufi", price: 130 },
+  { src: "/Lufi cases/photo_5_2025-10-10_17-44-28.jpg", name:"Lufi", price: 130 },
 ];
 
-const imagesPage2 = [
-  { src: "/babesharkcase/shark6.jpg",name: "Purple - Mint green babe shark" , price: 130 },
-  { src: "/babesharkcase/shark7.jpg",name: "Black babe shark" , price: 130 },
-  { src: "/babesharkcase/shark8.jpg",name: "Black - militairy babe shark" , price: 130 },
-  { src: "/babesharkcase/shark9.jpg",name: "Pink babe shark" , price: 130 },
-  { src: "/babesharkcase/shark10.jpg",name: "Red -black babe shark" , price: 130 },
-];
 
 // Phone Brands & Models
 const phoneBrands = {
@@ -44,7 +34,7 @@ const phoneBrands = {
   "Google": ["Google Pixel 8", "Google Pixel 7"]
 };
 
-const BabeShark = () => {
+const LufiCase = () => {
   const { addToCart } = useContext(CartContext);
   const { addToFavorites } = useContext(FavoritesContext);
   // const { user } = useContext(AuthContext);
@@ -58,7 +48,7 @@ const BabeShark = () => {
   const [selectedPhoneType, setSelectedPhoneType] = useState("");
   const [quantity, setQuantity] = useState(1);
 
-  const currentImages = currentPage === 1 ? imagesPage1 : imagesPage2;
+  const currentImages = currentPage === 1 ? imagesPage1 : imagesPage1;
 
   const handleAddToCartClick = (product) => {
     // if (!user) {
@@ -76,7 +66,7 @@ const BabeShark = () => {
 
 
     addToCart({
-      name: "",
+      name: "BabeShark Case",
       price: selectedProduct.price,
       image: selectedProduct.src,
       brand: selectedBrand,
@@ -94,14 +84,14 @@ const BabeShark = () => {
   };
 
   return (
-    <div className="bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 min-h-screen text-gray-900 font-sans">
+ <div className="bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 min-h-screen text-gray-900 font-sans">
       <div className="mb-1">
         <NavBar />
       </div>
 <div className="h-20"></div>
       <div className="max-w-6xl mx-auto p-6 mt-20">
         <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">
-          BabeShark Cases
+         Lufi Cases
         </h1>
 {/* Images Grid */}
 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
@@ -115,7 +105,7 @@ const BabeShark = () => {
       />
 
       {/* اسم وسعر المنتج */}
-      <div className="p-2  text-center bg-white">
+      <div className="p-2 text-center bg-white">
         <h3 className="text-sm font-semibold text-gray-800">{product.name}</h3>
         <p className="text-gray-600">{product.price} EGP</p>
       </div>
@@ -128,7 +118,7 @@ const BabeShark = () => {
           <ShoppingBag size={18} />
         </button>
         <button
-          onClick={() => addToFavorites({ name: "", image: product.src, price: product.price })}
+          onClick={() => addToFavorites({ name: "BabeShark Case", image: product.src, price: product.price })}
           className="bg-white p-2 rounded-full shadow hover:bg-gray-100"
         >
           <Heart size={18} />
@@ -138,8 +128,9 @@ const BabeShark = () => {
   ))}
 </div>
 
+
         {/* Pagination */}
-        <div className="flex justify-center mt-10 mb-10 gap-3">
+        {/* <div className="flex justify-center mt-10 mb-10 gap-3">
           {[1, 2].map((page) => (
             <button
               key={page}
@@ -149,7 +140,7 @@ const BabeShark = () => {
               {page}
             </button>
           ))}
-        </div>
+        </div> */}
 
         {/* Drawer */}
        {drawerOpen && selectedProduct && (
@@ -196,7 +187,7 @@ const BabeShark = () => {
               setSelectedBrand(e.target.value);
               setSelectedPhoneType("");
             }}
-            className="w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-10 text-gray-800 shadow-md focus:ring-2 transition-all outline-none"
+            className="w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-10 text-gray-800 shadow-md  focus:ring-2  transition-all outline-none"
           >
             <option value="">Choose your phone brand</option>
             {Object.keys(phoneBrands).map((brand) => (
@@ -221,7 +212,7 @@ const BabeShark = () => {
             <select
               value={selectedPhoneType}
               onChange={(e) => setSelectedPhoneType(e.target.value)}
-              className="w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-10 text-gray-800 shadow-md  transition-all outline-none"
+              className="w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-10 text-gray-800 shadow-md focus:ring-2  transition-all outline-none"
             >
               <option value="">Choose phone model</option>
               {phoneBrands[selectedBrand].map((model) => (
@@ -255,7 +246,7 @@ const BabeShark = () => {
             min="1"
             value={quantity}
             onChange={(e) => setQuantity(Number(e.target.value))}
-            className="w-16 text-center border border-gray-300 rounded-lg py-2 focus:ring-2  outline-none"
+            className="w-16 text-center border border-gray-300 rounded-lg py-2 focus:ring-2 outline-none"
           />
           <button
             type="button"
@@ -296,7 +287,7 @@ const BabeShark = () => {
   </div>
 )}
         {/* Footer */}
-        <Footer container>
+        <Footer container className="mt-20">
           <div className="w-full">
             <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
               <div className="grid grid-cols-2 gap-8 sm:mt-4 sm:grid-cols-3 sm:gap-6">
@@ -334,6 +325,5 @@ const BabeShark = () => {
       </div>
     </div>
   );
-};
-
-export default BabeShark;
+}
+export default LufiCase

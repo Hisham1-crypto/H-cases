@@ -47,8 +47,7 @@ const NavBar = ({ onSearch }) => {
   <>
   {/* 🔹 الشريط الثابت فوق */}
   <div className="fixed top-0 left-0 w-full bg-[#56cfe1] text-white text-xs sm:text-sm font-medium py-2 text-center z-40">
-    🎉 Get 20% OFF on your first order — Use code{" "}
-    <span className="font-semibold">WELCOME20</span>
+    🎉  20% OFF on any order for our new website 
   </div>
 
   {/* 🔹 الشريط المتحرك تحت */}
@@ -115,17 +114,26 @@ const NavBar = ({ onSearch }) => {
               }`}
             >
               <Link to="/babeshark" className="block px-4 py-2 hover:bg-gray-100 hover:text-[#56cfe1] text-right">
-                Babe Shark
+                Babe Shark 
               </Link>
               <Link to="/tigercase" className="block px-4 py-2 hover:bg-gray-100 hover:text-[#56cfe1] text-right">
-                Tiger Case
+                Tiger 
               </Link>
-              <Link to="/carcase" className="block px-4 py-2 hover:bg-gray-100 hover:text-[#56cfe1] text-right">
-                Cars Case
+              <Link to="/lvcase" className="block px-4 py-2 hover:bg-gray-100 hover:text-[#56cfe1] text-right">
+                LV 
               </Link>
-              <Link to="/rapscene" className="block px-4 py-2 hover:bg-gray-100 hover:text-[#56cfe1] text-right">
-                Rap Scene
+              <Link to="/evileeye" className="block px-4 py-2 hover:bg-gray-100 hover:text-[#56cfe1] text-right">
+              Evile Eye 
               </Link>
+               <Link to="/porsche911" className="block px-4 py-2 hover:bg-gray-100 hover:text-[#56cfe1] text-right">
+              Porsche 911
+              </Link>
+                <Link to="/luficase" className="block px-4 py-2 hover:bg-gray-100 hover:text-[#56cfe1] text-right">
+              Lufi 
+              </Link>
+                 <Link to="/labubu" className="block px-4 py-2 hover:bg-gray-100 hover:text-[#56cfe1] text-right">
+                Labubu
+                </Link>
             </div>
           </div>
 
@@ -225,18 +233,27 @@ const NavBar = ({ onSearch }) => {
                   Babe Shark
                 </Link>
                 <Link to="/tigercase" className="block px-4 py-2 hover:bg-gray-100 hover:text-[#56cfe1] text-right">
-                  Tiger Case
+                  Tiger 
                 </Link>
-                <Link to="/carcase" className="block px-4 py-2 hover:bg-gray-100 hover:text-[#56cfe1] text-right">
-                  Cars Case
+                <Link to="/lvcase" className="block px-4 py-2 hover:bg-gray-100 hover:text-[#56cfe1] text-right">
+                  LV 
                 </Link>
-                <Link to="/rapscene" className="block px-4 py-2 hover:bg-gray-100 hover:text-[#56cfe1] text-right">
-                  Rap Scene
+                <Link to="/evileeye" className="block px-4 py-2 hover:bg-gray-100 hover:text-[#56cfe1] text-right">
+                Evile eye    
+                </Link>
+                     <Link to="/porsche911" className="block px-4 py-2 hover:bg-gray-100 hover:text-[#56cfe1] text-right">
+                Porsche 911   
+                </Link>
+                   <Link to="/luficase" className="block px-4 py-2 hover:bg-gray-100 hover:text-[#56cfe1] text-right">
+                Lufi
+                </Link>
+                 <Link to="/labubu" className="block px-4 py-2 hover:bg-gray-100 hover:text-[#56cfe1] text-right">
+                Labubu
                 </Link>
               </div>
             </div>
 
-            <Link to="/tigercase" onClick={toggleSidebar} className="hover:text-[#56cfe1]">Tiger Case</Link>
+            {/* <Link to="/tigercase" onClick={toggleSidebar} className="hover:text-[#56cfe1]">Tiger Case</Link> */}
             <Link to="/shop" onClick={toggleSidebar} className="hover:text-[#56cfe1]">Airpods Case</Link>
             <Link to="/offers" onClick={toggleSidebar} className="hover:text-[#56cfe1]">Pop Socket</Link>
             <Link to="/contact" onClick={toggleSidebar} className="hover:text-[#56cfe1]">Costume</Link>

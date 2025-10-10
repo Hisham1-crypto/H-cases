@@ -1,4 +1,3 @@
-// src/BabeShark/BabeShark.jsx
 import React, { useContext, useState } from "react";
 import { Heart, ShoppingBag, X } from "lucide-react";
 import { CartContext } from "../CartContext";
@@ -18,15 +17,32 @@ import {
 } from "flowbite-react";
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
 
-
+// Provinces + shipping
+const allProvinces = [
+  { name: "Cairo", shipping: 60 }, { name: "Giza", shipping: 60 },
+  { name: "Alexandria", shipping: 63 }, { name: "Beheira", shipping: 63 },
+  { name: "Kafr El-Sheikh", shipping: 70 }, { name: "Damietta", shipping: 70 },
+  { name: "Port Said", shipping: 70 }, { name: "Monufia", shipping: 70 },
+  { name: "Qalyubia", shipping: 70 }, { name: "Gharbia", shipping: 70 },
+  { name: "Sharqia", shipping: 70 }, { name: "Suez", shipping: 70 },
+  { name: "Dakahlia", shipping: 70 }, { name: "Ismailia", shipping: 70 },
+  { name: "Sohag", shipping: 81 }, { name: "Beni Suef", shipping: 81 },
+  { name: "Minya", shipping: 81 }, { name: "Fayoum", shipping: 81 },
+  { name: "Assiut", shipping: 81 }, { name: "Marsa Matrouh", shipping: 92 },
+  { name: "Qena", shipping: 92 }, { name: "Red Sea", shipping: 92 },
+  { name: "Luxor", shipping: 92 }, { name: "Aswan", shipping: 92 },
+  { name: "North Coast", shipping: 95 }, { name: "South Sinai", shipping: 110 },
+  { name: "New Valley", shipping: 110 }, { name: "North Sinai", shipping: 110 },
+  { name: "Other", shipping: 100 },
+];
 
 // BabeShark images
 const imagesPage1 = [
-  { src: "/babesharkcase/shark1.jpg", name: "Red babe shark" , price: 130 },
-  { src: "/babesharkcase/shark2.jpg",name: "Militairy - black babe shark" , price: 130 },
-  { src: "/babesharkcase/shark3.jpg",name: "Blue - purple babe shark" , price: 130 },
-  { src: "/babesharkcase/shark4.jpg",name: "White military babe shark" , price: 130 },
-  { src: "/babesharkcase/shark5.jpg",name: "Dark militairy babe shark" , price: 130 },
+  { src: "/LV cases/photo_1_2025-10-10_17-04-36.jpg", name: "Blue LV case" , price: 130 },
+  { src: "/LV cases/photo_2_2025-10-10_17-04-36.jpg",name: "Black - white LV case" , price: 130 },
+  { src: "/LV cases/photo_3_2025-10-10_17-04-36.jpg",name: "LV case" , price: 130 },
+  { src: "/LV cases/photo_4_2025-10-10_17-04-36.jpg",name: "Black LV case" , price: 130 },
+  { src: "/LV cases/photo_5_2025-10-10_17-04-36.jpg",name: "Brown LV case" , price: 130 },
 ];
 
 const imagesPage2 = [
@@ -44,7 +60,7 @@ const phoneBrands = {
   "Google": ["Google Pixel 8", "Google Pixel 7"]
 };
 
-const BabeShark = () => {
+const LvCase = () => {
   const { addToCart } = useContext(CartContext);
   const { addToFavorites } = useContext(FavoritesContext);
   // const { user } = useContext(AuthContext);
@@ -101,7 +117,7 @@ const BabeShark = () => {
 <div className="h-20"></div>
       <div className="max-w-6xl mx-auto p-6 mt-20">
         <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">
-          BabeShark Cases
+         LV Cases
         </h1>
 {/* Images Grid */}
 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
@@ -139,7 +155,7 @@ const BabeShark = () => {
 </div>
 
         {/* Pagination */}
-        <div className="flex justify-center mt-10 mb-10 gap-3">
+        {/* <div className="flex justify-center mt-10 mb-10 gap-3">
           {[1, 2].map((page) => (
             <button
               key={page}
@@ -149,7 +165,7 @@ const BabeShark = () => {
               {page}
             </button>
           ))}
-        </div>
+        </div> */}
 
         {/* Drawer */}
        {drawerOpen && selectedProduct && (
@@ -336,4 +352,4 @@ const BabeShark = () => {
   );
 };
 
-export default BabeShark;
+export default LvCase

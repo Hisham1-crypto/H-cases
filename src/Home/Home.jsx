@@ -27,6 +27,81 @@ const products = [
   { id: 2, name: "Case - Pink Minimal", price: 180, image: "/case2.jpg" },
   { id: 3, name: "Case - Black Marble", price: 200, image: "/case3.jpg" },
 ];
+const featuredProducts = [
+  { id: 1, title: "LV", price: 130, oldPrice: 160, image: "/top pick photos/photo_8_2025-10-10_07-18-14.jpg" },
+    { id: 11, title: "Special Evile Eye", price: 130, oldPrice: 160, image: "/top pick photos/photo_16_2025-10-10_07-18-14.jpg" },
+  { id: 12, title: "Green Power Puff", price: 130, oldPrice: 160, image: "/top pick photos/photo_17_2025-10-10_07-18-14.jpg" },
+  { id: 13, title: "Blue Power Puff", price: 130, oldPrice: 160, image: "/top pick photos/photo_18_2025-10-10_07-18-14.jpg" },
+  { id: 14, title: "Red Power Puff", price: 130, oldPrice: 160, image: "/top pick photos/photo_19_2025-10-10_07-18-14.jpg" },
+  { id: 2, title: "Dark militairy babe shark", price: 130, oldPrice: 160, image: "/top pick photos/photo_9_2025-09-29_20-49-37.jpg" },
+  { id: 3, title: "Black LV", price: 130, oldPrice: 160, image: "/top pick photos/photo_9_2025-10-10_07-18-14.jpg" },
+  { id: 4, title: "White militairy babe shark", price: 130, oldPrice: 180, image: "/top pick photos/photo_10_2025-09-29_20-49-37.jpg" },
+  { id: 5, title: "Brown LV", price: 130, oldPrice: 160, image: "/top pick photos/photo_10_2025-10-10_07-18-14.jpg" },
+  { id: 6, title: "Sky Evile Eye", price: 130, oldPrice: 160, image: "/top pick photos/photo_11_2025-10-10_07-18-14.jpg" },
+  { id: 7, title: "Blue Evile Eye", price: 130, oldPrice: 160, image: "/top pick photos/photo_12_2025-10-10_07-18-14.jpg" },
+  { id: 8, title: "Pink Evile Eye", price: 130, oldPrice: 160, image: "/top pick photos/photo_13_2025-10-10_07-18-14.jpg" },
+  { id: 9, title: "Black Evile Eye", price: 130, oldPrice: 160, image: "/top pick photos/photo_14_2025-10-10_07-18-14.jpg" },
+  { id: 10, title: "Special Evile Eye", price: 130, oldPrice: 160, image: "/top pick photos/photo_15_2025-10-10_07-18-14.jpg" },
+  { id: 11, title: "Special Evile Eye", price: 130, oldPrice: 160, image: "/top pick photos/photo_16_2025-10-10_07-18-14.jpg" },
+  { id: 15, title: "Pink 911", price: 130, oldPrice: 160, image: "/top pick photos/photo_20_2025-10-10_07-18-14.jpg" },
+  { id: 16, title: "Pink GT3", price: 130, oldPrice: 160, image: "/top pick photos/photo_21_2025-10-10_07-18-14.jpg" },
+  { id: 17, title: "Pink Porsche 911", price: 130, oldPrice: 160, image: "/top pick photos/photo_22_2025-10-10_07-18-14.jpg" },
+  { id: 18, title: "White 911", price: 130, oldPrice: 160, image: "/top pick photos/photo_23_2025-10-10_07-18-14.jpg" },
+
+
+
+
+
+
+];
+
+
+
+
+
+
+
+
+
+
+
+const morecases = [
+  { id: 1, title: "Grey 911", price: 130, oldPrice: 160, image: "/top pick photos/photo_24_2025-10-10_07-18-14.jpg" },
+  { id: 1, title: "Bronze 911", price: 130, oldPrice: 160, image: "/top pick photos/photo_25_2025-10-10_07-18-14.jpg" },
+  { id: 3, title: "Red 911", price: 130, oldPrice: 160, image: "/top pick photos/photo_26_2025-10-10_07-18-14.jpg" },
+  { id: 4, title: "Lufi", price: 130, oldPrice: 180, image: "/top pick photos/photo_27_2025-10-10_07-18-14.jpg" },
+  { id: 5, title: "Lufi", price: 130, oldPrice: 180, image: "/top pick photos/photo_28_2025-10-10_07-18-14.jpg" },
+  { id: 6, title: "Pink Labubu", price: 130, oldPrice: 180, image: "/top pick photos/photo_34_2025-10-10_07-18-14.jpg" },
+  { id: 7, title: "Blue Labubu ", price: 130, oldPrice: 160, image: "/top pick photos/photo_35_2025-10-10_07-18-14.jpg" },
+  { id: 8, title: "Brown Labubu", price: 130, oldPrice: 160, image: "/top pick photos/photo_36_2025-10-10_07-18-14.jpg" },
+  { id: 9, title: "Dark Brown Labubu", price: 130, oldPrice: 160, image: "/top pick photos/photo_37_2025-10-10_07-18-14.jpg" },
+  { id: 10, title: "Light Pink Labubu", price: 130, oldPrice: 160, image: "/top pick photos/photo_38_2025-10-10_07-18-14.jpg" },
+  { id: 11, title: "Angry Pink Labubu ", price: 130, oldPrice: 160, image: "/top pick photos/photo_39_2025-10-10_07-18-14.jpg" },
+  { id: 15, title: "Lufi", price: 130, oldPrice: 160, image: "/top pick photos/photo_29_2025-10-10_07-18-14.jpg" },
+  { id: 16, title: "Lufi ", price: 130, oldPrice: 160, image: "/top pick photos/photo_30_2025-10-10_07-18-14.jpg" },
+  { id: 17, title: "Lufi", price: 130, oldPrice: 160, image: "/top pick photos/photo_31_2025-10-10_07-18-14.jpg" },
+  { id: 18, title: "Lufu", price: 130, oldPrice: 160, image: "/top pick photos/photo_32_2025-10-10_07-18-14.jpg" },
+
+
+
+
+
+
+];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const products2 = [
   {
     id: 1,
@@ -46,7 +121,7 @@ const products2 = [
   
   {
     id: 3,
-    title: "Blue & Muve babe shark",
+    title: "Blue - Muve babe shark",
     oldPrice: 160,
     price: 130,
     image: "/top pick photos/photo_2_2025-09-29_20-49-37.jpg",
@@ -60,10 +135,66 @@ const products2 = [
   },
   {
     id: 5,
-    title: "Militairy & black babe  shark",
+    title: "Militairy - black babe  shark",
     oldPrice: 160,
     price: 130,
     image: "/top pick photos/photo_3_2025-09-29_20-49-37.jpg",
+  },
+    {
+    id: 6,
+    title: "Red - black babe  shark",
+    oldPrice: 160,
+    price: 130,
+    image: "/top pick photos/photo_4_2025-09-29_20-49-37.jpg",
+  },
+     {
+    id: 7,
+    title: "Pink - blue babe  shark",
+    oldPrice: 160,
+    price: 130,
+    image: "/top pick photos/photo_5_2025-09-29_20-49-37.jpg",
+  },
+     {
+    id: 8,
+    title: "Brown tiger",
+    oldPrice: 160,
+    price: 130,
+    image: "/top pick photos/photo_5_2025-10-10_07-18-14.jpg",
+  },
+       {
+    id: 9,
+    title: "Dark militairy - black babe shark",
+    oldPrice: 160,
+    price: 130,
+    image: "/top pick photos/photo_6_2025-09-29_20-49-37.jpg",
+  },
+        {
+    id: 10,
+    title: "Blue LV",
+    oldPrice: 160,
+    price: 130,
+    image: "/top pick photos/photo_6_2025-10-10_07-18-14.jpg",
+  },
+          {
+    id: 11,
+    title: "Black babe shark",
+    oldPrice: 160,
+    price: 130,
+    image: "/top pick photos/photo_7_2025-09-29_20-49-37.jpg",
+  },
+           {
+    id: 12,
+    title: "Black - white LV",
+    oldPrice: 160,
+    price: 130,
+    image: "/top pick photos/photo_7_2025-10-10_07-18-14.jpg",
+  },
+             {
+    id: 13,
+    title: "Purple - mint babe shark",
+    oldPrice: 160,
+    price: 130,
+    image: "/top pick photos/photo_8_2025-09-29_20-49-37.jpg",
   },
 ];
 // Phone Brands & Models
@@ -98,15 +229,12 @@ const Home = () => {
   });
 
   // 🟡 Add to Cart Click
-  const handleAddToCartClick = (product) => {
-    // if (!user) {
-    //   alert("You must log in first to add products to the cart.");
-    //   navigate("/login");
-    //   return;
-    // }
-    setSelectedProduct(product);
-    setDrawerOpen(true);
-  };
+ // 🟡 Add to Cart Click
+const handleAddToCartClick = (product) => {
+  // لو المنتج فيه title بس، نخليه name عشان الدروير يشتغل صح
+  setSelectedProduct({ ...product, name: product.name || product.title });
+  setDrawerOpen(true);
+};
 
   // 🟡 Confirm Add ✅ (تم إصلاح الأقواس هنا)
   const handleConfirmAdd = () => {
@@ -382,9 +510,11 @@ const Home = () => {
 </section>
 
 
-  {/* الكود القديم للمنتجات بتاعك */}
- <section className="py-12 bg-white mt-10">
-
+  {/* 🟢 New Swiper Section قبل الفوتر */}
+<section className="py-12 bg-gray-50">
+  <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 text-gray-900">
+    Featured Collections
+  </h2>
 
   <div className="relative">
     <Swiper
@@ -399,10 +529,10 @@ const Home = () => {
       }}
       className="px-6"
     >
-      {products2.map((product) => (
+      {featuredProducts.map((product) => (
         <SwiperSlide key={product.id}>
           <div className="bg-white rounded-2xl shadow-md hover:shadow-lg transition overflow-hidden relative group">
-            {/* ❤️ فيفوريت */}
+            {/* ❤️ Favorite */}
             <button
               onClick={() => addToFavorites(product)}
               className="absolute top-3 left-3 p-2 bg-gray-100 rounded-full shadow hover:scale-110 transition z-10"
@@ -410,7 +540,7 @@ const Home = () => {
               <Heart className="w-5 h-5 text-black" />
             </button>
 
-            {/* 🛒 زرار السلة */}
+            {/* 🛒 Cart */}
             <button
               onClick={() => handleAddToCartClick(product)}
               className="absolute top-3 right-3 p-2 bg-gray-100 rounded-full shadow hover:scale-110 transition z-10"
@@ -418,7 +548,7 @@ const Home = () => {
               <ShoppingBag className="w-5 h-5 text-black" />
             </button>
 
-            {/* صورة المنتج */}
+            {/* Product Image */}
             <div
               onClick={() => handleAddToCartClick(product)}
               className="w-full h-64 overflow-hidden cursor-pointer"
@@ -430,14 +560,16 @@ const Home = () => {
               />
             </div>
 
-            {/* تفاصيل المنتج */}
+            {/* Product Info */}
             <div className="p-4 text-center">
               <h3 className="text-sm md:text-base font-semibold mb-2 line-clamp-2">
                 {product.title}
               </h3>
-              <div className="text-gray-400 line-through text-sm">
-                EGP {product.oldPrice.toLocaleString()}
-              </div>
+              {product.oldPrice && (
+                <div className="text-gray-400 line-through text-sm">
+                  EGP {product.oldPrice.toLocaleString()}
+                </div>
+              )}
               <div className="text-red-600 font-bold text-lg">
                 EGP {product.price.toLocaleString()}
               </div>
@@ -446,6 +578,63 @@ const Home = () => {
         </SwiperSlide>
       ))}
     </Swiper>
+  </div>
+</section>
+{/* 🟢 Grid Section after Featured Swiper */}
+<section className="py-12 bg-gray-50">
+  <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 text-gray-900">
+    Explore More Cases
+  </h2>
+
+  <div
+    className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-6"
+  >
+    {morecases.map((product) => (
+      <div
+        key={product.id}
+        className="bg-white rounded-3xl shadow-md hover:shadow-xl transition overflow-hidden relative group cursor-pointer"
+      >
+        {/* Image */}
+        <div className="overflow-hidden">
+          <img
+            src={product.image}
+            alt={product.title}
+            className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+          />
+        </div>
+
+        {/* Overlay on hover */}
+        <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-3">
+          <button
+            onClick={() => addToFavorites(product)}
+            className="p-2 bg-white rounded-full shadow hover:scale-110 transition"
+          >
+            <Heart className="w-5 h-5 text-red-500" />
+          </button>
+          <button
+            onClick={() => handleAddToCartClick(product)}
+            className="p-2 bg-white rounded-full shadow hover:scale-110 transition"
+          >
+            <ShoppingBag className="w-5 h-5 text-black" />
+          </button>
+        </div>
+
+        {/* Product Info */}
+        <div className="p-4 text-center">
+          <h3 className="text-base font-semibold mb-2 line-clamp-2">
+            {product.title || product.name}
+          </h3>
+          {product.oldPrice && (
+            <div className="text-gray-400 line-through text-sm mb-1">
+              EGP {product.oldPrice.toLocaleString()}
+            </div>
+          )}
+          <div className="text-red-600 font-bold text-lg">
+            EGP {product.price.toLocaleString()}
+          </div>
+        </div>
+      </div>
+    ))}
   </div>
 </section>
 
@@ -501,7 +690,7 @@ const Home = () => {
       <AnimatePresence>
         {drawerOpen && selectedProduct && (
           <motion.div
-            className="fixed inset-0 z-50 flex"
+            className="fixed inset-0 z-50 flex "
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -521,7 +710,7 @@ const Home = () => {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 100, damping: 20 }}
-              className="bg-white w-96 h-full p-6 shadow-2xl fixed right-0 top-0 flex flex-col overflow-y-auto"
+              className="bg-white w-96 h-full p-6 shadow-2xl fixed right-0 top-0 flex flex-col overflow-y-auto pl-10"
             >
               <button
                 onClick={() => setDrawerOpen(false)}
@@ -538,7 +727,7 @@ const Home = () => {
                   className="w-40 h-40 object-contain mb-4"
                 />
                 <h3 className="text-lg font-semibold">
-                  {selectedProduct.name}
+                  {selectedProduct.name }
                 </h3>
                 <p className="text-gray-600">{selectedProduct.price} EGP</p>
               </div>
@@ -562,7 +751,7 @@ const Home = () => {
                         model: "",
                       })
                     }
-                    className="w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-10 text-gray-800 shadow-md focus:border-yellow-400 focus:ring-2 focus:ring-yellow-300 transition-all outline-none"
+                    className="w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-10 text-gray-800 shadow-md  focus:ring-2  transition-all outline-none"
                   >
                     <option value="">Choose your phone brand</option>
                     {Object.keys(phoneData).map((brand) => (
@@ -589,7 +778,7 @@ const Home = () => {
                       onChange={(e) =>
                         setPhoneForm({ ...phoneForm, model: e.target.value })
                       }
-                      className="w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-10 text-gray-800 shadow-md focus:border-yellow-400 focus:ring-2 focus:ring-yellow-300 transition-all outline-none"
+                      className="w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-10 text-gray-800 shadow-md  focus:ring-2  transition-all outline-none"
                     >
                       <option value="">Phone model</option>
                       {phoneData[phoneForm.brand].map((model) => (
@@ -633,7 +822,7 @@ const Home = () => {
                         quantity: Number(e.target.value),
                       })
                     }
-                    className="w-16 text-center border border-gray-300 rounded-lg py-2 focus:ring-2 focus:ring-yellow-400 outline-none"
+                    className="w-16 text-center border border-gray-300 rounded-lg py-2 focus:ring-2 outline-none"
                   />
                   <button
                     type="button"

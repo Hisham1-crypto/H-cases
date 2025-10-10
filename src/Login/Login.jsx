@@ -20,8 +20,8 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-white">
-      <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
+    <div className="flex items-center justify-center min-h-screen bg-gray-50 ">
+      <div className="bg-white p-8  w-full max-w-md">
         <Link to="/" className="flex justify-center">
           <img
             src="\logo_transparent.png"

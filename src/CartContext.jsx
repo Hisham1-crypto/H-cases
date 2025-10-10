@@ -1,100 +1,99 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { AuthContext } from "./AuthProvider";
 
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-const { user, updateCart } = useContext(AuthContext);
-const cart = user?.cart || [];
+  const { user, updateCart } = useContext(AuthContext);
+  const [cartState, setCartState] = useState(() => {
+    if (user?.cart) return user.cart;
+    const localCart = localStorage.getItem("guest_cart");
+    return localCart ? JSON.parse(localCart) : [];
+  });
+  const [discount, setDiscount] = useState(0);
 
-const [discount, setDiscount] = useState(0);
+  // ✅ تحديث cart لما المستخدم يتغير (يسجل دخول أو خروج)
+  useEffect(() => {
+    const getInitialCart = () => {
+      if (user?.cart) return user.cart;
+      const localCart = localStorage.getItem("guest_cart");
+      return localCart ? JSON.parse(localCart) : [];
+    };
 
-const addToCart = (item) => {
-if (!user) return alert("Please Login With Your Account");
+    setCartState(getInitialCart());
+  }, [user]);
 
-const finalPhoneType = item.phoneModel || "";
-const finalProvince = item.province || "";
-const finalShipping = item.shipping ?? 0;
-const finalAddress = item.address || "";
-const finalPhone = item.phone || "";
+  // ✅ حفظ cart في localStorage لما المستخدم مش عامل login
+  useEffect(() => {
+    if (!user) {
+      localStorage.setItem("guest_cart", JSON.stringify(cartState));
+    }
+  }, [cartState, user]);
 
-const existingItem = cart.find(
-  (cartItem) =>
-    cartItem.id === item.id &&
-    cartItem.phoneModel === finalPhoneType &&
-    cartItem.province === finalProvince
-);
+  // ✅ إضافة المنتج للسلة (مع نقل الكمية والبراند والموديل صح)
+const addToCart = (item, quantityToAdd = 1) => {
+  const phoneBrand = item.phoneBrand || item.brand || "Not Selected";
+  const phoneModel = item.phoneModel || item.model || "Not Selected";
+  const province = item.province || "";
 
-let newCart;
-if (existingItem) {
-  newCart = cart.map((cartItem) =>
-    cartItem.id === item.id &&
-    cartItem.phoneModel === finalPhoneType &&
-    cartItem.province === finalProvince
-      ? { ...cartItem, quantity: cartItem.quantity + 1 }
-      : cartItem
+  const existingItem = cartState.find(
+    (cartItem) =>
+      cartItem.id === item.id &&
+      cartItem.phoneModel === phoneModel &&
+      cartItem.province === province
   );
-} else {
-  newCart = [
-    ...cart,
-    {
-      ...item,
-      phoneModel: finalPhoneType,
-      province: finalProvince,
-      shipping: finalShipping,
-      address: finalAddress,
-      phone: finalPhone,
-      quantity: 1,
-    },
-  ];
-}
 
-updateCart(newCart);
-return newCart;
+  
+  let newCart;
+  if (existingItem) {
+    newCart = cartState.map((cartItem) =>
+      cartItem.id === item.id &&
+      cartItem.phoneModel === phoneModel &&
+      cartItem.province === province
+        ? { ...cartItem, quantity: cartItem.quantity + quantityToAdd }
+        : cartItem
+    );
+    } else {
+    newCart = [
+      ...cartState,
+      { ...item, phoneBrand, phoneModel, province, quantity: quantityToAdd },
+    ];
+  }
 
-};
+    setCartState(newCart);
+    if (user) updateCart(newCart);
+  };
 
-const removeFromCart = (id, phoneModel, province) => {
-if (!user) return;
+  const removeFromCart = (id, phoneModel, province) => {
+    const newCart = cartState.map((item) =>
+      item.id === id && item.phoneModel === phoneModel && item.province === province
+        ? { ...item, quantity: Math.max(item.quantity - 1, 1) }
+        : item
+    );
+    setCartState(newCart);
+    if (user) updateCart(newCart);
+  };
 
-const newCart = cart.map((item) =>
-  item.id === id &&
-  item.phoneModel === phoneModel &&
-  item.province === province
-    ? { ...item, quantity: Math.max(item.quantity - 1, 1) } // ✅ ما يقلش عن 1
-    : item
-);
+  const deleteFromCart = (id, phoneModel, province) => {
+    const newCart = cartState.filter(
+      (item) => !(item.id === id && item.phoneModel === phoneModel && item.province === province)
+    );
+    setCartState(newCart);
+    if (user) updateCart(newCart);
+  };
 
-updateCart(newCart);
-return newCart;
-
-};
-
-const deleteFromCart = (id, phoneModel, province) => {
-if (!user) return;
-
-const newCart = cart.filter(
-  (item) =>
-    !(item.id === id && item.phoneModel === phoneModel && item.province === province)
-);
-
-updateCart(newCart);
-return newCart;
-
-};
-
-return (
-<CartContext.Provider
-value={{
-cart,
-addToCart,
-removeFromCart,
-deleteFromCart,
-discount,
-setDiscount,
-}}
->
-{children}
-</CartContext.Provider>
-);
+  return (
+    <CartContext.Provider
+      value={{
+        cart: cartState,
+        addToCart,
+        removeFromCart,
+        deleteFromCart,
+        discount,
+        setDiscount,
+      }}
+    >
+      {children}
+    </CartContext.Provider>
+  );
 };

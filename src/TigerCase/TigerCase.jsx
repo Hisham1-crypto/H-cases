@@ -1,9 +1,351 @@
-import React from 'react'
+// src/BabeShark/BabeShark.jsx
+import React, { useContext, useState } from "react";
+import { Heart, ShoppingBag, X } from "lucide-react";
+import { CartContext } from "../CartContext";
+import { FavoritesContext } from "../FavoritesProvider";
+import { AuthContext } from "../AuthProvider";
+import { useNavigate } from "react-router-dom";
+import NavBar from "../NavBar/NavBar";
+
+import {
+  FooterCopyright,
+  FooterDivider,
+  FooterIcon,
+  FooterLink,
+  FooterLinkGroup,
+  FooterTitle,
+  Footer,
+} from "flowbite-react";
+import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
+
+// // Provinces + shipping
+// const allProvinces = [
+//   { name: "Cairo", shipping: 60 }, { name: "Giza", shipping: 60 },
+//   { name: "Alexandria", shipping: 63 }, { name: "Beheira", shipping: 63 },
+//   { name: "Kafr El-Sheikh", shipping: 70 }, { name: "Damietta", shipping: 70 },
+//   { name: "Port Said", shipping: 70 }, { name: "Monufia", shipping: 70 },
+//   { name: "Qalyubia", shipping: 70 }, { name: "Gharbia", shipping: 70 },
+//   { name: "Sharqia", shipping: 70 }, { name: "Suez", shipping: 70 },
+//   { name: "Dakahlia", shipping: 70 }, { name: "Ismailia", shipping: 70 },
+//   { name: "Sohag", shipping: 81 }, { name: "Beni Suef", shipping: 81 },
+//   { name: "Minya", shipping: 81 }, { name: "Fayoum", shipping: 81 },
+//   { name: "Assiut", shipping: 81 }, { name: "Marsa Matrouh", shipping: 92 },
+//   { name: "Qena", shipping: 92 }, { name: "Red Sea", shipping: 92 },
+//   { name: "Luxor", shipping: 92 }, { name: "Aswan", shipping: 92 },
+//   { name: "North Coast", shipping: 95 }, { name: "South Sinai", shipping: 110 },
+//   { name: "New Valley", shipping: 110 }, { name: "North Sinai", shipping: 110 },
+//   { name: "Other", shipping: 100 },
+// ];
+
+// BabeShark images
+const imagesPage1 = [
+  { src: "/tigercase/tiger1.jpg", price: 130 },
+  { src: "/tigercase/tiger2.jpg", price: 130 },
+  { src: "/tigercase/tiger3.jpg", price: 130 },
+  { src: "/tigercase/tiger4.jpg", price: 130 },
+  { src: "/tigercase/tiger5.jpg", price: 130 },
+];
+
+// const imagesPage2 = [
+//   { src: "/babesharkcase/shark6.jpg", price: 200 },
+//   { src: "/babesharkcase/shark7.jpg", price: 220 },
+//   { src: "/babesharkcase/shark8.jpg", price: 250 },
+//   { src: "/babesharkcase/shark9.jpg", price: 230 },
+//   { src: "/babesharkcase/shark10.jpg", price: 210 },
+// ];
+
+// Phone Brands & Models
+const phoneBrands = {
+  "Apple": ["iPhone 14", "iPhone 14 Pro", "iPhone 13", "iPhone 13 Pro", "iPhone 12", "iPhone 12 Pro"],
+  "Samsung": ["Samsung S23", "Samsung S23 Ultra", "Samsung S22", "Samsung S22 Plus", "Samsung S21", "Samsung S21 Ultra"],
+  "Google": ["Google Pixel 8", "Google Pixel 7"]
+};
 
 const TigerCase = () => {
+  const { addToCart } = useContext(CartContext);
+  const { addToFavorites } = useContext(FavoritesContext);
+  // const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const [selectedBrand, setSelectedBrand] = useState("");
+  const [selectedPhoneType, setSelectedPhoneType] = useState("");
+  const [quantity, setQuantity] = useState(1);
+
+  const currentImages = currentPage === 1 ? imagesPage1 : imagesPage1;
+
+  const handleAddToCartClick = (product) => {
+    // if (!user) {
+    //   alert("You must log in first to add products to the cart.");
+    //   navigate("/login");
+    //   return;
+    // }
+    setSelectedProduct(product);
+    setDrawerOpen(true);
+  };
+
+  const handleConfirmOrder = () => {
+    if (!selectedBrand) return alert("Please choose a brand.");
+    if (!selectedPhoneType) return alert("Please choose your phone model.");
+
+
+    addToCart({
+      name: "BabeShark Case",
+      price: selectedProduct.price,
+      image: selectedProduct.src,
+      brand: selectedBrand,
+      phoneModel: selectedPhoneType,
+
+      quantity,
+    });
+
+    // Reset drawer state
+    setDrawerOpen(false);
+    setSelectedProduct(null);
+    setSelectedBrand("");
+    setSelectedPhoneType("");
+    setQuantity(1);
+  };
+
   return (
-    <div>TigerCase</div>
-  )
-}
+ <div className="bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 min-h-screen text-gray-900 font-sans">
+      <div className="mb-1">
+        <NavBar />
+      </div>
+<div className="h-20"></div>
+      <div className="max-w-6xl mx-auto p-6 mt-20">
+        <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">
+          Tiger Cases
+        </h1>
+
+        {/* Images Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          {currentImages.map((product, idx) => (
+            <div key={idx} className="relative border rounded-lg overflow-hidden shadow hover:shadow-lg transition cursor-pointer">
+              <img
+                src={product.src}
+                alt={`BabeShark ${idx + 1}`}
+                className="w-full h-auto object-cover transition-transform duration-300 hover:scale-105"
+                onClick={() => handleAddToCartClick(product)}
+              />
+              <div className="absolute top-2 right-2 flex flex-col gap-2">
+                <button
+                  onClick={() => handleAddToCartClick(product)}
+                  className="bg-white p-2 rounded-full shadow hover:bg-gray-100"
+                >
+                  <ShoppingBag size={18} />
+                </button>
+                <button
+                  onClick={() => addToFavorites({ name: "BabeShark Case", image: product.src, price: product.price })}
+                  className="bg-white p-2 rounded-full shadow hover:bg-gray-100"
+                >
+                  <Heart size={18} />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Pagination */}
+        {/* <div className="flex justify-center mt-10 mb-10 gap-3">
+          {[1, 2].map((page) => (
+            <button
+              key={page}
+              onClick={() => setCurrentPage(page)}
+              className={`px-4 py-2 rounded-full ${currentPage === page ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+            >
+              {page}
+            </button>
+          ))}
+        </div> */}
+
+        {/* Drawer */}
+       {drawerOpen && selectedProduct && (
+  <div className="fixed inset-0 z-50 flex">
+    {/* خلفية شفافة */}
+    <div
+      className="fixed inset-0 bg-black/50"
+      onClick={() => setDrawerOpen(false)}
+    ></div>
+
+    {/* الدروير نفسه */}
+    <div className="bg-white w-96 h-full p-6 shadow-2xl fixed right-0 top-0 flex flex-col  overflow-y-auto">
+      <button
+        onClick={() => setDrawerOpen(false)}
+        className="absolute top-4 left-4 p-2 rounded-full hover:bg-gray-100"
+      >
+        <X className="w-6 h-6" />
+      </button>
+
+      {/* Product Info */}
+      <div className="flex flex-col items-center text-center mb-6">
+        <img
+          src={selectedProduct.src}
+          alt="BabeShark Case"
+          className="w-40 h-40 object-contain mb-4"
+        />
+        <h3 className="text-lg font-semibold">BabeShark Case</h3>
+        <p className="text-gray-600">{selectedProduct.price} EGP</p>
+      </div>
+
+      <h2 className="text-xl font-bold mb-5 text-gray-800">
+        Choose your phone model
+      </h2>
+
+      {/* ✅ Brand */}
+      <div className="mb-5">
+        <label className="block text-sm font-semibold text-gray-600 mb-2">
+          Brand
+        </label>
+        <div className="relative">
+          <select
+            value={selectedBrand}
+            onChange={(e) => {
+              setSelectedBrand(e.target.value);
+              setSelectedPhoneType("");
+            }}
+            className="w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-10 text-gray-800 shadow-md focus:border-yellow-400 focus:ring-2 focus:ring-yellow-300 transition-all outline-none"
+          >
+            <option value="">Choose your phone brand</option>
+            {Object.keys(phoneBrands).map((brand) => (
+              <option key={brand} value={brand}>
+                {brand}
+              </option>
+            ))}
+          </select>
+          <span className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+            ▼
+          </span>
+        </div>
+      </div>
+
+      {/* ✅ Model */}
+      {selectedBrand && (
+        <div className="mb-5">
+          <label className="block text-sm font-semibold text-gray-600 mb-2">
+            Model
+          </label>
+          <div className="relative">
+            <select
+              value={selectedPhoneType}
+              onChange={(e) => setSelectedPhoneType(e.target.value)}
+              className="w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-10 text-gray-800 shadow-md focus:border-yellow-400 focus:ring-2 focus:ring-yellow-300 transition-all outline-none"
+            >
+              <option value="">Choose phone model</option>
+              {phoneBrands[selectedBrand].map((model) => (
+                <option key={model} value={model}>
+                  {model}
+                </option>
+              ))}
+            </select>
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+              ▼
+            </span>
+          </div>
+        </div>
+      )}
+
+      {/* ✅ Quantity */}
+      <div className="mb-5">
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Quantity
+        </label>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => setQuantity(Math.max(1, quantity - 1))}
+            className="w-9 h-9 flex items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:bg-gray-100 transition"
+          >
+            -
+          </button>
+          <input
+            type="number"
+            min="1"
+            value={quantity}
+            onChange={(e) => setQuantity(Number(e.target.value))}
+            className="w-16 text-center border border-gray-300 rounded-lg py-2 focus:ring-2 focus:ring-yellow-400 outline-none"
+          />
+          <button
+            type="button"
+            onClick={() => setQuantity(quantity + 1)}
+            className="w-9 h-9 flex items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:bg-gray-100 transition"
+          >
+            +
+          </button>
+        </div>
+      </div>
+
+      {/* ✅ Confirm Button */}
+      <button
+        onClick={() => {
+          if (!selectedBrand) return alert("Please choose a brand.");
+          if (!selectedPhoneType) return alert("Please choose your phone model.");
+
+        addToCart({
+  name: "BabeShark Case",
+  price: selectedProduct.price,
+  image: selectedProduct.src,
+  brand: selectedBrand,
+  model: selectedPhoneType,
+  quantity,
+});
+
+          setDrawerOpen(false);
+          setSelectedProduct(null);
+          setSelectedBrand("");
+          setSelectedPhoneType("");
+          setQuantity(1);
+        }}
+        className="mt-auto w-full bg-gradient-to-r from-[#D4AF37] to-yellow-400 text-black font-semibold py-3 rounded-lg shadow-md hover:scale-105 transition"
+      >
+        Confirm Add to Cart
+      </button>
+    </div>
+  </div>
+)}
+        {/* Footer */}
+        <Footer container>
+          <div className="w-full">
+            <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
+              <div className="grid grid-cols-2 gap-8 sm:mt-4 sm:grid-cols-3 sm:gap-6">
+                <div>
+                  <FooterTitle title="Follow us" />
+                  <FooterLinkGroup col>
+                    <FooterLink href="#">Instagram</FooterLink>
+                    <FooterLink href="#">Facebook</FooterLink>
+                  </FooterLinkGroup>
+                </div>
+                <div>
+                  <FooterTitle title="Legal" />
+                  <FooterLinkGroup col>
+                    <FooterLink href="#">Privacy Policy</FooterLink>
+                    <FooterLink href="#">Terms & Conditions</FooterLink>
+                  </FooterLinkGroup>
+                </div>
+              </div>
+            </div>
+            <FooterDivider />
+            <div className="w-full sm:flex sm:items-center sm:justify-between">
+              <FooterCopyright
+                href="#"
+                by="H-Cases"
+                year={new Date().getFullYear()}
+              />
+              <div className="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
+                <FooterIcon href="#" icon={BsFacebook} />
+                <FooterIcon href="#" icon={BsInstagram} />
+                <FooterIcon href="#" icon={BsTwitter} />
+              </div>
+            </div>
+          </div>
+        </Footer>
+      </div>
+    </div>
+  );
+};
+
 
 export default TigerCase

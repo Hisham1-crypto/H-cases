@@ -38,6 +38,7 @@ const App = () => {
     <AuthProvider>
       <CartProvider>
         <FavoritesProvider>
+          
           <div>
             <Routes>
               <Route path="/shoppingbag" element={<Shoppingbag />} />

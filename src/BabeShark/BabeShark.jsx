@@ -64,7 +64,7 @@ const phoneBrands = {
 const BabeShark = () => {
   const { addToCart } = useContext(CartContext);
   const { addToFavorites } = useContext(FavoritesContext);
-  const { user } = useContext(AuthContext);
+  // const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -78,11 +78,11 @@ const BabeShark = () => {
   const currentImages = currentPage === 1 ? imagesPage1 : imagesPage2;
 
   const handleAddToCartClick = (product) => {
-    if (!user) {
-      alert("You must log in first to add products to the cart.");
-      navigate("/login");
-      return;
-    }
+    // if (!user) {
+    //   alert("You must log in first to add products to the cart.");
+    //   navigate("/login");
+    //   return;
+    // }
     setSelectedProduct(product);
     setDrawerOpen(true);
   };
@@ -107,17 +107,16 @@ const BabeShark = () => {
     setSelectedProduct(null);
     setSelectedBrand("");
     setSelectedPhoneType("");
-
     setQuantity(1);
   };
 
   return (
     <div className="bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 min-h-screen text-gray-900 font-sans">
-      <div className="mb-20">
+      <div className="mb-1">
         <NavBar />
       </div>
-
-      <div className="max-w-6xl mx-auto p-6">
+<div className="h-20"></div>
+      <div className="max-w-6xl mx-auto p-6 mt-20">
         <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">
           BabeShark Cases
         </h1>
@@ -164,95 +163,149 @@ const BabeShark = () => {
         </div>
 
         {/* Drawer */}
-        {drawerOpen && selectedProduct && (
-          <div className="fixed inset-0 z-50 flex">
-            <div className="fixed inset-0 bg-black/50" onClick={() => setDrawerOpen(false)}></div>
-            <div className="bg-white w-96 h-full p-6 shadow-2xl transform transition-transform duration-500 fixed right-0 top-0 flex flex-col">
-              <button
-                onClick={() => setDrawerOpen(false)}
-                className="absolute top-4 left-4 p-2 rounded-full hover:bg-gray-100"
-              >
-                <X className="w-6 h-6" />
-              </button>
+       {drawerOpen && selectedProduct && (
+  <div className="fixed inset-0 z-50 flex">
+    {/* خلفية شفافة */}
+    <div
+      className="fixed inset-0 bg-black/50"
+      onClick={() => setDrawerOpen(false)}
+    ></div>
 
-              {/* Product Info */}
-              <div className="flex flex-col items-center text-center mb-6">
-                <img src={selectedProduct.src} alt="BabeShark Case" className="w-40 h-40 object-contain mb-4" />
-                <h3 className="text-lg font-semibold">BabeShark Case</h3>
-                <p className="text-gray-600">{selectedProduct.price} EGP</p>
-              </div>
+    {/* الدروير نفسه */}
+    <div className="bg-white w-96 h-full p-6 shadow-2xl fixed right-0 top-0 flex flex-col  overflow-y-auto">
+      <button
+        onClick={() => setDrawerOpen(false)}
+        className="absolute top-4 left-4 p-2 rounded-full hover:bg-gray-100"
+      >
+        <X className="w-6 h-6" />
+      </button>
 
-              {/* Brand Selector */}
-              <label className="block mb-2 text-sm font-medium text-gray-700">Brand</label>
-              <select
-                value={selectedBrand}
-                onChange={(e) => {
-                  setSelectedBrand(e.target.value);
-                  setSelectedPhoneType("");
-                }}
-                className="w-full mb-4 border rounded-lg p-2 focus:ring-2 focus:ring-yellow-400"
-              >
-                <option value="">Choose brand</option>
-                {Object.keys(phoneBrands).map(brand => (
-                  <option key={brand} value={brand}>{brand}</option>
-                ))}
-              </select>
+      {/* Product Info */}
+      <div className="flex flex-col items-center text-center mb-6">
+        <img
+          src={selectedProduct.src}
+          alt="BabeShark Case"
+          className="w-40 h-40 object-contain mb-4"
+        />
+        <h3 className="text-lg font-semibold">BabeShark Case</h3>
+        <p className="text-gray-600">{selectedProduct.price} EGP</p>
+      </div>
 
-              {/* Model Selector - يظهر فقط بعد اختيار البراند */}
-              {selectedBrand && (
-                <>
-                  <label className="block mb-2 text-sm font-medium text-gray-700">Phone Model</label>
-                  <select
-                    value={selectedPhoneType}
-                    onChange={(e) => setSelectedPhoneType(e.target.value)}
-                    className="w-full mb-4 border rounded-lg p-2 focus:ring-2 focus:ring-yellow-400"
-                  >
-                    <option value="">Choose phone model</option>
-                    {phoneBrands[selectedBrand].map(model => (
-                      <option key={model} value={model}>{model}</option>
-                    ))}
-                  </select>
-                </>
-              )}
+      <h2 className="text-xl font-bold mb-5 text-gray-800">
+        Choose your phone model
+      </h2>
 
-              {/* Quantity */}
-              <div className="mb-5">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Quantity</label>
-                <div className="flex items-center gap-3">
-                  <button
-                    type="button"
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="w-9 h-9 flex items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:bg-gray-100 transition"
-                  >
-                    -
-                  </button>
-                  <input
-                    type="number"
-                    min="1"
-                    value={quantity}
-                    onChange={(e) => setQuantity(Number(e.target.value))}
-                    className="w-16 text-center border border-gray-300 rounded-lg py-2 focus:ring-2 focus:ring-yellow-400 outline-none"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setQuantity(quantity + 1)}
-                    className="w-9 h-9 flex items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:bg-gray-100 transition"
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
+      {/* ✅ Brand */}
+      <div className="mb-5">
+        <label className="block text-sm font-semibold text-gray-600 mb-2">
+          Brand
+        </label>
+        <div className="relative">
+          <select
+            value={selectedBrand}
+            onChange={(e) => {
+              setSelectedBrand(e.target.value);
+              setSelectedPhoneType("");
+            }}
+            className="w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-10 text-gray-800 shadow-md focus:border-yellow-400 focus:ring-2 focus:ring-yellow-300 transition-all outline-none"
+          >
+            <option value="">Choose your phone brand</option>
+            {Object.keys(phoneBrands).map((brand) => (
+              <option key={brand} value={brand}>
+                {brand}
+              </option>
+            ))}
+          </select>
+          <span className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+            ▼
+          </span>
+        </div>
+      </div>
 
-              <button
-                onClick={handleConfirmOrder}
-                className="mt-auto w-full bg-gradient-to-r from-[#D4AF37] to-yellow-400 text-black font-semibold py-3 rounded-lg shadow-md hover:scale-105 transition"
-              >
-                Confirm Add to Cart
-              </button>
-            </div>
+      {/* ✅ Model */}
+      {selectedBrand && (
+        <div className="mb-5">
+          <label className="block text-sm font-semibold text-gray-600 mb-2">
+            Model
+          </label>
+          <div className="relative">
+            <select
+              value={selectedPhoneType}
+              onChange={(e) => setSelectedPhoneType(e.target.value)}
+              className="w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-10 text-gray-800 shadow-md focus:border-yellow-400 focus:ring-2 focus:ring-yellow-300 transition-all outline-none"
+            >
+              <option value="">Choose phone model</option>
+              {phoneBrands[selectedBrand].map((model) => (
+                <option key={model} value={model}>
+                  {model}
+                </option>
+              ))}
+            </select>
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+              ▼
+            </span>
           </div>
-        )}
+        </div>
+      )}
 
+      {/* ✅ Quantity */}
+      <div className="mb-5">
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Quantity
+        </label>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => setQuantity(Math.max(1, quantity - 1))}
+            className="w-9 h-9 flex items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:bg-gray-100 transition"
+          >
+            -
+          </button>
+          <input
+            type="number"
+            min="1"
+            value={quantity}
+            onChange={(e) => setQuantity(Number(e.target.value))}
+            className="w-16 text-center border border-gray-300 rounded-lg py-2 focus:ring-2 focus:ring-yellow-400 outline-none"
+          />
+          <button
+            type="button"
+            onClick={() => setQuantity(quantity + 1)}
+            className="w-9 h-9 flex items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:bg-gray-100 transition"
+          >
+            +
+          </button>
+        </div>
+      </div>
+
+      {/* ✅ Confirm Button */}
+      <button
+        onClick={() => {
+          if (!selectedBrand) return alert("Please choose a brand.");
+          if (!selectedPhoneType) return alert("Please choose your phone model.");
+
+        addToCart({
+  name: "BabeShark Case",
+  price: selectedProduct.price,
+  image: selectedProduct.src,
+  brand: selectedBrand,
+  model: selectedPhoneType,
+  quantity,
+});
+
+          setDrawerOpen(false);
+          setSelectedProduct(null);
+          setSelectedBrand("");
+          setSelectedPhoneType("");
+          setQuantity(1);
+        }}
+                className="mt-auto w-full bg-black font-thin text-white font-semibold py-3 rounded-lg shadow-md hover:scale-105 transition"
+      >
+        Confirm Add to Cart
+      </button>
+    </div>
+  </div>
+)}
         {/* Footer */}
         <Footer container>
           <div className="w-full">

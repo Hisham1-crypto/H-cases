@@ -15,3 +15,26 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.marquee-container {
+  display: flex;
+  white-space: nowrap;
+  overflow: hidden;
+  position: relative;
+}
+
+.marquee-content {
+  display: inline-block;
+  padding-left: 80%;
+  animation: marqueeLoop 10s linear infinite;
+}
+
+/* 🌀 الحركة: تمشي من الشمال لليمين وتبدأ من التانية */
+@keyframes marqueeLoop {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(1%);
+  }
+}
+

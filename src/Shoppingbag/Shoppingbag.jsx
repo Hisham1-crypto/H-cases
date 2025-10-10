@@ -1,33 +1,26 @@
 import React, { useContext, useState } from "react";
 import { CartContext } from "../CartContext";
 import { Link } from "react-router-dom";
-import { ShoppingCart, Trash2 } from "lucide-react";
-import { ChevronDown } from "lucide-react";
+import { ShoppingCart, Trash2, ChevronDown, X, ShoppingCartIcon } from "lucide-react";
 import NavBar from "../NavBar/NavBar";
+import { Footer, FooterCopyright, FooterDivider, FooterIcon, FooterLink, FooterLinkGroup, FooterTitle } from "flowbite-react";
+import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
 
 const ShoppingBag = () => {
-  const { cart, addToCart, removeFromCart, deleteFromCart, discount, setDiscount } = useContext(CartContext);
+  const { cart, addToCart, removeFromCart, deleteFromCart, discount, setDiscount } =
+    useContext(CartContext);
 
-  //  استيت للبرومو
   const [showPromo, setShowPromo] = useState(false);
   const [promoCode, setPromoCode] = useState("");
 
-  // المجموع الفرعي
   const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-
-  // إجمالي الشحن
   const shippingTotal = cart.reduce((acc, item) => acc + (item.shipping || 0), 0);
-
-  // الإجمالي قبل الخصم
   const totalBeforeDiscount = subtotal + shippingTotal;
-
-  //  الإجمالي بعد الخصم
   const total = totalBeforeDiscount - discount;
 
-  //  لوجيك البرومو كود
   const handleApplyPromo = () => {
     if (promoCode === "DISCOUNT50") {
-      setDiscount(subtotal * 0.1); // خصم 10%
+      setDiscount(subtotal * 0.1);
     } else {
       setDiscount(0);
       alert("Invalid promo code");
@@ -35,182 +28,252 @@ const ShoppingBag = () => {
   };
 
   return (
-        <div className="mb-20">
-          <div><NavBar /></div>
-<div className="h-8"></div>
-    <div className="mt-20 min-h-screen bg-gray-100 p-6">
-      <div className="max-w-5xl mx-auto bg-white p-6 rounded-2xl shadow-md grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Products */}
-        <div className="md:col-span-2">
-          <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center md:text-left flex">
-            Your Cart <ShoppingCart className="m-1" />
-          </h2>
+    <div className="mb-20">
+      <NavBar />
+      <div className="h-8"></div>
+
+      <div className="mt-20 min-h-screen bg-gray-100 p-4 sm:p-6">
+        <div className="max-w-6xl mx-auto">
+          <h1 className="text-2xl mb-6 text-gray-800 text-center flex justify-center items-center">
+            Your Cart <ShoppingCart className="ml-2" />
+          </h1>
 
           {cart.length === 0 ? (
-            <p className="text-gray-600 text-center">Your bag is empty.</p>
+            <div className="flex flex-col items-center justify-center py-20">
+              <div className="relative">
+                <ShoppingCartIcon
+                  className="w-20 h-20 text-gray-300 drop-shadow-md"
+                  strokeWidth={1.2}
+                />
+                <X
+                  className="w-8 h-8 ml-1 text-gray-300 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 drop-shadow"
+                  strokeWidth={2}
+                />
+              </div>
+              <p className="text-gray-600 text-center text-base mt-6">
+                Your bag is empty
+              </p>
+              <Link
+                to="/"
+                className="mt-4 bg-gradient-to-r from-[#56cfe1] to-[#48bfe3] text-white px-6 py-2 rounded-full shadow-md hover:shadow-lg hover:scale-105 transition"
+              >
+                Continue Shopping
+              </Link>
+            </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-6">
               {cart.map((item) => (
                 <div
                   key={`${item.id}-${item.phoneModel}-${item.province}`}
-                  className="flex justify-between items-center border-b pb-3"
+                  className="flex flex-col md:flex-row justify-between md:items-center border-b pb-5 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition"
                 >
-                  <div className="flex items-center gap-4">
+                  {/* صورة وبيانات المنتج */}
+                  <div className="flex flex-col sm:flex-row items-center gap-4 md:w-1/2 w-full mb-4 md:mb-0">
                     <img
                       src={item.image}
                       alt={item.name}
-                      className="w-16 h-16 object-contain rounded-xl"
+                      className="lg:w-50 lg:h-60 sm:w-32 sm:h-32 object-contain border-rounded"
                     />
+                    <div className="text-center sm:text-left">
+                      <h3 className="text-lg font-semibold text-gray-800">{item.name}</h3>
+                      <p className="text-gray-500 text-sm">
+                        {item.phoneBrand ? (
+                          <>
+                            Brand:{" "}
+                            <span className="font-medium text-gray-700">
+                              {item.phoneBrand}
+                            </span>
+                          </>
+                        ) : (
+                          <span className="text-gray-400 italic">
+                            No brand selected
+                          </span>
+                        )}
+                      </p>
+                      <p className="text-gray-500 text-sm">
+                        {item.phoneModel ? (
+                          <>
+                            Model:{" "}
+                            <span className="font-medium text-gray-700">
+                              {item.phoneModel}
+                            </span>
+                          </>
+                        ) : (
+                          <span className="text-gray-400 italic">
+                            No model selected
+                          </span>
+                        )}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* ✅ الأعمدة الجديدة */}
+                  <div className="flex justify-around md:justify-end items-center w-full md:w-1/2 text-center gap-6">
+                    {/* الكمية */}
                     <div>
-                      <h3 className="text-lg font-semibold">{item.name}</h3>
-
-                      {/* <p className="text-sm text-gray-500 mb-1">
-                        Phone Model: <span className="font-medium">{item.phoneModel}</span>
-                      </p>
-
-                      <p className="text-sm text-gray-500 mb-1">
-                        Goverment: <span className="font-medium">{item.province}</span> (
-                        {item.shipping} EGP Shipping)
-                      </p> */}
-
-                      {/* {item.address && (
-                        <p className="text-sm text-gray-500 mb-1">
-                          Address: <span className="font-medium">{item.address}</span>
-                        </p>
-                      )} */}
-                      {/* {item.phone && (
-                        <p className="text-sm text-gray-500 mb-1">
-                          Phone: <span className="font-medium">{item.phone}</span>
-                        </p>
-                      )} */}
-
-                      <p className="text-gray-600">
-                        {item.price} EGP x {item.quantity} = {item.price * item.quantity} EGP
-                      </p>
-
-                      {/* Quantity controls */}
-                      <div className="flex items-center gap-2 mt-2">
-                   <button
-  onClick={() => {
-    if (item.quantity > 1) {
-      removeFromCart(item.id, item.phoneModel, item.province);
-    }
-  }}
-  disabled={item.quantity <= 1}
-  className={`px-2 py-1 rounded transition
-    ${
-      item.quantity <= 1
-        ? "bg-gray-300 text-gray-500 cursor-not-allowed" // 🔒 غامق ومقفول
-        : "bg-red-100 text-red-500 hover:bg-red-200"
-    }`}
->
-  -
-</button>
-                        <span>{item.quantity}</span>
+                      <p className="text-sm text-gray-500 mb-1 font-medium">Quantity</p>
+                      <div className="flex items-center justify-center gap-2 bg-gray-50 px-3 py-1 rounded-full border">
+                        <button
+                          onClick={() =>
+                            removeFromCart(item.id, item.phoneModel, item.province)
+                          }
+                          disabled={item.quantity <= 1}
+                          className={`w-6 h-6 flex items-center justify-center rounded-full transition text-lg font-bold ${
+                            item.quantity <= 1
+                              ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                              : "bg-red-100 text-red-500 hover:bg-red-200"
+                          }`}
+                        >
+                          -
+                        </button>
+                        <span className="text-gray-800 font-medium w-6 text-center">
+                          {item.quantity}
+                        </span>
                         <button
                           onClick={() => addToCart(item)}
-                          className="px-2 py-1 bg-green-100 text-green-500 rounded hover:bg-green-200 transition"
+                          className="w-6 h-6 flex items-center justify-center rounded-full bg-green-100 text-green-600 hover:bg-green-200 transition text-lg font-bold"
                         >
                           +
                         </button>
                       </div>
                     </div>
-                  </div>
 
-                  <button
-                    onClick={() => deleteFromCart(item.id, item.phoneModel, item.province)}
-                    className="text-white bg-gray-700 p-2 rounded-full hover:bg-gray-800 transition"
-                  >
-                    <Trash2 className="w-5 h-5" />
-                  </button>
+                    {/* السعر */}
+                    <div>
+                      <p className="text-sm text-gray-500 font-medium">Total</p>
+                      <div className="h-3"></div>
+                      <p className="font-semibold text-gray-800 ">
+                        {item.price * item.quantity} EGP
+                      </p>
+                    </div>
+
+                    {/* زر الحذف */}
+                    <div>
+                      <button
+                        onClick={() =>
+                          deleteFromCart(item.id, item.phoneModel, item.province)
+                        }
+                        className="p-2 rounded-full hover:bg-gray-200 transition"
+                      >
+                        <Trash2 className="w-5 h-5 text-gray-600" />
+                      </button>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
           )}
-        </div>
 
-        {/* Price Summary */}
-        <div className="bg-gray-50 p-6 rounded-xl shadow-inner flex flex-col justify-between">
-          <h3 className="text-xl font-semibold text-gray-800 mb-4">Order Summary</h3>
+          {/* Price Summary */}
+          <div className="bg-gray-50 p-6 mt-10 rounded-xl shadow-inner flex flex-col justify-between max-w-lg mx-auto md:mx-0">
+            <h3 className="text-xl font-semibold text-gray-800 mb-4">
+              Order Summary
+            </h3>
 
-          {/* <div className="flex justify-between text-gray-700 mb-2">
-            <span>Subtotal</span>
-            <span>{subtotal} EGP</span>
-          </div> */}
-          {/* <div className="flex justify-between text-gray-700 mb-2">
-            <span>Shipping</span>
-            <span>{shippingTotal} EGP</span>
-          </div> */}
+            {discount > 0 && (
+              <div className="flex justify-between text-green-600 font-semibold mb-2">
+                <span>Discount</span>
+                <span>- {discount} EGP</span>
+              </div>
+            )}
 
-          {discount > 0 && (
-            <div className="flex justify-between text-green-600 font-semibold mb-2">
-              <span>Discount</span>
-              <span>- {discount} EGP</span>
+            <div className="flex justify-between text-lg font-bold text-gray-900 border-t pt-3">
+              <span>Total</span>
+              <span>{total} EGP</span>
             </div>
-          )}
 
-          <div className="flex justify-between text-lg font-bold text-gray-900 border-t pt-3">
-            <span>Total</span>
-            <span>{total} EGP</span>
+            {/* Promo Code Section */}
+            <div className="mt-6">
+              <button
+                className="flex items-center gap-2 text-blue-600 hover:underline focus:outline-none"
+                onClick={() => setShowPromo(!showPromo)}
+              >
+                <span>Do you have a promo code?</span>
+                <ChevronDown
+                  className={`h-5 w-5 transform transition-transform duration-300 ${
+                    showPromo ? "rotate-180" : "rotate-0"
+                  }`}
+                />
+              </button>
+
+              <div
+                className={`transition-all duration-500 overflow-hidden ${
+                  showPromo ? "max-h-40 opacity-100 mt-3" : "max-h-0 opacity-0"
+                }`}
+              >
+                <div className="space-y-3">
+                  <input
+                    type="text"
+                    value={promoCode}
+                    onChange={(e) => setPromoCode(e.target.value)}
+                    placeholder="Enter promo code"
+                    className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500"
+                  />
+                  <button
+                    onClick={handleApplyPromo}
+                    className="w-full bg-pink-500 text-white font-semibold py-2 rounded-lg hover:bg-pink-600 transition"
+                  >
+                    Apply Promo
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Checkout Button */}
+            <Link
+              to="/checkout"
+              className="mt-6 text-center bg-black text-white px-5 py-3 rounded-full shadow-md hover:scale-105 transition-transform"
+            >
+              Proceed to Checkout
+            </Link>
+            <Link
+              to="/"
+              className="inline-block mt-4 text-gray-600 hover:text-gray-800 hover:underline transition"
+            >
+              ← Back to Home
+            </Link>
           </div>
-
-{/* Promo Code Section */}
-<div className="mt-6">
-  <button
-    className="flex items-center gap-2 text-blue-600 hover:underline focus:outline-none"
-    onClick={() => setShowPromo(!showPromo)}
-  >
-    <span>Do you have a promo code?</span>
-    <ChevronDown
-      className={`h-5 w-5 transform transition-transform duration-300 ${
-        showPromo ? "rotate-180" : "rotate-0"
-      }`}
-    />
-  </button>
-
-  {/* Animated input */}
-  <div
-    className={`transition-all duration-500 overflow-hidden ${
-      showPromo ? "max-h-40 opacity-100 mt-3" : "max-h-0 opacity-0"
-    }`}
-  >
-    <div className="space-y-3">
-      <input
-        type="text"
-        value={promoCode}
-        onChange={(e) => setPromoCode(e.target.value)}
-        placeholder="Enter promo code"
-        className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500"
-      />
-      <button
-        onClick={handleApplyPromo}
-        className="w-full bg-pink-500 text-white font-semibold py-2 rounded-lg hover:bg-pink-600 transition"
-      >
-        Apply Promo
-      </button>
-    </div>
-  </div>
-</div>
-
-
-          {/* Checkout Button */}
-          <Link
-            to="/checkout"
-            className="mt-6 text-center bg-gradient-to-r from-orange-500 to-pink-500 text-white px-5 py-3 rounded-full shadow-md hover:from-orange-600 hover:to-pink-600 transition-transform transform hover:scale-105"
-          >
-            Proceed to Checkout
-          </Link>
-          <Link
-            to="/"
-            className="inline-block mt-4 text-gray-600 hover:text-gray-800 hover:underline transition"
-          >
-            ← Back to Home
-          </Link>
+          <div className="mt-10">
+              {/* Footer */}
+                  <Footer container>
+                    <div className="w-full">
+                      <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
+                        <div className="grid grid-cols-2 gap-8 sm:mt-4 sm:grid-cols-3 sm:gap-6">
+                          <div>
+                            <FooterTitle title="Follow us" />
+                            <FooterLinkGroup col>
+                              <FooterLink href="#">Instagram</FooterLink>
+                              <FooterLink href="#">Facebook</FooterLink>
+                            </FooterLinkGroup>
+                          </div>
+                          <div>
+                            <FooterTitle title="Legal" />
+                            <FooterLinkGroup col>
+                              <FooterLink href="#">Privacy Policy</FooterLink>
+                              <FooterLink href="#">Terms & Conditions</FooterLink>
+                            </FooterLinkGroup>
+                          </div>
+                        </div>
+                      </div>
+                      <FooterDivider />
+                      <div className="w-full sm:flex sm:items-center sm:justify-between">
+                        <FooterCopyright
+                          href="#"
+                          by="H-Cases"
+                          year={new Date().getFullYear()}
+                        />
+                        <div className="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
+                          <FooterIcon href="#" icon={BsFacebook} />
+                          <FooterIcon href="#" icon={BsInstagram} />
+                          <FooterIcon href="#" icon={BsTwitter} />
+                        </div>
+                      </div>
+                    </div>
+                  </Footer>
+          </div>
         </div>
       </div>
     </div>
-        </div>
-
   );
 };
 

@@ -48,6 +48,7 @@ const Checkout = () => {
 
   const [paymentType, setPaymentType] = useState("deposit");
   const [paymentScreenshot, setPaymentScreenshot] = useState(null);
+  const [loading, setLoading] = useState(false); // ✅ حالة التحميل الجديدة
 
   const subtotal = cart.reduce(
     (acc, item) => acc + item.price * item.quantity,
@@ -102,11 +103,9 @@ const Checkout = () => {
     }\n`;
     message += `Amount Paid: ${paymentAmount} EGP\n`;
     message += `\n*Products:*\n`;
-    cart.forEach((item) => {
-      message += `- ${item.name} x${item.quantity} = ${
-        item.price * item.quantity
-      } EGP\n`;
-    });
+cart.forEach((item) => {
+message += `- ${item.name} (${item.phoneBrand || "Unknown Brand"} - ${item.phoneModel || "Unknown Model"}) x${item.quantity} = ${item.price * item.quantity} EGP\n`;
+});
     message += `\nSubtotal: ${subtotalAfterDiscount} EGP\n`;
     message += `Shipping: ${shipping} EGP\n`;
     message += `Total: ${total} EGP`;
@@ -126,11 +125,13 @@ const Checkout = () => {
       );
 
       alert(
-        `تم إرسال بيانات الطلب على التليجرام بنجاح!\nReference: ${referenceNumber}`
+        `تم إرسال بيانات الطلب بنجاح!`
       );
     } catch (err) {
       console.error(err);
       alert("حدث خطأ أثناء إرسال الطلب على التليجرام.");
+    } finally {
+      setLoading(false); // ✅ إيقاف التحميل بعد الإرسال
     }
   };
 
@@ -151,27 +152,39 @@ const Checkout = () => {
               <p className="text-gray-400">Your cart is empty.</p>
             ) : (
               <div className="space-y-5">
-                {cart.map((item) => (
-                  <div
-                    key={item.id}
-                    className="flex items-center gap-4 border-b pb-3"
-                  >
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-20 h-20 object-cover rounded-xl shadow-sm"
-                    />
-                    <div className="flex-1">
-                      <h4 className="text-lg font-semibold text-gray-700">
-                        {item.name}
-                      </h4>
-                      <p className="text-gray-500">Qty: {item.quantity}</p>
-                      <p className="font-bold text-gray-800">
-                        {item.price * item.quantity} EGP
-                      </p>
-                    </div>
-                  </div>
-                ))}
+             {cart.map((item) => (
+  <div
+    key={item.id}
+    className="flex items-center gap-4 border-b pb-3"
+  >
+    <img
+      src={item.image}
+      alt={item.name}
+      className="w-20 h-20 object-cover rounded-xl shadow-sm"
+    />
+    <div className="flex-1">
+      <h4 className="text-lg font-semibold text-gray-700">
+        {item.name}
+      </h4>
+
+      {/* ✅ إضافة بيانات الموبايل والموديل */}
+  <p className="text-gray-500 text-sm">
+  Brand: <span className="font-medium text-gray-700">{item.phoneBrand || "—"}</span>
+</p>
+<p className="text-gray-500 text-sm">
+  Model: <span className="font-medium text-gray-700">{item.phoneModel || "—"}</span>
+</p>
+      <p className="text-gray-500 text-sm">
+        Quantity: <span className="font-medium text-gray-700">{item.quantity || 1}</span>
+      </p>
+
+      <p className="font-bold text-gray-800 mt-1">
+        {item.price * item.quantity} EGP
+      </p>
+    </div>
+  </div>
+))}
+
                 <div className="pt-3 space-y-1">
                   <div className="flex justify-between text-gray-600">
                     Subtotal: {subtotalAfterDiscount} EGP
@@ -334,12 +347,18 @@ const Checkout = () => {
                 </p>
               </div>
 
+   
               <button
                 type="button"
                 onClick={handlePayment}
-                className="w-full bg-gradient-to-r from-blue-400 to-blue-500 text-white py-3 rounded-full mt-4 shadow-lg hover:from-blue-500 hover:to-blue-600 transition"
+                disabled={loading} // ✅ تعطيل الزر أثناء التحميل
+                className={`w-full py-3 rounded-full mt-4 shadow-lg transition text-white ${
+                  loading
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-gradient-to-r from-blue-400 to-blue-500 hover:from-blue-500 hover:to-blue-600"
+                }`}
               >
-                Proceed to Payment
+                {loading ? " Loading... " : "Proceed to Payment"}
               </button>
             </form>
           </div>

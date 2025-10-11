@@ -385,7 +385,7 @@ const handleAddToCartClick = (product) => {
     "
   >
     {/* 🟤  Phone Cover (Big One) */}
-    <div className="relative group rounded-3xl overflow-hidden md:row-span-2 md:col-span-1 col-span-2 md:col-auto">
+    <div className="relative group rounded-3xl overflow-hidden md:row-span-2 h-100 md:col-span-1 col-span-2 md:col-auto">
       <img
         src="/phone cover.jpg"
         alt=" Phone Cover"
@@ -551,12 +551,12 @@ const handleAddToCartClick = (product) => {
             {/* Product Image */}
             <div
               onClick={() => handleAddToCartClick(product)}
-              className="w-full h-64 overflow-hidden cursor-pointer"
+              className="w-full h-100 overflow-hidden cursor-pointer"
             >
               <img
                 src={product.image}
                 alt={product.title}
-                className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                className="w-full h-100 object-cover hover:scale-110 transition-transform duration-500"
               />
             </div>
 
@@ -581,25 +581,27 @@ const handleAddToCartClick = (product) => {
   </div>
 </section>
 {/* 🟢 Grid Section after Featured Swiper */}
-<section className="py-12 bg-gray-50">
-  <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 text-gray-900">
+<section className="py-12 mt-10 bg-gray-50">
+  <h2 className="text-2xl md:text-3xl font-bold text-center  mb-8 text-gray-900">
     Explore More Cases
   </h2>
 
-  <div
-    className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-6"
-  >
+  
+<div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 gap-6 px-6">
+  
     {morecases.map((product) => (
       <div
         key={product.id}
-        className="bg-white rounded-3xl shadow-md hover:shadow-xl transition overflow-hidden relative group cursor-pointer"
+        className="bg-white rounded-3xl  shadow-md hover:shadow-xl transition overflow-hidden relative group cursor-pointer"
       >
         {/* Image */}
-        <div className="overflow-hidden">
+        <div className="w-full mt-5 mb-5 aspect-[3/4] flex items-center justify-center bg-gray-100 overflow-hidden rounded-2xl shadow-md"
+
+>
           <img
             src={product.image}
             alt={product.title}
-            className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
           />
         </div>
 

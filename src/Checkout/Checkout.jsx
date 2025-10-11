@@ -129,7 +129,7 @@ message += `- ${item.name} (${item.phoneBrand || "Unknown Brand"} - ${item.phone
       );
     } catch (err) {
       console.error(err);
-      alert("حدث خطأ أثناء إرسال الطلب على التليجرام.");
+      alert("حدث خطأ أثناء إرسال الطلب .");
     } finally {
       setLoading(false); // ✅ إيقاف التحميل بعد الإرسال
     }
@@ -190,13 +190,13 @@ message += `- ${item.name} (${item.phoneBrand || "Unknown Brand"} - ${item.phone
                     Subtotal: {subtotalAfterDiscount} EGP
                   </div>
                   <div className="flex justify-between text-gray-600">
-                    Shipping: {shipping} EGP
+                    Shipping: {total >= 500 ? "Free" : `${shipping} EGP`}
                   </div>
                   <div className="flex justify-between font-bold text-gray-800 border-t pt-2">
-                    Total: {total} EGP
+                    Total: {total >= 500 ? total - shipping : total} EGP
                   </div>
                   <div className="flex justify-between font-semibold text-blue-600">
-                    Deposit: {deposit} EGP
+                    Deposit: {total >= 500 ? (total - shipping) / 2 : deposit} EGP
                   </div>
                 </div>
               </div>

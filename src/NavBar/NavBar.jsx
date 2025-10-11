@@ -29,6 +29,7 @@ const NavBar = ({ onSearch }) => {
 
   const [showSearch, setShowSearch] = useState(false);
   const [isUserDrawerOpen, setIsUserDrawerOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
   const toggleUserDrawer = () => setIsUserDrawerOpen(!isUserDrawerOpen);
@@ -54,10 +55,10 @@ const NavBar = ({ onSearch }) => {
   <div className="fixed top-8 left-0 w-full bg-black text-white text-sm sm:text-base font-light py-2 overflow-hidden z-30">
     <div className="marquee-container">
       <div className="marquee-content">
-        🚚 Any order above <span className="font-semibold">500 pounds</span> shipping is free within Egypt.
+        🚚 Any order above <span className="font-semibold">500 pounds</span> shipping is free.
       </div>
       <div className="marquee-content">
-        🚚 Any order above <span className="font-semibold">500 pounds</span> shipping is free within Egypt.
+        🚚 Any order above <span className="font-semibold">500 pounds</span> shipping is free.
       </div>
     </div>
   </div>
@@ -156,7 +157,7 @@ const NavBar = ({ onSearch }) => {
 
   {/* Search Bar */}
   <div
-    className={`fixed top-20 right-4 left-4 mx-auto bg-white shadow-md rounded-full flex items-center px-3 py-2 
+    className={`fixed top-20 right-4 mt-10 sm:mt-0 left-4 mx-auto bg-white shadow-md rounded-full flex items-center px-3 py-2 
     transition-all duration-500 md:absolute md:top-0 md:right-12 md:left-auto md:w-[200px]
     ${showSearch ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}`}
   >

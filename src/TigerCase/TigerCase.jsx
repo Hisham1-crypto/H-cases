@@ -291,7 +291,7 @@ const TigerCase = () => {
           if (!selectedPhoneType) return alert("Please choose your phone model.");
 
         addToCart({
-  name: "BabeShark Case",
+  name:  selectedProduct.name ,
   price: selectedProduct.price,
   image: selectedProduct.src,
   brand: selectedBrand,

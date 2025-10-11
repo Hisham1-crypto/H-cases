@@ -141,14 +141,14 @@ const handleConfirmAdd = () => {
       <AnimatePresence>
         {drawerOpen && selectedProduct && (
           <motion.div
-            className="fixed inset-0 z-50 flex"
+            className="fixed inset-0 z-50 flex "
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
             {/* الخلفية */}
             <motion.div
-              className="fixed inset-0 bg-black/50"
+              className="fixed inset-0 bg-black/50 "
               onClick={() => setDrawerOpen(false)}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -161,7 +161,7 @@ const handleConfirmAdd = () => {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 100, damping: 20 }}
-              className="bg-white w-96 h-full p-6 shadow-2xl fixed right-0 top-0 flex flex-col"
+              className="bg-white w-96 h-full p-6 shadow-2xl fixed right-0 top-0 flex flex-col overflow-y-auto"
             >
               <button
                 onClick={() => setDrawerOpen(false)}

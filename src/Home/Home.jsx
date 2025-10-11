@@ -481,12 +481,12 @@ const handleAddToCartClick = (product) => {
             {/* صورة المنتج */}
             <div
               onClick={() => handleAddToCartClick(product)}
-              className="w-full h-64 overflow-hidden cursor-pointer"
+              className="w-full h-100 overflow-hidden cursor-pointer"
             >
               <img
                 src={product.image}
                 alt={product.title}
-                className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                className="w-full h-100 object-cover hover:scale-110 transition-transform duration-500"
               />
             </div>
 

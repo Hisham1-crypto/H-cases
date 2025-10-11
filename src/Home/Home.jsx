@@ -461,7 +461,7 @@ const handleAddToCartClick = (product) => {
     >
       {products2.map((product) => (
         <SwiperSlide key={product.id}>
-          <div className="bg-white rounded-2xl shadow-md hover:shadow-lg transition overflow-hidden relative group">
+          <div className="bg-white py-12 rounded-2xl shadow-md hover:shadow-lg transition overflow-hidden relative group">
             {/* ❤️ فيفوريت */}
             <button
               onClick={() => addToFavorites(product)}

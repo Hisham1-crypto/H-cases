@@ -27,6 +27,7 @@ import EvileEye from "./EvileEye/EvileEye";
 import Porche911 from "./Porche911/Porche911";
 import LufiCase from "./LufiCase/LufiCase";
 import LabubuCase from "./LabubuCase/LabubuCase";
+import Costume from "./Costume/Costume";
 
 
 
@@ -61,6 +62,7 @@ const App = () => {
               <Route path="/porsche911" element={<Porche911/>}/>
               <Route path="/luficase" element={<LufiCase/>}/>
               <Route path="/labubu" element={<LabubuCase/>}/>
+              <Route path="/costume" element={<Costume/>}/>
 
               <Route
                 path="/checkout"

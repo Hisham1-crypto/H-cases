@@ -55,16 +55,6 @@ const featuredProducts = [
 
 ];
 
-
-
-
-
-
-
-
-
-
-
 const morecases = [
   { id: 1, title: "Grey 911", price: 130, oldPrice: 160, image: "/top pick photos/photo_24_2025-10-10_07-18-14.jpg" },
   { id: 1, title: "Bronze 911", price: 130, oldPrice: 160, image: "/top pick photos/photo_25_2025-10-10_07-18-14.jpg" },
@@ -88,19 +78,6 @@ const morecases = [
 
 
 ];
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 const products2 = [
   {
@@ -199,7 +176,7 @@ const products2 = [
 ];
 // Phone Brands & Models
 const phoneData = {
-  iPhone: ["iPhone 14 Pro", "iPhone 14", "iPhone 13"],
+  iPhone: ["iPhone 14 Pro","iPhone 14 Pro Max", "iPhone 14", "iPhone 13"],
   Samsung: ["Samsung S23", "Samsung S22", "Samsung A72"],
   Xiaomi: ["Xiaomi 13", "Xiaomi 12", "Xiaomi Note 11"],
 };

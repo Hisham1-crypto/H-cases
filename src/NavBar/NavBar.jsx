@@ -140,7 +140,7 @@ const NavBar = ({ onSearch }) => {
 
           <Link to="/shop" className="hover:text-[#56cfe1] transition">Airpods Case</Link>
           <Link to="/offers" className="hover:text-[#56cfe1] transition">Pop Socket</Link>
-          <Link to="/contact" className="hover:text-[#56cfe1] transition">Costume</Link>
+          <Link to="/costume" className="hover:text-[#56cfe1] transition">Costume</Link>
         </div>
 
         {/* ✅ Left Icons */}
@@ -257,7 +257,7 @@ const NavBar = ({ onSearch }) => {
             {/* <Link to="/tigercase" onClick={toggleSidebar} className="hover:text-[#56cfe1]">Tiger Case</Link> */}
             <Link to="/shop" onClick={toggleSidebar} className="hover:text-[#56cfe1]">Airpods Case</Link>
             <Link to="/offers" onClick={toggleSidebar} className="hover:text-[#56cfe1]">Pop Socket</Link>
-            <Link to="/contact" onClick={toggleSidebar} className="hover:text-[#56cfe1]">Costume</Link>
+            <Link to="/costume" onClick={toggleSidebar} className="hover:text-[#56cfe1]">Costume</Link>
 
             {/* ✅ User Icon (تحت اللينكات) */}
             <button

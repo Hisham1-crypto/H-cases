@@ -18,6 +18,7 @@ import { CartContext } from "../CartContext";
 import { FavoritesContext } from "../FavoritesProvider";
 import NavBar from "../NavBar/NavBar";
 import { motion, AnimatePresence } from "framer-motion";
+import Footer from "../Footer/Footer";
 
 
 const CostumePage = () => {
@@ -164,7 +165,7 @@ const handleAddToCart = async () => {
     const product = {
       id: Date.now(),
       name: "Custom Case",
-      price: 80,
+      price: 200,
       image: objectUrl,
     };
     setSelectedProduct(product);
@@ -205,7 +206,7 @@ const handleConfirmAdd = () => {
       const product = {
         id: Date.now(),
         name: "Custom Case",
-        price: 80,
+        price: 200,
         image: objectUrl,
       };
       addToFavorites(product);
@@ -240,173 +241,173 @@ const handleConfirmAdd = () => {
       <div className="h-20"></div>
 
       <div className="max-w-6xl mx-auto px-6 py-10 mt-20">
-        <div className="flex gap-8">
-          {/* Preview column */}
-          <div className="flex-1 flex flex-col items-center">
-            <div className="w-full max-w-[520px]">
-              <div className="mb-4 text-left">
-                <h2 className="text-2xl font-semibold">Customize Your Case</h2>
-                <p className="text-sm text-gray-600 mt-1">
-                  Upload design, move it inside the case, rotate & zoom. When ready add to cart or save.
-                </p>
-              </div>
+      <div className="flex flex-col lg:flex-row gap-8 items-center lg:items-start">
+  {/* Preview column */}
+  <div className="w-full flex flex-col items-center">
+    <div className="w-full max-w-[520px]">
+      <div className="mb-4 text-left">
+        <h2 className="text-2xl font-semibold text-center lg:text-left">Customize Your Case</h2>
+        <p className="text-sm text-gray-600 mt-1 text-center lg:text-left">
+          Upload design, move it inside the case, rotate & zoom. When ready add to cart or save.
+        </p>
+      </div>
 
-              <div
-                ref={designRef}
-                className="relative mx-auto bg-white rounded-3xl overflow-hidden shadow-lg"
+      <div
+        ref={designRef}
+        className="relative mx-auto bg-white rounded-3xl overflow-hidden shadow-lg"
+        style={{
+          width: "100%",
+          maxWidth: previewWidth,
+          height:previewWidth * 1.8,
+          borderRadius: 38,
+        }}
+      >
+        <div className="absolute inset-0 p-4 rounded-2xl">
+          {uploadedImage ? (
+            <Rnd
+              bounds="parent"
+              size={{ width: rndProps.width, height: rndProps.height }}
+              position={{ x: rndProps.x, y: rndProps.y }}
+              onDragStop={handleDragStop}
+              onResizeStop={handleResizeStop}
+              minWidth={40}
+              minHeight={40}
+            >
+              <img
+                src={uploadedImage}
+                alt="uploaded"
+                className="w-full h-full object-cover rounded-sm"
                 style={{
-                  width: previewWidth,
-                  height: (previewWidth * 18) / 9,
-                  borderRadius: 28,
+                  transform: `rotate(${rotation}deg) scale(${scale})`,
+                  transformOrigin: "center center",
+                  pointerEvents: "none",
+                  borderRadius: 38,
+
                 }}
-              >
-                <div className="absolute inset-0 p-4 rounded-2xl">
-                  {uploadedImage ? (
-                    <Rnd
-                      bounds="parent"
-                      size={{ width: rndProps.width, height: rndProps.height }}
-                      position={{ x: rndProps.x, y: rndProps.y }}
-                      onDragStop={handleDragStop}
-                      onResizeStop={handleResizeStop}
-                      minWidth={40}
-                      minHeight={40}
-                    >
-                      <img
-                        src={uploadedImage}
-                        alt="uploaded"
-                        className="w-full h-full object-cover rounded-sm"
-                        style={{
-                          transform: `rotate(${rotation}deg) scale(${scale})`,
-                          transformOrigin: "center center",
-                          pointerEvents: "none",
-                        }}
-                        draggable={false}
-                      />
-                    </Rnd>
-                  ) : (
-                    <div className="h-full w-full flex items-center justify-center border-2 border-dashed border-gray-200 rounded-lg">
-                      <div className="text-center text-gray-400">
-                        <p className="text-lg">No design yet</p>
-                        <p className="text-xs mt-1">Upload an image to start</p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                <img
-                  src="/caseee (1)22.png"
-                  alt="case-overlay"
-                  className="absolute inset-0 w-full h-full pointer-events-none"
-                  style={{ zIndex: 10, objectFit: "contain" }}
-                />
-              </div>
-
-              <div className="mt-6 flex gap-3 justify-center">
-                <button
-                  // onClick={handleSave}
-                  className="inline-flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-lg shadow-sm hover:shadow-md"
-                >
-                  <Save size={16} /> Save
-                </button>
-
-                <button
-                  onClick={handleAddToCart}
-                  className="inline-flex items-center gap-2 bg-[#56cfe1] text-white px-4 py-2 rounded-lg shadow hover:opacity-95"
-                >
-                  <ShoppingBag size={16} /> Add to Cart
-                </button>
-
-                <button
-                  onClick={handleAddToFavorites}
-                  className="inline-flex items-center gap-2 bg-black text-white px-4 py-2 rounded-lg shadow hover:opacity-95"
-                >
-                  <Heart size={16} /> Favourite
-                </button>
+                draggable={false}
+              />
+            </Rnd>
+          ) : (
+            <div className="h-full w-full flex items-center justify-center border-2 border-dashed border-gray-200 rounded-lg">
+              <div className="text-center text-gray-400">
+                <p className="text-lg">No design yet</p>
+                <p className="text-xs mt-1">Upload an image to start</p>
               </div>
             </div>
-          </div>
-
-          {/* Sidebar */}
-          <aside className="w-[240px] bg-white rounded-lg p-4 shadow-sm">
-            <div className="flex flex-col gap-3">
-              <label className="flex items-center gap-2 bg-gray-100 p-2 rounded-md cursor-pointer hover:bg-gray-200">
-                <Upload size={16} />
-                <span className="text-sm">Upload</span>
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={handleImageUpload}
-                />
-              </label>
-
-              <button
-                onClick={() => handleRotate(15)}
-                className="flex items-center gap-2 p-2 rounded-md hover:bg-gray-100"
-              >
-                <RotateCw size={16} /> <span className="text-sm">Rotate +15°</span>
-              </button>
-
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => handleZoom(-0.1)}
-                  className="p-2 rounded-md hover:bg-gray-100"
-                >
-                  <ZoomOut size={16} />
-                </button>
-                <div className="flex-1">
-                  <input
-                    type="range"
-                    min="0.4"
-                    max="3"
-                    step="0.01"
-                    value={scale}
-                    onChange={(e) => setScale(Number(e.target.value))}
-                    className="w-full"
-                  />
-                </div>
-                <button
-                  onClick={() => handleZoom(0.1)}
-                  className="p-2 rounded-md hover:bg-gray-100"
-                >
-                  <ZoomIn size={16} />
-                </button>
-              </div>
-
-              <button
-                onClick={handleReset}
-                className="flex items-center gap-2 p-2 rounded-md hover:bg-gray-100"
-              >
-                <RefreshCcw size={16} /> <span className="text-sm">Reset</span>
-              </button>
-
-              <button
-                onClick={handleDelete}
-                className="flex items-center gap-2 p-2 rounded-md text-red-600 hover:bg-red-50"
-              >
-                <Trash2 size={16} /> <span className="text-sm">Delete</span>
-              </button>
-
-              <div className="mt-4 pt-3 border-t border-gray-100">
-                <p className="text-xs text-gray-500 mb-2">Preview options</p>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setPreviewWidth((w) => Math.max(240, w - 40))}
-                    className="px-2 py-1 bg-gray-100 rounded-md text-sm"
-                  >
-                    - Width
-                  </button>
-                  <button
-                    onClick={() => setPreviewWidth((w) => Math.min(520, w + 40))}
-                    className="px-2 py-1 bg-gray-100 rounded-md text-sm"
-                  >
-                    + Width
-                  </button>
-                </div>
-              </div>
-            </div>
-          </aside>
+          )}
         </div>
+
+        <img
+          src="\caseee112233.png"
+          alt="case-overlay"
+          className="absolute inset-0 w-full h-full pointer-events-none"
+          style={{ zIndex: 10, objectFit: "contain" }}
+        />
+      </div>
+
+      <div className="mt-6 flex flex-wrap gap-3 justify-center">
+    
+        <button
+          onClick={handleAddToCart}
+          className="inline-flex items-center gap-2 bg-[#56cfe1] text-white px-4 py-2 rounded-lg shadow hover:opacity-95 "
+        >
+          <ShoppingBag size={16} /> Add to Cart 
+        </button>
+
+        <button
+          onClick={handleAddToFavorites}
+          className="inline-flex items-center gap-2 bg-black text-white px-4 py-2 rounded-lg shadow hover:opacity-95"
+        >
+          <Heart size={16} /> Favourite
+        </button>
+      </div>
+    </div>
+  </div>
+
+  {/* Sidebar */}
+  <aside className="w-full lg:w-[240px] bg-white rounded-lg p-4 shadow-sm mt-8 lg:mt-0">
+    <div className="flex flex-col gap-3">
+      <label className="flex items-center justify-center gap-2 bg-gray-100 p-2 rounded-md cursor-pointer hover:bg-gray-200">
+        <Upload size={16} />
+        <span className="text-sm">Upload</span>
+        <input
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={handleImageUpload}
+        />
+      </label>
+
+      <button
+        onClick={() => handleRotate(15)}
+        className="flex items-center gap-2 p-2 rounded-md hover:bg-gray-100 justify-center"
+      >
+        <RotateCw size={16} /> <span className="text-sm">Rotate +15°</span>
+      </button>
+
+      <div className="flex items-center gap-2 justify-center">
+        <button
+          onClick={() => handleZoom(-0.1)}
+          className="p-2 rounded-md hover:bg-gray-100"
+        >
+          <ZoomOut size={16} />
+        </button>
+        <div className="flex-1 max-w-[150px]">
+          <input
+            type="range"
+            min="0.4"
+            max="3"
+            step="0.01"
+            value={scale}
+            onChange={(e) => setScale(Number(e.target.value))}
+            className="w-full"
+          />
+        </div>
+        <button
+          onClick={() => handleZoom(0.1)}
+          className="p-2 rounded-md hover:bg-gray-100"
+        >
+          <ZoomIn size={16} />
+        </button>
+      </div>
+
+      <button
+        onClick={handleReset}
+        className="flex items-center gap-2 p-2 rounded-md hover:bg-gray-100 justify-center"
+      >
+        <RefreshCcw size={16} /> <span className="text-sm">Reset</span>
+      </button>
+
+      <button
+        onClick={handleDelete}
+        className="flex items-center gap-2 p-2 rounded-md text-red-600 hover:bg-red-50 justify-center"
+      >
+        <Trash2 size={16} /> <span className="text-sm">Delete</span>
+      </button>
+
+      <div className="mt-4 pt-3 border-t border-gray-100 text-center">
+        <p className="text-xs text-gray-500 mb-2">Preview options</p>
+        <div className="flex gap-2 justify-center">
+          <button
+            onClick={() => setPreviewWidth((w) => Math.max(240, w - 40))}
+            className="px-2 py-1 bg-gray-100 rounded-md text-sm"
+          >
+            - Width
+          </button>
+          <button
+            onClick={() => setPreviewWidth((w) => Math.min(520, w + 40))}
+            className="px-2 py-1 bg-gray-100 rounded-md text-sm"
+          >
+            + Width
+          </button>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+</div>
+
+
       </div>
       <AnimatePresence>
   {drawerOpen && selectedProduct && (

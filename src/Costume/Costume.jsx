@@ -11,11 +11,14 @@ import {
   ZoomIn,
   ZoomOut,
   Upload,
+  X,
 } from "lucide-react";
 import html2canvas from "html2canvas";
 import { CartContext } from "../CartContext";
 import { FavoritesContext } from "../FavoritesProvider";
 import NavBar from "../NavBar/NavBar";
+import { motion, AnimatePresence } from "framer-motion";
+
 
 const CostumePage = () => {
   const { addToCart } = useContext(CartContext);
@@ -32,17 +35,23 @@ const CostumePage = () => {
   });
 
   const designRef = useRef(null);
-  const caseImgRef = useRef(null);
   const [previewWidth, setPreviewWidth] = useState(320);
+const [drawerOpen, setDrawerOpen] = useState(false);
+const [selectedProduct, setSelectedProduct] = useState(null);
 
+const [phoneForm, setPhoneForm] = useState({
+  brand: "",
+  model: "",
+  quantity: 1,
+});
   useEffect(() => {
-    const onResize = () => {
+    const handleResize = () => {
       const w = Math.min(400, Math.max(280, window.innerWidth * 0.35));
       setPreviewWidth(w);
     };
-    onResize();
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const handleImageUpload = (e) => {
@@ -75,20 +84,7 @@ const CostumePage = () => {
     setRndProps({ x: 20, y: 20, width: 160, height: 200 });
   };
 
-  const handleSave = async () => {
-    try {
-      const dataUrl = await generateDesignDataUrl({ quality: 1.0 });
-      if (!dataUrl) return;
-      const link = document.createElement("a");
-      link.href = dataUrl;
-      link.download = "custom-case.png";
-      link.click();
-    } catch (err) {
-      console.error("Save failed:", err);
-    }
-  };
-
-  // ✅ تعديل مهم: اقتصاص مضبوط بنسبة 9:18 لحل مشكلة الطول الزائد
+  // ✅ إصلاح نهائي للـ crop لتقليل الطول المبالغ فيه
   const generateCroppedCanvas = async () => {
     if (!designRef.current) return null;
 
@@ -97,18 +93,18 @@ const CostumePage = () => {
       const canvas = await html2canvas(element, {
         useCORS: true,
         backgroundColor: null,
-        scale: 1.8,
+        scale: 2,
       });
 
-      const aspect = 9 / 18; // النسبة الطبيعية للجراب (عرض إلى طول)
       const fullW = canvas.width;
       const fullH = canvas.height;
-      const cropWidth = fullW * 0.78;
-      const cropHeight = cropWidth / aspect;
 
-      // توسيط الاقتصاص داخل الصورة
+      // نحدد إطار الاقتصاص المناسب للجراب بالضبط
+      const cropWidth = fullW * 0.76;
+      const cropHeight = fullH * 0.68; // 👈 تم تقليل الارتفاع هنا لتصحيح الشكل
+
       const cropX = (fullW - cropWidth) / 2;
-      const cropY = (fullH - cropHeight) / 2.05;
+      const cropY = (fullH - cropHeight) / 2.15;
 
       const croppedCanvas = document.createElement("canvas");
       croppedCanvas.width = cropWidth;
@@ -160,22 +156,46 @@ const CostumePage = () => {
     });
   };
 
-  const handleAddToCart = async () => {
-    try {
-      const blob = await generateDesignBlob();
-      if (!blob) return;
-      const objectUrl = URL.createObjectURL(blob);
-      const product = {
-        id: Date.now(),
-        name: "Custom Case",
-        price: 80,
-        image: objectUrl,
-      };
-      addToCart(product);
-    } catch (err) {
-      console.error("Add to cart failed:", err);
-    }
+const handleAddToCart = async () => {
+  try {
+    const blob = await generateDesignBlob();
+    if (!blob) return;
+    const objectUrl = URL.createObjectURL(blob);
+    const product = {
+      id: Date.now(),
+      name: "Custom Case",
+      price: 80,
+      image: objectUrl,
+    };
+    setSelectedProduct(product);
+    setDrawerOpen(true); // افتح الدروير بدل الإضافة المباشرة
+  } catch (err) {
+    console.error("Add to cart failed:", err);
+  }
+};
+const handleConfirmAdd = () => {
+  if (!phoneForm.brand) {
+    alert("Please select brand");
+    return;
+  } else if (!phoneForm.model) {
+    alert("Please select model");
+    return;
+  }
+
+  const fullProduct = {
+    ...selectedProduct,
+    brand: phoneForm.brand,
+    model: phoneForm.model,
+    quantity: Number(phoneForm.quantity) || 1,
   };
+
+  addToCart(fullProduct);
+
+  // reset
+  setDrawerOpen(false);
+  setPhoneForm({ brand: "", model: "", quantity: 1 });
+};
+
 
   const handleAddToFavorites = async () => {
     try {
@@ -273,9 +293,7 @@ const CostumePage = () => {
                   )}
                 </div>
 
-                {/* case overlay */}
                 <img
-                  ref={caseImgRef}
                   src="/caseee (1)22.png"
                   alt="case-overlay"
                   className="absolute inset-0 w-full h-full pointer-events-none"
@@ -285,7 +303,7 @@ const CostumePage = () => {
 
               <div className="mt-6 flex gap-3 justify-center">
                 <button
-                  onClick={handleSave}
+                  // onClick={handleSave}
                   className="inline-flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-lg shadow-sm hover:shadow-md"
                 >
                   <Save size={16} /> Save
@@ -390,6 +408,136 @@ const CostumePage = () => {
           </aside>
         </div>
       </div>
+      <AnimatePresence>
+  {drawerOpen && selectedProduct && (
+    <motion.div
+      className="fixed inset-0 z-50 flex"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      {/* الخلفية */}
+      <motion.div
+        className="fixed inset-0 bg-black/50"
+        onClick={() => setDrawerOpen(false)}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      />
+
+      {/* محتوى الدروير */}
+      <motion.div
+        initial={{ x: "100%" }}
+        animate={{ x: 0 }}
+        exit={{ x: "100%" }}
+        transition={{ type: "spring", stiffness: 100, damping: 20 }}
+        className="bg-white w-96 h-full p-6 shadow-2xl fixed right-0 top-0 flex flex-col overflow-y-auto"
+      >
+        <button
+          onClick={() => setDrawerOpen(false)}
+          className="absolute top-4 left-4 p-2 rounded-full hover:bg-gray-100"
+        >
+          <X className="w-6 h-6" />
+        </button>
+
+        {/* معلومات المنتج */}
+        <div className="flex flex-col items-center text-center mb-6 mt-8">
+          <img
+            src={selectedProduct.image}
+            alt={selectedProduct.name}
+            className="w-40 h-40 object-contain mb-4"
+          />
+          <h3 className="text-lg font-semibold">{selectedProduct.name}</h3>
+          <p className="text-gray-600">{selectedProduct.price} EGP</p>
+        </div>
+
+        <h2 className="text-xl font-bold mb-5 text-gray-800 text-center">
+          Choose your phone model
+        </h2>
+
+        {/* Brand */}
+        <div className="mb-5">
+          <label className="block text-sm font-semibold text-gray-600 mb-2">
+            Brand
+          </label>
+          <select
+            value={phoneForm.brand}
+            onChange={(e) =>
+              setPhoneForm({
+                ...phoneForm,
+                brand: e.target.value,
+                model: "",
+              })
+            }
+            className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 shadow-sm"
+          >
+            <option value="">Choose brand</option>
+            <option value="iPhone">iPhone</option>
+            <option value="Samsung">Samsung</option>
+            <option value="Xiaomi">Xiaomi</option>
+          </select>
+        </div>
+
+        {/* Model */}
+        {phoneForm.brand && (
+          <div className="mb-5">
+            <label className="block text-sm font-semibold text-gray-600 mb-2">
+              Model
+            </label>
+            <select
+              value={phoneForm.model}
+              onChange={(e) =>
+                setPhoneForm({ ...phoneForm, model: e.target.value })
+              }
+              className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 shadow-sm"
+            >
+              <option value="">Select model</option>
+              {phoneForm.brand === "iPhone" &&
+                ["iPhone 14 Pro", "iPhone 13", "iPhone 12"].map((m) => (
+                  <option key={m}>{m}</option>
+                ))}
+              {phoneForm.brand === "Samsung" &&
+                ["S23", "S22", "A72"].map((m) => (
+                  <option key={m}>{m}</option>
+                ))}
+              {phoneForm.brand === "Xiaomi" &&
+                ["13", "12", "Note 11"].map((m) => (
+                  <option key={m}>{m}</option>
+                ))}
+            </select>
+          </div>
+        )}
+
+        {/* Quantity */}
+        <div className="mb-5">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Quantity
+          </label>
+          <input
+            type="number"
+            min="1"
+            value={phoneForm.quantity}
+            onChange={(e) =>
+              setPhoneForm({
+                ...phoneForm,
+                quantity: Number(e.target.value),
+              })
+            }
+            className="w-20 border border-gray-300 rounded-lg py-2 px-3 text-center"
+          />
+        </div>
+
+        <button
+          onClick={handleConfirmAdd}
+          className="mt-auto w-full bg-black text-white py-3 rounded-lg shadow-md hover:scale-105 transition"
+        >
+          Confirm Add to Cart
+        </button>
+      </motion.div>
+    </motion.div>
+  )}
+</AnimatePresence>
+
     </div>
   );
 };

@@ -234,6 +234,15 @@ const handleConfirmAdd = () => {
     const clampedY = Math.max(0, Math.min(d.y, parentH - rndProps.height));
     setRndProps((p) => ({ ...p, x: clampedX, y: clampedY }));
   };
+  const [isMobile, setIsMobile] = useState(false);
+
+useEffect(() => {
+  const checkMobile = () => setIsMobile(window.innerWidth < 768);
+  checkMobile();
+  window.addEventListener("resize", checkMobile);
+  return () => window.removeEventListener("resize", checkMobile);
+}, []);
+
 
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 mb-20">
@@ -254,6 +263,7 @@ const handleConfirmAdd = () => {
 
       <div
         ref={designRef}
+
         className="relative mx-auto bg-white rounded-3xl overflow-hidden shadow-lg"
         style={{
           width: "100%",
@@ -264,37 +274,108 @@ const handleConfirmAdd = () => {
       >
         <div className="absolute inset-0 p-4 rounded-2xl">
           {uploadedImage ? (
-            <Rnd
-              bounds="parent"
-              size={{ width: rndProps.width, height: rndProps.height }}
-              position={{ x: rndProps.x, y: rndProps.y }}
-              onDragStop={handleDragStop}
-              onResizeStop={handleResizeStop}
-              minWidth={40}
-              minHeight={40}
-            >
-              <img
-                src={uploadedImage}
-                alt="uploaded"
-                className="w-full h-full object-cover rounded-sm"
-                style={{
-                  transform: `rotate(${rotation}deg) scale(${scale})`,
-                  transformOrigin: "center center",
-                  pointerEvents: "none",
-                  borderRadius: 38,
+  <>
+    <Rnd
+      className="touch-none"
+      bounds="parent"
+      size={{ width: rndProps.width, height: rndProps.height }}
+      position={{ x: rndProps.x, y: rndProps.y }}
+      onDragStop={handleDragStop}
+      onResizeStop={handleResizeStop}
+      minWidth={40}
+      minHeight={40}
+    >
+      <img
+        src={uploadedImage}
+        alt="uploaded"
+        className="w-full h-full object-cover rounded-sm"
+        style={{
+          transform: `rotate(${rotation}deg) scale(${scale})`,
+          transformOrigin: "center center",
+          pointerEvents: "none",
+          borderRadius: 28,
+          width: "100%",
+        }}
+        draggable={false}
+      />
+    </Rnd>
 
-                }}
-                draggable={false}
-              />
-            </Rnd>
-          ) : (
+    {/* ✅ لوحة تحكم للموبايل فقط */}
+    {isMobile && (
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex flex-wrap justify-center gap-2 bg-white/90 p-2 rounded-xl shadow-lg backdrop-blur-sm z-50">
+        <div className="flex gap-2">
+          <button
+            onClick={() => setRndProps(p => ({ ...p, y: p.y - 10 }))}
+            className="p-2 rounded-md bg-gray-100 hover:bg-gray-200 active:scale-95"
+          >
+            ⬆️
+          </button>
+          <button
+            onClick={() => setRndProps(p => ({ ...p, y: p.y + 10 }))}
+            className="p-2 rounded-md bg-gray-100 hover:bg-gray-200 active:scale-95"
+          >
+            ⬇️
+          </button>
+          <button
+            onClick={() => setRndProps(p => ({ ...p, x: p.x - 10 }))}
+            className="p-2 rounded-md bg-gray-100 hover:bg-gray-200 active:scale-95"
+          >
+            ⬅️
+          </button>
+          <button
+            onClick={() => setRndProps(p => ({ ...p, x: p.x + 10 }))}
+            className="p-2 rounded-md bg-gray-100 hover:bg-gray-200 active:scale-95"
+          >
+            ➡️
+          </button>
+        </div>
+
+        <div className="flex gap-2 mt-1 justify-center w-full">
+          <button
+            onClick={() => handleZoom(0.1)}
+            className="p-2 rounded-md bg-gray-100 hover:bg-gray-200 active:scale-95"
+          >
+            ➕
+          </button>
+          <button
+            onClick={() => handleZoom(-0.1)}
+            className="p-2 rounded-md bg-gray-100 hover:bg-gray-200 active:scale-95"
+          >
+            ➖
+          </button>
+          <button
+            onClick={() => handleRotate(15)}
+            className="p-2 rounded-md bg-gray-100 hover:bg-gray-200 active:scale-95"
+          >
+            🔄
+          </button>
+          <button
+            onClick={handleReset}
+            className="p-2 rounded-md bg-gray-100 hover:bg-gray-200 active:scale-95"
+          >
+            ♻️
+          </button>
+        </div>
+      </div>
+    )}
+  </>
+) : (
+  <div className="h-full w-full flex items-center justify-center border-2 border-dashed border-gray-200 rounded-lg">
+    <div className="text-center text-gray-400">
+      <p className="text-lg">No design yet</p>
+      <p className="text-xs mt-1">Upload an image to start</p>
+    </div>
+  </div>
+)}
+
+           
             <div className="h-full w-full flex items-center justify-center border-2 border-dashed border-gray-200 rounded-lg">
               <div className="text-center text-gray-400">
                 <p className="text-lg">No design yet</p>
                 <p className="text-xs mt-1">Upload an image to start</p>
               </div>
             </div>
-          )}
+          
         </div>
 
         <img

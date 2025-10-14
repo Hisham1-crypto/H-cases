@@ -138,9 +138,10 @@ const NavBar = ({ onSearch }) => {
             </div>
           </div>
 
-          <Link to="/shop" className="hover:text-[#56cfe1] transition">Airpods Case</Link>
-          <Link to="/offers" className="hover:text-[#56cfe1] transition">Pop Socket</Link>
-          <Link to="/costume" className="hover:text-[#56cfe1] transition">Costume</Link>
+          <Link to="/laptopsleeve" className="hover:text-[#56cfe1] transition">Laptop Sleeve</Link>
+          <Link to="/funnybag" className="hover:text-[#56cfe1] transition">Funny bag</Link>
+          <Link to="/minibag" className="hover:text-[#56cfe1] transition">Mini bag</Link>
+
         </div>
 
         {/* ✅ Left Icons */}
@@ -255,9 +256,9 @@ const NavBar = ({ onSearch }) => {
             </div>
 
             {/* <Link to="/tigercase" onClick={toggleSidebar} className="hover:text-[#56cfe1]">Tiger Case</Link> */}
-            <Link to="/shop" onClick={toggleSidebar} className="hover:text-[#56cfe1]">Airpods Case</Link>
-            <Link to="/offers" onClick={toggleSidebar} className="hover:text-[#56cfe1]">Pop Socket</Link>
-            <Link to="/costume" onClick={toggleSidebar} className="hover:text-[#56cfe1]">Costume</Link>
+            <Link to="/laptopsleeve" onClick={toggleSidebar} className="hover:text-[#56cfe1]">Laptop sleeve</Link>
+            <Link to="/funnybag" onClick={toggleSidebar} className="hover:text-[#56cfe1]">Funny bag</Link>
+            <Link to="/minibag" onClick={toggleSidebar} className="hover:text-[#56cfe1]">Mini bag</Link>
 
             {/* ✅ User Icon (تحت اللينكات) */}
             <button

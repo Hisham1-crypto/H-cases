@@ -28,7 +28,12 @@ import Porche911 from "./Porche911/Porche911";
 import LufiCase from "./LufiCase/LufiCase";
 import LabubuCase from "./LabubuCase/LabubuCase";
 import Costume from "./Costume/Costume";
-
+import Minibag from "./Minibag/Minibag";
+import Funnybag from "./Funnybag/Funnybag";
+import Laptopsleeve from "./Laptopsleeve/Laptopsleeve";
+import Laptopsleeve1 from "./Laptopsleeve1/Laptopsleeve1";
+import Funnybagdetails from "./Funnybagdetails/Funnybagdetails"
+import Minibagdetails from "./Minibagdetails/Minibagdetails"
 
 
 const ProtectedRoute = ({ children }) => {
@@ -63,6 +68,13 @@ const App = () => {
               <Route path="/luficase" element={<LufiCase/>}/>
               <Route path="/labubu" element={<LabubuCase/>}/>
               <Route path="/costume" element={<Costume/>}/>
+              <Route path="/minibag" element={<Minibag/>}/>
+              <Route path="/minibagdetails/:id" element={<Minibagdetails/>}/>
+              <Route path="/funnybag" element={<Funnybag/>}/>
+              <Route path="/funnybagdetails/:id" element={<Funnybagdetails/>}/>
+              <Route path="/laptopsleeve" element={<Laptopsleeve/>}/>
+              <Route path="/laptopsleeve/:id" element={<Laptopsleeve1/>}/>
+
 
               <Route
                 path="/checkout"

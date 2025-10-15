@@ -7,7 +7,7 @@ import { FavoritesContext } from "../FavoritesProvider";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import { Pagination } from "swiper/modules";
+import { Navigation, Pagination } from "swiper/modules";
 
 const products = [
   {
@@ -252,45 +252,44 @@ const handleBuyNow = () => {
           </div>
         </div>
 
-        {/* ✅ قسم "You may also like" */}
-        {/* <div className="mt-16">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
-            You may also like
-          </h2>
-
-          <Swiper
-            spaceBetween={20}
-            pagination={{ clickable: true }}
-            modules={[Pagination]}
-            breakpoints={{
-              320: { slidesPerView: 1.2 },
-              640: { slidesPerView: 2 },
-              1024: { slidesPerView: 4 },
-            }}
-          >
-            {relatedProducts.slice(0, 8).map((item) => (
-              <SwiperSlide key={item.id}>
-                <div
-                  onClick={() => navigate(`/product/${item.id}`)}
-                  className="cursor-pointer border rounded-xl overflow-hidden bg-white shadow-md hover:shadow-lg transition-all"
-                >
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-full h-100 object-cover"
-                  />
-                  <div className="p-4">
-                    <h3 className="font-semibold text-gray-800 text-lg truncate">
-                      {item.name}
-                    </h3>
-                    <p className="text-blue-600 font-bold">EGP {item.price}</p>
-                  </div>
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div> */}
       </div>
+            {/* 🔻 Things You May Like Section */}
+            <div className="max-w-6xl mx-auto px-6 mt-20 mb-20">
+              <h2 className="text-3xl font-bold text-gray-800 mb-6">
+                Things You May Like
+              </h2>
+              <Swiper
+                modules={[Navigation]}
+                spaceBetween={20}
+                slidesPerView={2}
+                navigation
+                pagination={{ clickable: true }}
+                breakpoints={{
+                  640: { slidesPerView: 2 },
+                  768: { slidesPerView: 3 },
+                  1024: { slidesPerView: 4 },
+                }}
+              >
+                {relatedProducts.map((item) => (
+                  <SwiperSlide key={item.id}>
+                    <div
+                      onClick={() => navigate(`/minibagdetails/${item.id}`)}
+                      className="cursor-pointer bg-white p-4 rounded-2xl shadow-md hover:shadow-lg transition"
+                    >
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="w-full h-48 object-cover rounded-lg mb-3"
+                      />
+                      <h3 className="text-lg font-semibold text-gray-700 truncate">
+                        {item.name}
+                      </h3>
+                      <p className="text-green-600 font-bold">EGP {item.price}</p>
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
     </div>
   );
 };

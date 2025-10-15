@@ -22,6 +22,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Eye } from "lucide-react";
+import Footerr from "../Footerr/Footerr";
 
 // Products
 const products = [
@@ -827,6 +828,7 @@ const Home = () => {
             ))}
           </div>
         </section>
+        {/* <div><Footerr /></div> */}
       </div>
     </div>
   );

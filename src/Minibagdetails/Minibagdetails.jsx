@@ -70,6 +70,7 @@ const ProductDetails = () => {
   const [selectedSize, setSelectedSize] = useState("");
 
   const [quantity, setQuantity] = useState(1);
+const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   if (!product) return <div>Product not found</div>;
 

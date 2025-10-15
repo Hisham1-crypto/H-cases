@@ -1,8 +1,8 @@
-import { FooterCopyright, FooterDivider, FooterIcon, FooterLink, FooterLinkGroup, FooterTitle } from 'flowbite-react'
+import { Footer, FooterCopyright, FooterDivider, FooterIcon, FooterLink, FooterLinkGroup, FooterTitle } from 'flowbite-react'
 import React from 'react'
 import { BsFacebook, BsInstagram, BsTwitter } from 'react-icons/bs'
 
-const Footer = () => {
+const Footerr = () => {
   return (
     <div>
     {/* Footer */}
@@ -45,4 +45,4 @@ const Footer = () => {
   )
 }
 
-export default Footer
+export default Footerr

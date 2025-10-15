@@ -18,7 +18,6 @@ import { CartContext } from "../CartContext";
 import { FavoritesContext } from "../FavoritesProvider";
 import NavBar from "../NavBar/NavBar";
 import { motion, AnimatePresence } from "framer-motion";
-import Footer from "../Footer/Footer";
 
 /**
  * دمج التحكم الجديد للموبايل مع الكود الأصلي.

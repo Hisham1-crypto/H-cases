@@ -4,39 +4,39 @@ import { Heart, ShoppingBag } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
 
-const products = [
-  {
-    id: 1,
+const products =  [
+ {
+    id: 12,
     name: "funny bag",
     image: "/funny bag/photo_1_2025-10-14_18-15-04.jpg",
     price: 200,
   },
   {
-    id: 2,
+    id: 13,
     name: "funny bag",
     image: "/funny bag/photo_2_2025-10-14_18-15-04.jpg",
     price: 250,
   },
   {
-    id: 3,
+    id: 14,
     name: "funny bag",
     image: "/funny bag/photo_3_2025-10-14_18-15-04.jpg",
     price: 300,
   },
     {
-    id: 4,
+    id: 15,
     name: "funny bag",
     image: "/funny bag/photo_4_2025-10-14_18-15-04.jpg",
     price: 300,
   },
       {
-    id: 5,
+    id: 16,
     name: "funny bag",
     image: "/funny bag/photo_5_2025-10-14_18-15-04.jpg",
     price: 300,
   },
       {
-    id: 6,
+    id: 17,
     name: "funny bag",
     image: "/funny bag/photo_6_2025-10-14_18-15-04.jpg",
     price: 300,

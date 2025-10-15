@@ -1,3 +1,4 @@
+// src/CartContext.js
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { AuthContext } from "./AuthProvider";
 
@@ -5,78 +6,105 @@ export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const { user, updateCart } = useContext(AuthContext);
+
+  // ✅ تحميل السلة الأولية
   const [cartState, setCartState] = useState(() => {
     if (user?.cart) return user.cart;
     const localCart = localStorage.getItem("guest_cart");
     return localCart ? JSON.parse(localCart) : [];
   });
+
   const [discount, setDiscount] = useState(0);
 
-  // ✅ تحديث cart لما المستخدم يتغير (يسجل دخول أو خروج)
+  // ✅ تحديث السلة عند تغير المستخدم
   useEffect(() => {
     const getInitialCart = () => {
       if (user?.cart) return user.cart;
       const localCart = localStorage.getItem("guest_cart");
       return localCart ? JSON.parse(localCart) : [];
     };
-
     setCartState(getInitialCart());
   }, [user]);
 
-  // ✅ حفظ cart في localStorage لما المستخدم مش عامل login
+  // ✅ حفظ السلة في localStorage عند الزوار
   useEffect(() => {
     if (!user) {
       localStorage.setItem("guest_cart", JSON.stringify(cartState));
     }
   }, [cartState, user]);
 
-  // ✅ إضافة المنتج للسلة (مع نقل الكمية والبراند والموديل صح)
-const addToCart = (item, quantityToAdd = 1) => {
-  const phoneBrand = item.phoneBrand || item.brand || "Not Selected";
-  const phoneModel = item.phoneModel || item.model || "Not Selected";
-  const province = item.province || "";
-
-  const existingItem = cartState.find(
-    (cartItem) =>
-      cartItem.id === item.id &&
-      cartItem.phoneModel === phoneModel &&
-      cartItem.province === province
-  );
-
-  
-  let newCart;
-  if (existingItem) {
-    newCart = cartState.map((cartItem) =>
-      cartItem.id === item.id &&
-      cartItem.phoneModel === phoneModel &&
-      cartItem.province === province
-        ? { ...cartItem, quantity: cartItem.quantity + quantityToAdd }
-        : cartItem
+  // 🔍 دالة مساعدة لتحديد المنتج الفريد
+  const isSameItem = (a, b) => {
+    return (
+      a.id === b.id &&
+      (a.size || "") === (b.size || "") &&
+      (a.phoneModel || "") === (b.phoneModel || "") &&
+      (a.province || "") === (b.province || "")
     );
+  };
+
+  // ✅ إضافة المنتج للسلة
+  const addToCart = (item, quantityToAdd = 1) => {
+    const normalizedItem = {
+      ...item,
+      phoneBrand: item.phoneBrand || item.brand || "Not Selected",
+      phoneModel: item.phoneModel || item.model || "Not Selected",
+      province: item.province || "",
+      size: item.size || "",
+    };
+
+    const existingItem = cartState.find((cartItem) =>
+      isSameItem(cartItem, normalizedItem)
+    );
+
+    let newCart;
+    if (existingItem) {
+      // لو المنتج موجود → زود الكمية
+      newCart = cartState.map((cartItem) =>
+        isSameItem(cartItem, normalizedItem)
+          ? { ...cartItem, quantity: cartItem.quantity + quantityToAdd }
+          : cartItem
+      );
     } else {
-    newCart = [
-      ...cartState,
-      { ...item, phoneBrand, phoneModel, province, quantity: quantityToAdd },
-    ];
-  }
+      // منتج جديد
+      newCart = [...cartState, { ...normalizedItem, quantity: quantityToAdd }];
+    }
 
     setCartState(newCart);
     if (user) updateCart(newCart);
   };
 
-  const removeFromCart = (id, phoneModel, province) => {
-    const newCart = cartState.map((item) =>
-      item.id === id && item.phoneModel === phoneModel && item.province === province
-        ? { ...item, quantity: Math.max(item.quantity - 1, 1) }
-        : item
-    );
-    setCartState(newCart);
-    if (user) updateCart(newCart);
-  };
+  // ✅ تقليل الكمية من منتج
+ const removeFromCart = (id, size, phoneModel, province, quantity) => {
+  const newCart = cartState.map((item) => {
+    if (
+      item.id === id &&
+      (item.size || "") === (size || "") &&
+      (item.phoneModel || "") === (phoneModel || "") &&
+      (item.province || "") === (province || "")
+    ) {
+      // قلل الكمية لو أكبر من 1
+      const newQuantity = Math.max(quantity - 1, 1);
+      return { ...item, quantity: newQuantity };
+    }
+    return item;
+  });
 
-  const deleteFromCart = (id, phoneModel, province) => {
+  setCartState(newCart);
+  if (user) updateCart(newCart);
+};
+
+
+  // ✅ حذف منتج نهائيًا
+  const deleteFromCart = (id, size, phoneModel, province) => {
     const newCart = cartState.filter(
-      (item) => !(item.id === id && item.phoneModel === phoneModel && item.province === province)
+      (item) =>
+        !(
+          item.id === id &&
+          (item.size || "") === (size || "") &&
+          (item.phoneModel || "") === (phoneModel || "") &&
+          (item.province || "") === (province || "")
+        )
     );
     setCartState(newCart);
     if (user) updateCart(newCart);

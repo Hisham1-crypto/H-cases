@@ -1,10 +1,21 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { CartContext } from "../CartContext";
 import axios from "axios";
 import NavBar from "../NavBar/NavBar";
+import { Trash2 } from "lucide-react";
 
 const Checkout = () => {
-  const { cart, discount = 0 } = useContext(CartContext);
+const { cart, discount = 0, deleteFromCart } = useContext(CartContext);
+
+// ✅ جلب المنتج القادم من زر "Buy It Now" لو موجود
+const [buyNowItem, setBuyNowItem] = useState(null);
+
+// useEffect(() => {
+// //   const storedItem = localStorage.getItem("checkout_item");
+// //   if (storedItem) {
+// //     setBuyNowItem(JSON.parse(storedItem));
+// //   }
+// // }, []);
 
   const provinces = [
     { name: "Cairo", shipping: 60 },
@@ -50,10 +61,10 @@ const Checkout = () => {
   const [paymentScreenshot, setPaymentScreenshot] = useState(null);
   const [loading, setLoading] = useState(false); // ✅ حالة التحميل الجديدة
 
-  const subtotal = cart.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
+ const subtotal = buyNowItem
+  ? buyNowItem.price * buyNowItem.quantity
+  : cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
   const selectedProvince = provinces.find((p) => p.name === customer.province);
   const shipping = selectedProvince ? selectedProvince.shipping : 0;
   const subtotalAfterDiscount = discount > 0 ? subtotal - discount : subtotal;
@@ -64,76 +75,126 @@ const Checkout = () => {
   const TELEGRAM_BOT_TOKEN = "7627147252:AAELRiOLp440ZlUulyMf_R2b8LqIQZXSzBs";
   const TELEGRAM_CHAT_ID = "6762937189";
 
-  const handlePayment = async () => {
-    if (
-      !customer.firstName ||
-      !customer.lastName ||
-      !customer.province ||
-      !customer.address ||
-      !customer.phone
-    ) {
-      alert("من فضلك املأ كل البيانات");
-      return;
-    }
-    if (cart.length === 0) {
-      alert("سلة المشتريات فارغة");
-      return;
-    }
-    if (!paymentScreenshot) {
-      alert("يرجى رفع صورة الإيصال");
-      return;
+const handlePayment = async () => {
+  if (
+    !customer.firstName ||
+    !customer.lastName ||
+    !customer.province ||
+    !customer.address ||
+    !customer.phone
+  ) {
+    alert("من فضلك املأ كل البيانات");
+    return;
+  }
+
+  const itemsToSend = buyNowItem ? [buyNowItem] : cart;
+
+  if (itemsToSend.length === 0) {
+    alert("لا يوجد منتجات لإرسالها");
+    return;
+  }
+
+  if (!paymentScreenshot) {
+    alert("يرجى رفع صورة الإيصال");
+    return;
+  }
+
+  setLoading(true);
+
+  let lastOrderNumber = parseInt(
+    localStorage.getItem("lastOrderNumber") || "0",
+    10
+  );
+  lastOrderNumber += 1;
+  localStorage.setItem("lastOrderNumber", lastOrderNumber);
+  const referenceNumber = `ETCH${lastOrderNumber}`;
+
+  // 🧾 نص الرسالة
+  let message = `📦 *New Order!*\n`;
+  message += `Reference: ${referenceNumber}\n`;
+  message += `Name: ${customer.firstName} ${customer.lastName}\n`;
+  message += `Phone: ${customer.phone}\n`;
+  message += `Province: ${customer.province}\n`;
+  message += `Address: ${customer.address}\n`;
+  message += `Payment: ${
+    paymentType === "full" ? "Full Payment" : "Deposit (50%)"
+  }\n`;
+  message += `Amount Paid: ${paymentType === "full" ? total : deposit} EGP\n\n`;
+
+  message += `🛍️ *Products:*\n`;
+  itemsToSend.forEach((item) => {
+    message += `• ${item.name}\n`;
+    message += `Brand: ${item.phoneBrand || "—"}\n`;
+    message += `Model: ${item.phoneModel || "—"}\n`;
+    message += `Size: ${item.size || "—"}\n`;
+    message += `Quantity: ${item.quantity || 1}\n`;
+    message += `Price: ${item.price * item.quantity} EGP\n\n`;
+  });
+
+  message += `Subtotal: ${subtotalAfterDiscount} EGP\n`;
+  message += `Shipping: ${shipping} EGP\n`;
+  message += `Total: ${total} EGP`;
+
+  try {
+    const formData = new FormData();
+    const mediaArray = [];
+
+    // 🖼️ أولاً: أضف صور المنتجات كملفات حقيقية
+    for (let i = 0; i < itemsToSend.length; i++) {
+      const item = itemsToSend[i];
+
+      if (item.image) {
+        const response = await fetch(item.image);
+        const blob = await response.blob();
+        const fileName = `product_${i}.jpg`;
+
+        // نضيف الملف إلى formData
+        formData.append(fileName, blob, fileName);
+
+        // نضيفه كعنصر في mediaArray
+        mediaArray.push({
+          type: "photo",
+          media: `attach://${fileName}`,
+          caption: `🛍️ ${item.name}\nSize: ${item.size || "—"}\nQty: ${
+            item.quantity
+          }`,
+        });
+      }
     }
 
-    let lastOrderNumber = parseInt(
-      localStorage.getItem("lastOrderNumber") || "0",
-      10
+    // 🧾 ثم نضيف صورة الإيصال
+    const receiptFileName = "receipt.jpg";
+    formData.append(receiptFileName, paymentScreenshot, receiptFileName);
+    mediaArray.push({
+      type: "photo",
+      media: `attach://${receiptFileName}`,
+      caption: message,
+      parse_mode: "Markdown",
+    });
+
+    // 💬 نضيف باقي البيانات
+    formData.append("chat_id", TELEGRAM_CHAT_ID);
+    formData.append("media", JSON.stringify(mediaArray));
+
+    // 📤 نرسل الطلب
+    await axios.post(
+      `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMediaGroup`,
+      formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
     );
-    lastOrderNumber += 1;
-    localStorage.setItem("lastOrderNumber", lastOrderNumber);
-    const referenceNumber = `ETCH${lastOrderNumber}`;
 
-    let message = `📦 *New Order!*\n`;
-    message += `Reference: ${referenceNumber}\n`;
-    message += `Name: ${customer.firstName} ${customer.lastName}\n`;
-    message += `Phone: ${customer.phone}\n`;
-    message += `Province: ${customer.province}\n`;
-    message += `Address: ${customer.address}\n`;
-    message += `Payment: ${
-      paymentType === "full" ? "Full Payment" : "Deposit (50%)"
-    }\n`;
-    message += `Amount Paid: ${paymentAmount} EGP\n`;
-    message += `\n*Products:*\n`;
-cart.forEach((item) => {
-message += `- ${item.name} (${item.phoneBrand || "Unknown Brand"} - ${item.phoneModel || "Unknown Model"}) x${item.quantity} = ${item.price * item.quantity} EGP\n`;
-});
-    message += `\nSubtotal: ${subtotalAfterDiscount} EGP\n`;
-    message += `Shipping: ${shipping} EGP\n`;
-    message += `Total: ${total} EGP`;
+    alert("✅ تم إرسال الطلب بنجاح!");
+  } catch (err) {
+    console.error("Telegram Error:", err.response?.data || err.message);
+    alert("❌ حدث خطأ أثناء إرسال الطلب. راجع الكونسول لمزيد من التفاصيل.");
+  } finally {
+    setLoading(false);
+  }
+};
 
-    try {
-      const formData = new FormData();
-      formData.append("chat_id", TELEGRAM_CHAT_ID);
-      formData.append("caption", message);
-      formData.append("photo", paymentScreenshot);
 
-      await axios.post(
-        `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`,
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
-
-      alert(
-        `تم إرسال بيانات الطلب بنجاح!`
-      );
-    } catch (err) {
-      console.error(err);
-      alert("حدث خطأ أثناء إرسال الطلب .");
-    } finally {
-      setLoading(false); // ✅ إيقاف التحميل بعد الإرسال
-    }
-  };
 
   return (
     <div>
@@ -148,15 +209,17 @@ message += `- ${item.name} (${item.phoneBrand || "Unknown Brand"} - ${item.phone
             <h3 className="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">
               Your Order
             </h3>
-            {cart.length === 0 ? (
-              <p className="text-gray-400">Your cart is empty.</p>
-            ) : (
-              <div className="space-y-5">
-             {cart.map((item) => (
+         {(buyNowItem || cart.length > 0) ? (
+  <div className="space-y-5">
+    {(buyNowItem ? [buyNowItem] : cart).map((item) => (
   <div
     key={item.id}
     className="flex items-center gap-4 border-b pb-3"
   >
+        {/* 🗑️ زر حذف المنتج */}
+   
+
+    
     <img
       src={item.image}
       alt={item.name}
@@ -177,11 +240,27 @@ message += `- ${item.name} (${item.phoneBrand || "Unknown Brand"} - ${item.phone
       <p className="text-gray-500 text-sm">
         Quantity: <span className="font-medium text-gray-700">{item.quantity || 1}</span>
       </p>
+<p className="text-gray-500 text-sm">
+  Size: <span className="font-medium text-gray-700">{item.size || "—"}</span>
+</p>
+
 
       <p className="font-bold text-gray-800 mt-1">
         {item.price * item.quantity} EGP
       </p>
+
+
     </div>
+    <button
+  onClick={() =>
+    deleteFromCart(item.id, item.size, item.phoneModel, item.province)
+  }
+    className="text-red-500 hover:text-red-700 transition"
+  title="Remove item"
+>
+  <Trash2 size={20} />
+</button>
+
   </div>
 ))}
 
@@ -200,7 +279,13 @@ message += `- ${item.name} (${item.phoneBrand || "Unknown Brand"} - ${item.phone
                   </div>
                 </div>
               </div>
-            )}
+           ) : <div className="flex flex-col items-center justify-center py-16 text-center text-gray-500">
+  <div className="bg-gray-100 p-6 rounded-2xl shadow-sm w-fit">
+    <p className="text-xl font-semibold text-gray-700 mb-2">No Orders Yet</p>
+    <p className="text-sm text-gray-500">You haven’t placed any orders so far.</p>
+  </div>
+</div>
+ }
           </div>
 
           {/* Left Side - Customer Info */}

@@ -5,56 +5,56 @@ import { useNavigate } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
 
 const products = [
-  {
-    id: 1,
+      {
+    id: 18,
     name: "mini bag",
     image: "/minibag/photo_1_2025-10-14_18-49-08.jpg",
     price: 200,
   },
   {
-    id: 2,
+    id: 19,
     name: "mini bag",
     image: "/minibag/photo_2_2025-10-14_18-49-08.jpg",
     price: 250,
   },
   {
-    id: 3,
+    id: 20,
     name: "mini bag",
     image: "/minibag/photo_3_2025-10-14_18-49-08.jpg",
     price: 300,
   },
     {
-    id: 4,
+    id: 21,
     name: "mini bag",
     image: "/minibag/photo_4_2025-10-14_18-49-08.jpg",
     price: 300,
   },
       {
-    id: 5,
+    id: 22,
     name: "mini bag",
     image: "/minibag/photo_5_2025-10-14_18-49-08.jpg",
     price: 300,
   },
       {
-    id: 6,
+    id: 23,
     name: "mini bag",
     image: "/minibag/photo_6_2025-10-14_18-49-08.jpg",
     price: 300,
   },  
        {
-    id: 7,
+    id: 24,
     name: "mini bag",
     image: "/minibag/photo_7_2025-10-14_18-49-08.jpg",
     price: 300,
   },  
        {
-    id: 8,
+    id: 25,
     name: "mini bag",
     image: "/minibag/photo_8_2025-10-14_18-49-08.jpg",
     price: 300,
-  },  
-    
+  },      
 ];
+
 
 const Laptopsleeve = () => {
   const navigate = useNavigate();

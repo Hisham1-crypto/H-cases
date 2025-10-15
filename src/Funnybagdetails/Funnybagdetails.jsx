@@ -4,40 +4,42 @@ import { Heart } from "lucide-react";
 import NavBar from "../NavBar/NavBar";
 import { CartContext } from "../CartContext";
 import { FavoritesContext } from "../FavoritesProvider";
+import { Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 const products =  [
-  {
-    id: 1,
+ {
+    id: 12,
     name: "funny bag",
     image: "/funny bag/photo_1_2025-10-14_18-15-04.jpg",
     price: 200,
   },
   {
-    id: 2,
+    id: 13,
     name: "funny bag",
     image: "/funny bag/photo_2_2025-10-14_18-15-04.jpg",
     price: 250,
   },
   {
-    id: 3,
+    id: 14,
     name: "funny bag",
     image: "/funny bag/photo_3_2025-10-14_18-15-04.jpg",
     price: 300,
   },
     {
-    id: 4,
+    id: 15,
     name: "funny bag",
     image: "/funny bag/photo_4_2025-10-14_18-15-04.jpg",
     price: 300,
   },
       {
-    id: 5,
+    id: 16,
     name: "funny bag",
     image: "/funny bag/photo_5_2025-10-14_18-15-04.jpg",
     price: 300,
   },
       {
-    id: 6,
+    id: 17,
     name: "funny bag",
     image: "/funny bag/photo_6_2025-10-14_18-15-04.jpg",
     price: 300,
@@ -54,37 +56,56 @@ const ProductDetails = () => {
   const { addToFavorites } = useContext(FavoritesContext);
 
   const [quantity, setQuantity] = useState(1);
-  const [selectedSize, setSelectedSize] = useState(""); // ✅ المقاس
+  const relatedProducts = products.filter((p) => p.id !== product.id);
+  const [selectedSize, setSelectedSize] = useState("");
 
   if (!product) return <div>Product not found</div>;
 
   // ✅ إضافة المنتج للسلة
-  const handleAddToCart = () => {
+ 
+ const handleAddToCart = () => {
 
-    addToCart({
-      id: product.id,
-      name: product.name,
-      image: product.image,
-      price: product.price,
-      size: selectedSize,
-      quantity,
-    });
-
+  const cartItem = {
+    id: product.id,
+    name: product.name,
+    image: product.image,
+    price: product.price,
+    size: selectedSize,
   };
 
-  // ✅ إضافة للمفضلة
-  const handleFavorite = () => {
-    addToFavorites({
-      id: product.id,
-      name: product.name,
-      image: product.image,
-      price: product.price,
-    });
+  // ✅ هنا نبعت الكمية فعلاً
+  addToCart(cartItem, quantity);
+};
+
+
+ const handleFavorite = () => {
+  const favoriteItem = {
+    id: product.id,
+    name: product.name,
+    image: product.image,
+    price: product.price,
+    quantity: quantity,
   };
 
-  const handleBuyNow = () => {
-    navigate("/checkout");
+  addToFavorites(favoriteItem);
+};
+
+ const handleBuyNow = () => {
+
+  const buyNowProduct = {
+    id: product.id,
+    name: product.name,
+    image: product.image,
+    price: product.price,
+    size: selectedSize,
+    quantity: quantity,
   };
+
+  // ✅ حفظ المنتج في localStorage علشان صفحة Checkout تقدر تجيبه
+  localStorage.setItem("checkout_item", JSON.stringify(buyNowProduct));
+
+  navigate("/checkout");
+};
 
   return (
     <div>
@@ -169,12 +190,12 @@ const ProductDetails = () => {
             </div>
 
             {/* اللينك التحتي */}
-            <p
+            {/* <p
               className="text-blue-600 mt-3 underline cursor-pointer text-sm"
               onClick={() => alert("Shipping, Return & Refund Policies")}
             >
               Shipping, Return & Refund Policies
-            </p>
+            </p> */}
            <div className="mt-8">
   <h2 className="text-2xl font-semibold text-gray-800 mb-4 border-b-2 border-gray-200 pb-2">
     Product Details
@@ -192,17 +213,94 @@ const ProductDetails = () => {
       <span className="text-lime-500 mt-1">•</span>
       <span>Adjustable strap for all sizes</span>
     </li>
-    <li className="flex items-start gap-2">
+    <li className="flex items-start gap-2 mb-20">
       <span className="text-lime-500 mt-1">•</span>
       <span>Extra back pocket for secure storage</span>
     </li>
   </ul>
 </div>
+<div className="h-10"></div>
+ {/* ✅ قسم "You may also like"
+<div className="mt-20 text-center flex flex-col items-center">
+  <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+                   You may also like
+                 </h2>
+         <div className="w-full max-w-6xl">
+
+                 <Swiper className="justify-items-center "
+                   spaceBetween={20}
+                   pagination={{ clickable: true }}
+                   modules={[Pagination]}
+                   breakpoints={{
+                     320: { slidesPerView: 1.2 },
+                     640: { slidesPerView: 2 },
+                     1024: { slidesPerView: 4 },
+                   }}
+                 >
+                   {relatedProducts.slice(0, 8).map((item) => (
+                     <SwiperSlide key={item.id}>
+                       <div
+                         onClick={() => navigate(`/product/${item.id}`)}
+                         className="cursor-pointer border rounded-xl overflow-hidden bg-white shadow-md hover:shadow-lg transition-all"
+                       >
+                         <img
+                           src={item.image}
+                           alt={item.name}
+                           className="w-full h-100 object-cover"
+                         />
+                         <div className="p-4">
+                           <h3 className="font-semibold text-gray-800 text-lg truncate">
+                             {item.name}
+                           </h3>
+                           <p className="text-blue-600 font-bold">EGP {item.price}</p>
+                         </div>
+                       </div>
+                     </SwiperSlide>
+                   ))}
+                 </Swiper>
+               </div>
+                              </div> */}
 
           </div>
         
         </div>
       </div>
+       <div className="max-w-6xl mx-auto px-6 mt-20 mb-20">
+              <h2 className="text-3xl font-bold text-gray-800 mb-6">
+                Things You May Like
+              </h2>
+              <Swiper
+                modules={[Navigation]}
+                spaceBetween={20}
+                slidesPerView={2}
+                navigation
+                pagination={{ clickable: true }}
+                breakpoints={{
+                  640: { slidesPerView: 2 },
+                  768: { slidesPerView: 3 },
+                  1024: { slidesPerView: 4 },
+                }}
+              >
+                {relatedProducts.map((item) => (
+                  <SwiperSlide key={item.id}>
+                    <div
+                      onClick={() => navigate(`/funnybagdetails/${item.id}`)}
+                      className="cursor-pointer bg-white p-4 rounded-2xl shadow-md hover:shadow-lg transition"
+                    >
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="w-full h-48 object-cover rounded-lg mb-3"
+                      />
+                      <h3 className="text-lg font-semibold text-gray-700 truncate">
+                        {item.name}
+                      </h3>
+                      <p className="text-green-600 font-bold">EGP {item.price}</p>
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
     </div>
   );
 };

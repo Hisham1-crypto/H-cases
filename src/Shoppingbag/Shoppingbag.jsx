@@ -30,7 +30,7 @@ const ShoppingBag = () => {
   return (
     <div className="mb-20">
       <NavBar />
-      <div className="h-8"></div>
+      <div className="h-20"></div>
 
       <div className="mt-20 min-h-screen bg-gray-100 p-4 sm:p-6">
         <div className="max-w-6xl mx-auto">
@@ -63,103 +63,121 @@ const ShoppingBag = () => {
           ) : (
             <div className="space-y-6">
               {cart.map((item) => (
-                <div
-                  key={`${item.id}-${item.phoneModel}-${item.province}`}
-                  className="flex flex-col md:flex-row justify-between md:items-center border-b pb-5 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition"
-                >
-                  {/* صورة وبيانات المنتج */}
-                  <div className="flex flex-col sm:flex-row items-center gap-4 md:w-1/2 w-full mb-4 md:mb-0">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="lg:w-50 lg:h-60 sm:w-32 sm:h-32 object-contain border-rounded"
-                    />
-                    <div className="text-center sm:text-left">
-                      <h3 className="text-lg font-semibold text-gray-800">{item.name}</h3>
-                      <p className="text-gray-500 text-sm">
-                        {item.phoneBrand ? (
-                          <>
-                            Brand:{" "}
-                            <span className="font-medium text-gray-700">
-                              {item.phoneBrand}
-                            </span>
-                          </>
-                        ) : (
-                          <span className="text-gray-400 italic">
-                            No brand selected
-                          </span>
-                        )}
-                      </p>
-                      <p className="text-gray-500 text-sm">
-                        {item.phoneModel ? (
-                          <>
-                            Model:{" "}
-                            <span className="font-medium text-gray-700">
-                              {item.phoneModel}
-                            </span>
-                          </>
-                        ) : (
-                          <span className="text-gray-400 italic">
-                            No model selected
-                          </span>
-                        )}
-                      </p>
-                    </div>
-                  </div>
+               // داخل الماب اللي بيعرض كل عنصر في السلة
 
-                  {/* ✅ الأعمدة الجديدة */}
-                  <div className="flex justify-around md:justify-end items-center w-full md:w-1/2 text-center gap-6">
-                    {/* الكمية */}
-                    <div>
-                      <p className="text-sm text-gray-500 mb-1 font-medium">Quantity</p>
-                      <div className="flex items-center justify-center gap-2 bg-gray-50 px-3 py-1 rounded-full border">
-                        <button
-                          onClick={() =>
-                            removeFromCart(item.id, item.phoneModel, item.province)
-                          }
-                          disabled={item.quantity <= 1}
-                          className={`w-6 h-6 flex items-center justify-center rounded-full transition text-lg font-bold ${
-                            item.quantity <= 1
-                              ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                              : "bg-red-100 text-red-500 hover:bg-red-200"
-                          }`}
-                        >
-                          -
-                        </button>
-                        <span className="text-gray-800 font-medium w-6 text-center">
-                          {item.quantity}
-                        </span>
-                        <button
-                          onClick={() => addToCart(item)}
-                          className="w-6 h-6 flex items-center justify-center rounded-full bg-green-100 text-green-600 hover:bg-green-200 transition text-lg font-bold"
-                        >
-                          +
-                        </button>
-                      </div>
-                    </div>
+<div
+  key={`${item.id}-${item.phoneModel}-${item.province}`}
+  className="flex flex-col md:flex-row justify-between md:items-center border-b pb-5 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition"
+>
+  {/* صورة وبيانات المنتج */}
+  <div className="flex flex-col sm:flex-row items-center gap-4 md:w-1/2 w-full mb-4 md:mb-0">
+    <img
+      src={item.image}
+      alt={item.name}
+      className="lg:w-50 lg:h-60 sm:w-32 sm:h-32 object-contain border-rounded"
+    />
+    <div className="text-center sm:text-left">
+      <h3 className="text-lg font-semibold text-gray-800">{item.name}</h3>
 
-                    {/* السعر */}
-                    <div>
-                      <p className="text-sm text-gray-500 font-medium">Total</p>
-                      <div className="h-3"></div>
-                      <p className="font-semibold text-gray-800 ">
-                        {item.price * item.quantity} EGP
-                      </p>
-                    </div>
+      {/* ✅ Brand */}
+      <p className="text-gray-500 text-sm">
+        {item.phoneBrand ? (
+          <>
+            Brand:{" "}
+            <span className="font-medium text-gray-700">{item.phoneBrand}</span>
+          </>
+        ) : (
+          <span className="text-gray-400 italic">No brand selected</span>
+        )}
+      </p>
 
-                    {/* زر الحذف */}
-                    <div>
-                      <button
-                        onClick={() =>
-                          deleteFromCart(item.id, item.phoneModel, item.province)
-                        }
-                        className="p-2 rounded-full hover:bg-gray-200 transition"
-                      >
-                        <Trash2 className="w-5 h-5 text-gray-600" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
+      {/* ✅ Model */}
+      <p className="text-gray-500 text-sm">
+        {item.phoneModel ? (
+          <>
+            Model:{" "}
+            <span className="font-medium text-gray-700">{item.phoneModel}</span>
+          </>
+        ) : (
+          <span className="text-gray-400 italic">No model selected</span>
+        )}
+      </p>
+
+      {/* ✅ Size (المقاس) */}
+      <p className="text-gray-500 text-sm">
+        {item.size ? (
+          <>
+            Size:{" "}
+            <span className="font-medium text-gray-700">{item.size}</span>
+          </>
+        ) : (
+          <span className="text-gray-400 italic">No size selected</span>
+        )}
+      </p>
+    </div>
+  </div>
+
+  {/* باقي الكود كما هو */}
+  <div className="flex justify-around md:justify-end items-center w-full md:w-1/2 text-center gap-6">
+    {/* الكمية */}
+    <div>
+      <p className="text-sm text-gray-500 mb-1 font-medium">Quantity</p>
+      <div className="flex items-center justify-center gap-2 bg-gray-50 px-3 py-1 rounded-full border">
+ <button
+  onClick={() =>
+    removeFromCart(
+      item.id,
+      item.size,
+      item.phoneModel,
+      item.province,
+      item.quantity
+    )
+  }
+  disabled={item.quantity <= 1}
+  className={`w-6 h-6 flex items-center justify-center rounded-full transition text-lg font-bold ${
+    item.quantity <= 1
+      ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+      : "bg-red-100 text-red-500 hover:bg-red-200"
+  }`}
+>
+  -
+</button>
+
+        <span className="text-gray-800 font-medium w-6 text-center">
+          {item.quantity}
+        </span>
+        <button
+          onClick={() => addToCart(item)}
+          className="w-6 h-6 flex items-center justify-center rounded-full bg-green-100 text-green-600 hover:bg-green-200 transition text-lg font-bold"
+        >
+          +
+        </button>
+      </div>
+    </div>
+
+    {/* السعر */}
+    <div>
+      <p className="text-sm text-gray-500 font-medium">Total</p>
+      <div className="h-3"></div>
+      <p className="font-semibold text-gray-800">
+        {item.price * item.quantity} EGP
+      </p>
+    </div>
+
+    {/* زر الحذف */}
+    <div>
+      <button
+        onClick={() =>
+          deleteFromCart(item.id, item.size, item.phoneModel, item.province)
+        }
+        className="p-2 rounded-full hover:bg-gray-200 transition"
+      >
+        <Trash2 className="w-5 h-5 text-gray-600" />
+      </button>
+    </div>
+  </div>
+</div>
+
               ))}
             </div>
           )}

@@ -5,15 +5,6 @@ import { FavoritesContext } from "../FavoritesProvider";
 import { AuthContext } from "../AuthProvider";
 import { useNavigate, Link, Navigate } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
-import {
-  FooterCopyright,
-  FooterDivider,
-  FooterLink,
-  FooterLinkGroup,
-  FooterTitle,
-  Footer,
-  FooterIcon,
-} from "flowbite-react";
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
 import { motion, AnimatePresence } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -175,6 +166,33 @@ const featuredProducts = [
 ];
 
 const morecases = [
+   {
+    id: 1,
+    name: "Laptop Sleeve 13 inch",
+    image: "/laptopsleeve/photo_1_2025-10-14_15-29-33.jpg",
+    price: 200,
+  },
+
+
+  {
+    id: 8,
+    name: "Laptop Sleeve 17 inch",
+    image: "/laptopsleeve/photo_8_2025-10-14_15-29-33.jpg",
+    price: 300,
+  },
+  {
+    id: 9,
+    name: "Laptop Sleeve 17 inch",
+    image: "/laptopsleeve/photo_9_2025-10-14_15-29-33.jpg",
+    price: 300,
+  },
+
+  {
+    id: 11,
+    name: "Laptop Sleeve 17 inch",
+    image: "/laptopsleeve/photo_11_2025-10-14_15-29-33.jpg",
+    price: 300,
+  },
   {
     id: 46,
     title: "Grey 911",
@@ -195,6 +213,30 @@ const morecases = [
     price: 130,
     oldPrice: 160,
     image: "/top pick photos/photo_26_2025-10-10_07-18-14.jpg",
+  },
+   {
+    id: 18,
+    name: "mini bag",
+    image: "/minibag/photo_1_2025-10-14_18-49-08.jpg",
+    price: 200,
+  },
+ {
+    id: 23,
+    name: "mini bag",
+    image: "/minibag/photo_6_2025-10-14_18-49-08.jpg",
+    price: 300,
+  },  
+       {
+    id: 24,
+    name: "mini bag",
+    image: "/minibag/photo_7_2025-10-14_18-49-08.jpg",
+    price: 300,
+  },  
+    {
+    id: 21,
+    name: "mini bag",
+    image: "/minibag/photo_4_2025-10-14_18-49-08.jpg",
+    price: 300,
   },
   {
     id: 49,
@@ -217,6 +259,13 @@ const morecases = [
     oldPrice: 180,
     image: "/top pick photos/photo_34_2025-10-10_07-18-14.jpg",
   },
+   {
+    id: 12,
+    name: "funny bag",
+    image: "/funny bag/photo_1_2025-10-14_18-15-04.jpg",
+    price: 200,
+  },
+
   {
     id: 52,
     title: "Blue Labubu ",
@@ -231,6 +280,19 @@ const morecases = [
     oldPrice: 160,
     image: "/top pick photos/photo_36_2025-10-10_07-18-14.jpg",
   },
+    {
+    id: 13,
+    name: "funny bag",
+    image: "/funny bag/photo_2_2025-10-14_18-15-04.jpg",
+    price: 250,
+  },
+      {
+    id: 17,
+    name: "funny bag",
+    image: "/funny bag/photo_6_2025-10-14_18-15-04.jpg",
+    price: 300,
+  },  
+    
   {
     id: 54,
     title: "Dark Brown Labubu",
@@ -291,14 +353,15 @@ const products2 = [
     image: "/top pick photos/photo_1_2025-09-29_20-49-37.jpg",
   },
 
-  {
-    id: 62,
-    title: "Tiger Case",
-    oldPrice: 160,
-    price: 130,
-    image: "/top pick photos/photo_1_2025-10-10_07-18-14.jpg",
-  },
 
+      {
+    id: 23,
+        oldPrice: 160,
+
+    title: "mini bag",
+    image: "/minibag/photo_6_2025-10-14_18-49-08.jpg",
+    price: 300,
+  },  
   {
     id: 63,
     title: "Blue - Muve babe shark",
@@ -306,13 +369,16 @@ const products2 = [
     price: 130,
     image: "/top pick photos/photo_2_2025-09-29_20-49-37.jpg",
   },
-  {
-    id: 64,
-    title: "Black  Tiger case",
-    oldPrice: 160,
-    price: 130,
-    image: "/top pick photos/photo_2_2025-10-10_07-18-14.jpg",
+    {
+    id: 19,
+    title: "mini bag",
+        oldPrice: 160,
+
+    image: "/minibag/photo_2_2025-10-14_18-49-08.jpg",
+    price: 250,
   },
+
+
   {
     id: 65,
     title: "Militairy - black babe  shark",
@@ -348,20 +414,8 @@ const products2 = [
     price: 130,
     image: "/top pick photos/photo_6_2025-09-29_20-49-37.jpg",
   },
-  {
-    id: 70,
-    title: "Blue LV",
-    oldPrice: 160,
-    price: 130,
-    image: "/top pick photos/photo_6_2025-10-10_07-18-14.jpg",
-  },
-  {
-    id: 71,
-    title: "Black babe shark",
-    oldPrice: 160,
-    price: 130,
-    image: "/top pick photos/photo_7_2025-09-29_20-49-37.jpg",
-  },
+
+
   {
     id: 72,
     title: "Black - white LV",
@@ -369,14 +423,184 @@ const products2 = [
     price: 130,
     image: "/top pick photos/photo_7_2025-10-10_07-18-14.jpg",
   },
+
+];
+
+const laptopsleeve =[
   {
+    id: 1,
+    title: "Laptop Sleeve 13 inch",
+        oldPrice: 160,
+
+    image: "/laptopsleeve/photo_1_2025-10-14_15-29-33.jpg",
+    price: 200,
+  },
+  {
+    id: 2,
+    title: "Laptop Sleeve 15 inch",
+        oldPrice: 160,
+
+    image: "/laptopsleeve/photo_2_2025-10-14_15-29-33.jpg",
+    price: 250,
+  },
+  {
+    id: 3,
+    title: "Laptop Sleeve 17 inch",
+        oldPrice: 160,
+
+    image: "/laptopsleeve/photo_3_2025-10-14_15-29-33.jpg",
+    price: 300,
+  },
+    {
+    id: 4,
+    title: "Laptop Sleeve 17 inch",
+        oldPrice: 160,
+
+    image: "/laptopsleeve/photo_4_2025-10-14_15-29-33.jpg",
+    price: 300,
+  },
+      {
+    id: 5,
+    title: "Laptop Sleeve 17 inch",
+        oldPrice: 160,
+
+    image: "/laptopsleeve/photo_5_2025-10-14_15-29-33.jpg",
+    price: 300,
+  },
+      {
+    id: 6,
+    title: "Laptop Sleeve 17 inch",
+        oldPrice: 160,
+
+    image: "/laptopsleeve/photo_6_2025-10-14_15-29-33.jpg",
+    price: 300,
+  },  
+    {
+    id: 7,
+    title: "Laptop Sleeve 17 inch",
+        oldPrice: 160,
+
+    image: "/laptopsleeve/photo_7_2025-10-14_15-29-33.jpg",
+    price: 300,
+  },
+    {
+    id: 8,
+    title: "Laptop Sleeve 17 inch",
+        oldPrice: 160,
+
+    image: "/laptopsleeve/photo_8_2025-10-14_15-29-33.jpg",
+    price: 300,
+  },
+    {
+    id: 9,
+    title: "Laptop Sleeve 17 inch",
+        oldPrice: 160,
+
+    image: "/laptopsleeve/photo_9_2025-10-14_15-29-33.jpg",
+    price: 300,
+  },
+    {
+    id: 10,
+    title: "Laptop Sleeve 17 inch",
+        oldPrice: 160,
+
+    image: "/laptopsleeve/photo_10_2025-10-14_15-29-33.jpg",
+    price: 300,
+  },
+    {
+    id: 11,
+    title: "Laptop Sleeve 17 inch",
+        oldPrice: 160,
+
+    image: "/laptopsleeve/photo_11_2025-10-14_15-29-33.jpg",
+    price: 300,
+  },
+];
+const firstgrid = [
+    {
+    id: 1,
+    title: "Special Evile Eye",
+    oldPrice: 160,
+    image: "/evileeye/photo_5_2025-10-10_17-14-24.jpg",
+    price: 200,
+  },
+      {
+    id: 74,
+    title: "Special Evile Eye",
+    oldPrice: 160,
+    image: "/funny bag/photo_2_2025-10-14_18-15-04.jpg",
+    price: 200,
+  },
+       {
+    id: 2,
+    title: "Laptop Sleeve",
+    oldPrice: 160,
+    image: "/laptopsleeve/photo_2_2025-10-14_15-29-33.jpg",
+    price: 200,
+  },
+{   id: 20,
+    oldPrice: 160,
+    name: "mini bag",
+    image: "/minibag/photo_3_2025-10-14_18-49-08.jpg",
+    price: 300,
+  }, 
+       {
+    id: 22,
+    name: "mini bag",
+    oldPrice: 160,
+    image: "/minibag/photo_5_2025-10-14_18-49-08.jpg",
+    price: 300,
+  },
+   {
+    id: 14,
+    name: "funny bag",
+    oldPrice: 160,
+    image: "/funny bag/photo_3_2025-10-14_18-15-04.jpg",
+    price: 300,
+  },
+             {
     id: 73,
     title: "Purple - mint babe shark",
     oldPrice: 160,
     price: 130,
     image: "/top pick photos/photo_8_2025-09-29_20-49-37.jpg",
   },
-];
+         {
+    id: 69,
+    title: "Dark militairy - black babe shark",
+    oldPrice: 160,
+    price: 130,
+    image: "/top pick photos/photo_6_2025-09-29_20-49-37.jpg",
+  },
+        {
+    id: 70,
+    title: "Blue LV",
+    oldPrice: 160,
+    price: 130,
+    image: "/top pick photos/photo_6_2025-10-10_07-18-14.jpg",
+  },
+          {
+    id: 71,
+    title: "Black babe shark",
+    oldPrice: 160,
+    price: 130,
+    image: "/top pick photos/photo_7_2025-09-29_20-49-37.jpg",
+  },
+       {
+    id: 68,
+    title: "Brown tiger",
+    oldPrice: 160,
+    price: 130,
+    image: "/top pick photos/photo_5_2025-10-10_07-18-14.jpg",
+  },
+    {
+    id: 64,
+    title: "Black  Tiger case",
+    oldPrice: 160,
+    price: 130,
+    image: "/top pick photos/photo_2_2025-10-10_07-18-14.jpg",
+  },
+]
 // Phone Brands & Models
 const phoneData = {
   iPhone: ["iPhone 14 Pro", "iPhone 14 Pro Max", "iPhone 14", "iPhone 13"],
@@ -599,6 +823,81 @@ const Home = () => {
           </div>
         </div>
       </section>
+           <h2 className="text-2xl md:text-3xl font-bold text-center  mb-8 text-gray-900">
+          Special Products
+          </h2>
+
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 gap-6 px-6">
+            {firstgrid.map((product) => (
+              <div
+                key={product.id}
+                className="bg-white rounded-3xl  shadow-md hover:shadow-xl transition overflow-hidden relative group cursor-pointer"
+              >
+                {/* Image */}
+                <div className="w-full  mb-5 aspect-[3/4] flex items-center justify-center bg-gray-100 overflow-hidden rounded-2xl shadow-md">
+                  <img
+                    src={product.image}
+                    alt={product.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                       onClick={(e) => {
+                        e.stopPropagation();
+                        if (product.id >= 1 && product.id <= 11) {
+                          navigate(`/laptopsleeve/${product.id}`);
+                        } else if (product.id >= 12 && product.id <= 17) {
+                          navigate(`/funnybagdetails/${product.id}`);
+                        } else if (product.id >= 18 && product.id <= 25) {
+                          navigate(`/minibagdetails/${product.id}`);
+                        } else {
+                          navigate(`/phonedetails/${product.id}`);
+                        }
+                      }}
+                  />
+                </div>
+
+                {/* Overlay on hover */}
+                <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-3">
+                  <button
+                    onClick={() => addToFavorites(product)}
+                    className="p-2 bg-white rounded-full shadow hover:scale-110 transition"
+                  >
+                    <Heart className="w-5 h-5 text-red-500" />
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (product.id >= 1 && product.id <= 11) {
+                        navigate(`/laptopsleeve/${product.id}`);
+                      } else if (product.id >= 12 && product.id <= 17) {
+                        navigate(`/funnybagdetails/${product.id}`);
+                      } else if (product.id >= 18 && product.id <= 25) {
+                        navigate(`/minibagdetails/${product.id}`);
+                      } else {
+                        navigate(`/phonedetails/${product.id}`);
+                      }
+                    }}
+                    className="absolute top-3 right-3 p-2 bg-gray-100 rounded-full shadow hover:bg-black hover:text-white hover:scale-110 transition z-10 flex items-center gap-1"
+                  >
+                    <Eye className="w-5 h-5" />
+                  </button>
+                </div>
+
+                {/* Product Info */}
+                <div className="p-4 text-center">
+                  <h3 className="text-base font-semibold mb-2 line-clamp-2">
+                    {product.title || product.name}
+                  </h3>
+                  {product.oldPrice && (
+                    <div className="text-gray-400 line-through text-sm mb-1">
+                      EGP {product.oldPrice.toLocaleString()}
+                    </div>
+                  )}
+                  <div className="text-red-600 font-bold text-lg">
+                    EGP {product.price.toLocaleString()}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
       {/* Products Section */}
       <div id="products" className="p-6 max-w-6xl mx-auto">
         {/* توب بيك سوايبر */}
@@ -631,7 +930,7 @@ const Home = () => {
                       <Heart className="w-5 h-5 text-black" />
                     </button>
 
-                    {/* 🛒 زرار العين */}
+                    {/* زرار العين */}
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -659,6 +958,18 @@ const Home = () => {
                         src={product.image}
                         alt={product.title}
                         className="w-full h-100 object-cover hover:scale-110 transition-transform duration-500"
+                           onClick={(e) => {
+                        e.stopPropagation();
+                        if (product.id >= 1 && product.id <= 11) {
+                          navigate(`/laptopsleeve/${product.id}`);
+                        } else if (product.id >= 12 && product.id <= 17) {
+                          navigate(`/funnybagdetails/${product.id}`);
+                        } else if (product.id >= 18 && product.id <= 25) {
+                          navigate(`/minibagdetails/${product.id}`);
+                        } else {
+                          navigate(`/phonedetails/${product.id}`);
+                        }
+                      }}
                       />
                     </div>
 
@@ -739,6 +1050,18 @@ const Home = () => {
                         src={product.image}
                         alt={product.title}
                         className="w-full h-100 object-cover hover:scale-110 transition-transform duration-500"
+                           onClick={(e) => {
+                        e.stopPropagation();
+                        if (product.id >= 1 && product.id <= 11) {
+                          navigate(`/laptopsleeve/${product.id}`);
+                        } else if (product.id >= 12 && product.id <= 17) {
+                          navigate(`/funnybagdetails/${product.id}`);
+                        } else if (product.id >= 18 && product.id <= 25) {
+                          navigate(`/minibagdetails/${product.id}`);
+                        } else {
+                          navigate(`/phonedetails/${product.id}`);
+                        }
+                      }}
                       />
                     </div>
 
@@ -780,6 +1103,18 @@ const Home = () => {
                     src={product.image}
                     alt={product.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                       onClick={(e) => {
+                        e.stopPropagation();
+                        if (product.id >= 1 && product.id <= 11) {
+                          navigate(`/laptopsleeve/${product.id}`);
+                        } else if (product.id >= 12 && product.id <= 17) {
+                          navigate(`/funnybagdetails/${product.id}`);
+                        } else if (product.id >= 18 && product.id <= 25) {
+                          navigate(`/minibagdetails/${product.id}`);
+                        } else {
+                          navigate(`/phonedetails/${product.id}`);
+                        }
+                      }}
                   />
                 </div>
 
@@ -827,8 +1162,98 @@ const Home = () => {
               </div>
             ))}
           </div>
+                  <section className="py-12 bg-white">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 text-gray-900">
+           Laptop Sleeves
+          </h2>
+
+          <div className="relative">
+            <Swiper
+              modules={[Navigation, Autoplay]}
+              spaceBetween={20}
+              slidesPerView={1}
+              navigation
+              autoplay={{ delay: 3000, disableOnInteraction: false }}
+              breakpoints={{
+                640: { slidesPerView: 2 },
+                1024: { slidesPerView: 4 },
+              }}
+              className="px-6"
+            >
+              {laptopsleeve.map((product) => (
+                <SwiperSlide key={product.id}>
+                  <div className="bg-white py-12 rounded-2xl shadow-md hover:shadow-lg transition overflow-hidden relative group">
+                    {/* ❤️ فيفوريت */}
+                    <button
+                      onClick={() => addToFavorites(product)}
+                      className="absolute top-3 left-3 p-2 bg-gray-100 rounded-full shadow hover:scale-110 transition z-10"
+                    >
+                      <Heart className="w-5 h-5 text-black" />
+                    </button>
+
+                    {/* زرار العين */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (product.id >= 1 && product.id <= 11) {
+                          navigate(`/laptopsleeve/${product.id}`);
+                        } else if (product.id >= 12 && product.id <= 17) {
+                          navigate(`/funnybagdetails/${product.id}`);
+                        } else if (product.id >= 18 && product.id <= 25) {
+                          navigate(`/minibagdetails/${product.id}`);
+                        } else {
+                          navigate(`/phonedetails/${product.id}`);
+                        }
+                      }}
+                      className="absolute top-3 right-3 p-2 bg-gray-100 rounded-full shadow hover:bg-black hover:text-white hover:scale-110 transition z-10 flex items-center gap-1"
+                    >
+                      <Eye className="w-5 h-5" />
+                    </button>
+
+                    {/* صورة المنتج */}
+                    <div
+                      // onClick={() => handleAddToCartClick(product)}
+                      className="w-full h-100 overflow-hidden cursor-pointer"
+                    >
+                      <img
+                        src={product.image}
+                        alt={product.title}
+                        className="w-full h-100 object-cover hover:scale-110 transition-transform duration-500"
+                           onClick={(e) => {
+                        e.stopPropagation();
+                        if (product.id >= 1 && product.id <= 11) {
+                          navigate(`/laptopsleeve/${product.id}`);
+                        } else if (product.id >= 12 && product.id <= 17) {
+                          navigate(`/funnybagdetails/${product.id}`);
+                        } else if (product.id >= 18 && product.id <= 25) {
+                          navigate(`/minibagdetails/${product.id}`);
+                        } else {
+                          navigate(`/phonedetails/${product.id}`);
+                        }
+                      }}
+                      />
+                    </div>
+
+                    {/* تفاصيل المنتج */}
+                    <div className="p-4 text-center">
+                      <h3 className="text-sm md:text-base font-semibold mb-2 line-clamp-2">
+                        {product.title}
+                      </h3>
+                      <div className="text-gray-400 line-through text-sm">
+                        EGP {product.oldPrice.toLocaleString()}
+                      </div>
+                      <div className="text-red-600 font-bold text-lg">
+                        EGP {product.price.toLocaleString()}
+                      </div>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
         </section>
-        {/* <div><Footerr /></div> */}
+        </section>
+        <div><Footerr /></div>
       </div>
     </div>
   );

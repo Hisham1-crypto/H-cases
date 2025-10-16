@@ -71,7 +71,6 @@ const EvileEye = () => {
       image: selectedProduct.src,
       brand: selectedBrand,
       phoneModel: selectedPhoneType,
-
       quantity,
     });
 
@@ -127,20 +126,6 @@ const EvileEye = () => {
     </div>
   ))}
 </div>
-
-
-        {/* Pagination */}
-        {/* <div className="flex justify-center mt-10 mb-10 gap-3">
-          {[1, 2].map((page) => (
-            <button
-              key={page}
-              onClick={() => setCurrentPage(page)}
-              className={`px-4 py-2 rounded-full ${currentPage === page ? "bg-blue-500 text-white" : "bg-gray-200"}`}
-            >
-              {page}
-            </button>
-          ))}
-        </div> */}
 
         {/* Drawer */}
        {drawerOpen && selectedProduct && (

@@ -8,7 +8,7 @@ import NavBar from "../NavBar/NavBar";
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
 import { motion, AnimatePresence } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { Autoplay, Pagination, Navigation, EffectFade } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -16,10 +16,10 @@ import { Eye } from "lucide-react";
 import Footerr from "../Footerr/Footerr";
 
 // Products
-const products = [
-  { id: 1, name: "Case - Abstract Orange", price: 150, image: "/case1.jpg" },
-  { id: 2, name: "Case - Pink Minimal", price: 180, image: "/case2.jpg" },
-  { id: 3, name: "Case - Black Marble", price: 200, image: "/case3.jpg" },
+const images = [
+  {  name: "Case - Abstract Orange",  image: "/case1.jpg" },
+  {  name: "Case - Pink Minimal",  image: "/case2.jpg" },
+  {  name: "Case - Black Marble",  image: "/case3.jpg" },
 ];
 const featuredProducts = [
   {
@@ -170,7 +170,7 @@ const morecases = [
     id: 1,
     name: "Laptop Sleeve 13 inch",
     image: "/laptopsleeve/photo_1_2025-10-14_15-29-33.jpg",
-    price: 200,
+    price: 450,
   },
 
 
@@ -178,20 +178,20 @@ const morecases = [
     id: 8,
     name: "Laptop Sleeve 17 inch",
     image: "/laptopsleeve/photo_8_2025-10-14_15-29-33.jpg",
-    price: 300,
+    price: 450,
   },
   {
     id: 9,
     name: "Laptop Sleeve 17 inch",
     image: "/laptopsleeve/photo_9_2025-10-14_15-29-33.jpg",
-    price: 300,
+    price: 450,
   },
 
   {
     id: 11,
     name: "Laptop Sleeve 17 inch",
     image: "/laptopsleeve/photo_11_2025-10-14_15-29-33.jpg",
-    price: 300,
+    price: 450,
   },
   {
     id: 46,
@@ -218,25 +218,25 @@ const morecases = [
     id: 18,
     name: "mini bag",
     image: "/minibag/photo_1_2025-10-14_18-49-08.jpg",
-    price: 200,
+    price: 400,
   },
  {
     id: 23,
     name: "mini bag",
     image: "/minibag/photo_6_2025-10-14_18-49-08.jpg",
-    price: 300,
+    price: 400,
   },  
        {
     id: 24,
     name: "mini bag",
     image: "/minibag/photo_7_2025-10-14_18-49-08.jpg",
-    price: 300,
+    price: 400,
   },  
     {
     id: 21,
     name: "mini bag",
     image: "/minibag/photo_4_2025-10-14_18-49-08.jpg",
-    price: 300,
+    price: 400,
   },
   {
     id: 49,
@@ -263,7 +263,7 @@ const morecases = [
     id: 12,
     name: "funny bag",
     image: "/funny bag/photo_1_2025-10-14_18-15-04.jpg",
-    price: 200,
+    price: 450,
   },
 
   {
@@ -284,13 +284,13 @@ const morecases = [
     id: 13,
     name: "funny bag",
     image: "/funny bag/photo_2_2025-10-14_18-15-04.jpg",
-    price: 250,
+    price: 450,
   },
       {
     id: 17,
     name: "funny bag",
     image: "/funny bag/photo_6_2025-10-14_18-15-04.jpg",
-    price: 300,
+    price: 450,
   },  
     
   {
@@ -356,11 +356,10 @@ const products2 = [
 
       {
     id: 23,
-        oldPrice: 160,
-
+    oldPrice: 500,
     title: "mini bag",
     image: "/minibag/photo_6_2025-10-14_18-49-08.jpg",
-    price: 300,
+    price: 400,
   },  
   {
     id: 63,
@@ -372,10 +371,9 @@ const products2 = [
     {
     id: 19,
     title: "mini bag",
-        oldPrice: 160,
-
+    oldPrice: 500,
     image: "/minibag/photo_2_2025-10-14_18-49-08.jpg",
-    price: 250,
+    price: 400,
   },
 
 
@@ -438,82 +436,82 @@ const laptopsleeve =[
   {
     id: 2,
     title: "Laptop Sleeve 15 inch",
-        oldPrice: 160,
+    oldPrice: 550,
 
     image: "/laptopsleeve/photo_2_2025-10-14_15-29-33.jpg",
-    price: 250,
+    price: 450,
   },
   {
     id: 3,
     title: "Laptop Sleeve 17 inch",
-        oldPrice: 160,
+    oldPrice: 500,
 
     image: "/laptopsleeve/photo_3_2025-10-14_15-29-33.jpg",
-    price: 300,
+    price: 450,
   },
     {
     id: 4,
     title: "Laptop Sleeve 17 inch",
-        oldPrice: 160,
+        oldPrice: 550,
 
     image: "/laptopsleeve/photo_4_2025-10-14_15-29-33.jpg",
-    price: 300,
+    price: 450,
   },
       {
     id: 5,
     title: "Laptop Sleeve 17 inch",
-        oldPrice: 160,
+        oldPrice: 550,
 
     image: "/laptopsleeve/photo_5_2025-10-14_15-29-33.jpg",
-    price: 300,
+    price: 450,
   },
       {
     id: 6,
     title: "Laptop Sleeve 17 inch",
-        oldPrice: 160,
+        oldPrice: 550,
 
     image: "/laptopsleeve/photo_6_2025-10-14_15-29-33.jpg",
-    price: 300,
+    price: 450,
   },  
     {
     id: 7,
     title: "Laptop Sleeve 17 inch",
-        oldPrice: 160,
+        oldPrice: 550,
 
     image: "/laptopsleeve/photo_7_2025-10-14_15-29-33.jpg",
-    price: 300,
+    price: 450,
   },
     {
     id: 8,
     title: "Laptop Sleeve 17 inch",
-        oldPrice: 160,
+        oldPrice: 550,
 
     image: "/laptopsleeve/photo_8_2025-10-14_15-29-33.jpg",
-    price: 300,
+    price: 450,
   },
     {
     id: 9,
     title: "Laptop Sleeve 17 inch",
-        oldPrice: 160,
+        oldPrice: 550,
 
     image: "/laptopsleeve/photo_9_2025-10-14_15-29-33.jpg",
-    price: 300,
+    price: 450,
   },
     {
     id: 10,
     title: "Laptop Sleeve 17 inch",
-        oldPrice: 160,
+        oldPrice: 550,
 
     image: "/laptopsleeve/photo_10_2025-10-14_15-29-33.jpg",
-    price: 300,
+    price: 450,
   },
     {
     id: 11,
     title: "Laptop Sleeve 17 inch",
-        oldPrice: 160,
+        oldPrice: 550,
 
     image: "/laptopsleeve/photo_11_2025-10-14_15-29-33.jpg",
-    price: 300,
+    price: 450,
   },
 ];
 const firstgrid = [
@@ -525,38 +523,38 @@ const firstgrid = [
     price: 200,
   },
       {
-    id: 74,
-    title: "Special Evile Eye",
-    oldPrice: 160,
+    id:  13,
+    title: "fanny pack",
+    oldPrice: 500,
     image: "/funny bag/photo_2_2025-10-14_18-15-04.jpg",
-    price: 200,
+    price: 450,
   },
        {
     id: 2,
     title: "Laptop Sleeve",
-    oldPrice: 160,
+    oldPrice: 550,
     image: "/laptopsleeve/photo_2_2025-10-14_15-29-33.jpg",
-    price: 200,
+    price: 450,
   },
 {   id: 20,
-    oldPrice: 160,
+    oldPrice: 500,
     name: "mini bag",
     image: "/minibag/photo_3_2025-10-14_18-49-08.jpg",
-    price: 300,
+    price: 400,
   }, 
        {
     id: 22,
     name: "mini bag",
-    oldPrice: 160,
+    oldPrice: 500,
     image: "/minibag/photo_5_2025-10-14_18-49-08.jpg",
-    price: 300,
+    price: 400,
   },
    {
     id: 14,
     name: "funny bag",
-    oldPrice: 160,
+    oldPrice: 500,
     image: "/funny bag/photo_3_2025-10-14_18-15-04.jpg",
-    price: 300,
+    price: 450,
   },
              {
     id: 73,
@@ -916,31 +914,35 @@ const Home = () => {
                 </div>
 
                 {/* Overlay on hover */}
-                <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-3">
-                  <button
-                    onClick={() => addToFavorites(product)}
-                    className="p-2 bg-white rounded-full shadow hover:scale-110 transition"
-                  >
-                    <Heart className="w-5 h-5 text-red-500" />
-                  </button>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      if (product.id >= 1 && product.id <= 11) {
-                        navigate(`/laptopsleeve/${product.id}`);
-                      } else if (product.id >= 12 && product.id <= 17) {
-                        navigate(`/funnybagdetails/${product.id}`);
-                      } else if (product.id >= 18 && product.id <= 25) {
-                        navigate(`/minibagdetails/${product.id}`);
-                      } else {
-                        navigate(`/phonedetails/${product.id}`);
-                      }
-                    }}
-                    className="absolute top-3 right-3 p-2 bg-gray-100 rounded-full shadow hover:bg-black hover:text-white hover:scale-110 transition z-10 flex items-center gap-1"
-                  >
-                    <Eye className="w-5 h-5" />
-                  </button>
-                </div>
+              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-3">
+  {/* الزر بتاع القلب */}
+  <button
+    onClick={() => addToFavorites(product)}
+    className="p-2 bg-white rounded-full shadow hover:scale-110 transition"
+  >
+    <Heart className="w-5 h-5 text-red-500" />
+  </button>
+
+  {/* الزر بتاع العين */}
+  <button
+    onClick={(e) => {
+      e.stopPropagation();
+      if (product.id >= 1 && product.id <= 11) {
+        navigate(`/laptopsleeve/${product.id}`);
+      } else if (product.id >= 12 && product.id <= 17) {
+        navigate(`/funnybagdetails/${product.id}`);
+      } else if (product.id >= 18 && product.id <= 25) {
+        navigate(`/minibagdetails/${product.id}`);
+      } else {
+        navigate(`/phonedetails/${product.id}`);
+      }
+    }}
+    className="p-2 bg-white rounded-full shadow hover:scale-110 transition"
+  >
+    <Eye className="w-5 h-5 text-gray-800" />
+  </button>
+</div>
+
                 
                 {/* Product Info */}
                 <div className="p-4 text-center"    onClick={(e) => {
@@ -1063,6 +1065,52 @@ const Home = () => {
             </Swiper>
           </div>
         </section>
+
+
+
+
+   <div className="flex justify-center items-center min-h-screen bg-gray-50">
+      <div
+        className="relative w-[90%] md:w-[80%] lg:w-[70%] rounded-3xl overflow-hidden shadow-2xl animate-fadeIn"
+        style={{ animation: "fadeIn 1.2s ease-out" }}
+      >
+        <Swiper
+          modules={[Autoplay, Pagination, EffectFade]}
+          effect="fade"
+          autoplay={{
+            delay: 3500,
+            disableOnInteraction: false,
+          }}
+          pagination={{ clickable: true }}
+          loop={true}
+          className="w-full h-[70vh]"
+        >
+          {images.map((item, index) => (
+            <SwiperSlide key={index}>
+              <div className="relative w-full h-full">
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-center text-white px-4">
+                  <h2 className="text-3xl md:text-5xl font-bold mb-4 drop-shadow-lg">
+                    {item.name}
+                  </h2>
+                  <button className="bg-white text-black px-6 py-2 rounded-full font-semibold hover:bg-black hover:text-white transition">
+                    Shop Now
+                  </button>
+                </div>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+    </div>
+
+
+
+
 
         {/* 🟢 New Swiper Section قبل الفوتر */}
         <section className="py-12 bg-gray-50">

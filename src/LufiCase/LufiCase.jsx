@@ -19,11 +19,13 @@ import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
 
 // BabeShark images
 const imagesPage1 = [
-  { src: "/Lufi cases/photo_1_2025-10-10_17-44-28.jpg", name:"Lufi", price: 130 },
-  { src: "/Lufi cases/photo_2_2025-10-10_17-44-28.jpg", name:"Lufi", price: 130 },
-  { src: "/Lufi cases/photo_3_2025-10-10_17-44-28.jpg", name:"Lufi", price: 130 },
-  { src: "/Lufi cases/photo_4_2025-10-10_17-44-28.jpg", name:"Lufi", price: 130 },
-  { src: "/Lufi cases/photo_5_2025-10-10_17-44-28.jpg", name:"Lufi", price: 130 },
+  { id: 49, name: "Lufi", price: 130, oldPrice: 180, src: "/top pick photos/photo_27_2025-10-10_07-18-14.jpg" },
+  { id: 50, name: "Lufi", price: 130, oldPrice: 180, src: "/top pick photos/photo_28_2025-10-10_07-18-14.jpg" },
+  { id: 57, name: "Lufi", price: 130, oldPrice: 160, src: "/top pick photos/photo_29_2025-10-10_07-18-14.jpg" },
+  { id: 58, name: "Lufi ", price: 130, oldPrice: 160, src: "/top pick photos/photo_30_2025-10-10_07-18-14.jpg" },
+  { id: 59, name: "Lufi", price: 130, oldPrice: 160, src: "/top pick photos/photo_31_2025-10-10_07-18-14.jpg" },
+  { id: 60, name: "Lufu", price: 130, oldPrice: 160, src: "/top pick photos/photo_32_2025-10-10_07-18-14.jpg" },
+   
 ];
 
 
@@ -66,7 +68,7 @@ const LufiCase = () => {
 
 
     addToCart({
-      name: "BabeShark Case",
+      name:selectedProduct.name ,
       price: selectedProduct.price,
       image: selectedProduct.src,
       brand: selectedBrand,
@@ -118,7 +120,7 @@ const LufiCase = () => {
           <ShoppingBag size={18} />
         </button>
         <button
-          onClick={() => addToFavorites({ name: "BabeShark Case", image: product.src, price: product.price })}
+          onClick={() => addToFavorites({id:product.id, name: product.name, image: product.src, price: product.price })}
           className="bg-white p-2 rounded-full shadow hover:bg-gray-100"
         >
           <Heart size={18} />
@@ -279,7 +281,7 @@ const LufiCase = () => {
           setSelectedPhoneType("");
           setQuantity(1);
         }}
-                className="mt-auto w-full bg-black font-thin text-white font-semibold py-3 rounded-lg shadow-md hover:scale-105 transition"
+                className="mt-auto w-full bg-black font-thin text-white  py-3 rounded-lg shadow-md hover:scale-105 transition"
       >
         Confirm Add to Cart
       </button>

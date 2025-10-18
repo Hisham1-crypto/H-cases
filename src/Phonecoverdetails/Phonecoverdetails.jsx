@@ -43,6 +43,16 @@ const products = [
   { id: 58, title: "Lufi ", price: 130, oldPrice: 160, image: "/top pick photos/photo_30_2025-10-10_07-18-14.jpg" },
   { id: 59, title: "Lufi", price: 130, oldPrice: 160, image: "/top pick photos/photo_31_2025-10-10_07-18-14.jpg" },
   { id: 60, title: "Lufu", price: 130, oldPrice: 160, image: "/top pick photos/photo_32_2025-10-10_07-18-14.jpg" },
+      { 
+      id:113,
+      image: "/tigercase/tiger3.jpg",
+       title:"Cheetah 2 case",
+           oldPrice: 160,
+
+        price: 130 },
+
+  {id:114, image: "/tigercase/tiger4.jpg",    oldPrice: 160,
+ title:"Brown tiger case", price: 130 },
 
 {
     id: 61,
@@ -51,7 +61,19 @@ const products = [
     price: 130,
     image: "/top pick photos/photo_1_2025-09-29_20-49-37.jpg",
   },
-  
+      { image: "/babesharkcase/shark9.jpg",
+      id: 111,   
+      oldPrice: 160,
+      title: "Pink babe shark" ,
+      price: 130 },
+          {
+      id:112 ,
+      image: "/babesharkcase/shark4.jpg",
+      title: "White military babe shark" ,
+      price: 130,
+      oldPrice: 160,
+
+    },
     {
     id: 62,
     title: "Tiger Case",
@@ -62,7 +84,7 @@ const products = [
   
   {
     id: 63,
-    title: "Blue - Muve babe shark",
+    title: "Blue - Purple babe shark",
     oldPrice: 160,
     price: 130,
     image: "/top pick photos/photo_2_2025-09-29_20-49-37.jpg",
@@ -150,7 +172,7 @@ const phoneData = {
 const Phonecoverdetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const product = products.find((p) => p.id === Number(id));
+const product = products.find((p) => p.id === Number(id));
   const relatedProducts = products.filter((p) => p.id !== product.id);
 
   const { addToCart } = useContext(CartContext);

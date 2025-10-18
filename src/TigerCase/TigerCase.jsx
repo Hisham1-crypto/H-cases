@@ -17,33 +17,39 @@ import {
 } from "flowbite-react";
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
 
-// // Provinces + shipping
-// const allProvinces = [
-//   { name: "Cairo", shipping: 60 }, { name: "Giza", shipping: 60 },
-//   { name: "Alexandria", shipping: 63 }, { name: "Beheira", shipping: 63 },
-//   { name: "Kafr El-Sheikh", shipping: 70 }, { name: "Damietta", shipping: 70 },
-//   { name: "Port Said", shipping: 70 }, { name: "Monufia", shipping: 70 },
-//   { name: "Qalyubia", shipping: 70 }, { name: "Gharbia", shipping: 70 },
-//   { name: "Sharqia", shipping: 70 }, { name: "Suez", shipping: 70 },
-//   { name: "Dakahlia", shipping: 70 }, { name: "Ismailia", shipping: 70 },
-//   { name: "Sohag", shipping: 81 }, { name: "Beni Suef", shipping: 81 },
-//   { name: "Minya", shipping: 81 }, { name: "Fayoum", shipping: 81 },
-//   { name: "Assiut", shipping: 81 }, { name: "Marsa Matrouh", shipping: 92 },
-//   { name: "Qena", shipping: 92 }, { name: "Red Sea", shipping: 92 },
-//   { name: "Luxor", shipping: 92 }, { name: "Aswan", shipping: 92 },
-//   { name: "North Coast", shipping: 95 }, { name: "South Sinai", shipping: 110 },
-//   { name: "New Valley", shipping: 110 }, { name: "North Sinai", shipping: 110 },
-//   { name: "Other", shipping: 100 },
-// ];
+
 
 // BabeShark images
 const imagesPage1 = [
-  { src: "/tigercase/tiger1.jpg", name:"Cheetah case", price: 130 },
-  { src: "/tigercase/tiger2.jpg", name:"Brown Tiger case", price: 130 },
-  { src: "/tigercase/tiger3.jpg", name:"Cheetah 2 case", price: 130 },
-  { src: "/tigercase/tiger4.jpg", name:"Brown tiger case", price: 130 },
-  { src: "/tigercase/tiger5.jpg", name:"Black tiger case", price: 130 },
-];
+   {
+    id: 62,
+    name: "Tiger Case",
+    oldPrice: 160,
+    price: 130,
+    src: "/top pick photos/photo_1_2025-10-10_07-18-14.jpg",
+  },    {
+    id: 68,
+    name: "Brown tiger",
+    oldPrice: 160,
+    price: 130,
+    src: "/top pick photos/photo_5_2025-10-10_07-18-14.jpg",
+  },
+    { 
+      id:113,
+      src: "/tigercase/tiger3.jpg",
+      name:"Cheetah 2 case",
+      oldPrice: 160,
+      price: 130 },
+
+  {id:114, src: "/tigercase/tiger4.jpg",    oldPrice: 160,
+ name:"Brown tiger case", price: 130 },
+  {
+    id: 64,
+    name: "Black  Tiger case",
+    oldPrice: 160,
+    price: 130,
+    src: "/top pick photos/photo_2_2025-10-10_07-18-14.jpg",
+  },];
 
 // const imagesPage2 = [
 //   { src: "/babesharkcase/shark6.jpg", price: 200 },
@@ -92,7 +98,7 @@ const TigerCase = () => {
 
 
     addToCart({
-      name: "BabeShark Case",
+      name: selectedProduct.name,
       price: selectedProduct.price,
       image: selectedProduct.src,
       brand: selectedBrand,
@@ -125,7 +131,7 @@ const TigerCase = () => {
     <div key={idx} className="relative border rounded-lg overflow-hidden shadow hover:shadow-lg transition cursor-pointer">
       <img
         src={product.src}
-        alt={`BabeShark ${idx + 1}`}
+        alt={`tiger ${idx + 1}`}
         className="w-full h-auto object-cover transition-transform duration-300 hover:scale-105"
         onClick={() => handleAddToCartClick(product)}
       />
@@ -144,7 +150,7 @@ const TigerCase = () => {
           <ShoppingBag size={18} />
         </button>
         <button
-          onClick={() => addToFavorites({ name: "BabeShark Case", image: product.src, price: product.price })}
+          onClick={() => addToFavorites({id:product.id, name: product.name , image: product.src, price: product.price })}
           className="bg-white p-2 rounded-full shadow hover:bg-gray-100"
         >
           <Heart size={18} />
@@ -305,7 +311,7 @@ const TigerCase = () => {
           setSelectedPhoneType("");
           setQuantity(1);
         }}
-                className="mt-auto w-full bg-black font-thin text-white font-semibold py-3 rounded-lg shadow-md hover:scale-105 transition"
+                className="mt-auto w-full bg-black font-thin text-white  py-3 rounded-lg shadow-md hover:scale-105 transition"
       >
         Confirm Add to Cart
       </button>

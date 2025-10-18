@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Heart, ShoppingBag, X } from "lucide-react";
 import { CartContext } from "../CartContext";
 import { FavoritesContext } from "../FavoritesProvider";
@@ -614,8 +614,46 @@ const Home = () => {
   const navigate = useNavigate();
 
   const [searchQuery, setSearchQuery] = useState("");
-  const filteredProducts = products.filter((p) =>
-    p.name.toLowerCase().includes(searchQuery.toLowerCase())
+  const [showPopup, setShowPopup] = useState(false);
+ useEffect(() => {
+    // نتحقق هل المستخدم شاف الرسالة قبل كده
+    const hasSeenPopup = localStorage.getItem("hasSeenFreeShippingPopup");
+
+    // لو أول مرة يدخل
+    if (!hasSeenPopup) {
+      setShowPopup(true);
+      localStorage.setItem("hasSeenFreeShippingPopup", "true"); // نخزن إنه شافها
+    }
+  }, []);
+  // فلترة المنتجات كلها بناءً على السيرش
+  const filteredFirstGrid = firstgrid.filter(
+    (p) =>
+      p.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.name?.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const filteredProducts2 = products2.filter(
+    (p) =>
+      p.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.name?.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const filteredFeatured = featuredProducts.filter(
+    (p) =>
+      p.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.name?.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const filteredMoreCases = morecases.filter(
+    (p) =>
+      p.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.name?.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const filteredLaptopSleeve = laptopsleeve.filter(
+    (p) =>
+      p.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.name?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -635,7 +673,40 @@ const Home = () => {
       <div className="mb-20">
         <NavBar onSearch={setSearchQuery} />
       </div>
+     {showPopup && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-[9999] animate-fade-in">
+          <div className="bg-white rounded-2xl shadow-2xl p-6 sm:p-8 w-[90%] sm:w-[400px] text-center relative animate-slide-up">
+            {/* زر الإغلاق */}
+            <button
+              onClick={() => setShowPopup(false)}
+              className="absolute top-3 right-3 text-gray-400 hover:text-gray-600 transition"
+            >
+              <X className="w-5 h-5" />
+            </button>
 
+            {/* المحتوى */}
+            <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-2">
+              🎉 Free Shipping Alert!
+            </h2>
+            <p className="text-gray-600 mb-5 text-sm sm:text-base">
+              Any order above{" "}
+              <span className="font-bold text-[#56cfe1]">500 EGP</span> gets
+              free shipping.
+            </p>
+
+            {/* الأزرار */}
+            <div className="flex justify-center gap-3">
+              <button
+                onClick={() => setShowPopup(false)}
+                className="bg-black text-white px-5 py-2 rounded-full text-sm hover:bg-gray-800 transition"
+              >
+                Order Now
+              </button>
+            
+            </div>
+          </div>
+        </div>
+      )}
       {/* Hero Section with Swiper */}
       <section className="relative w-full">
         <Swiper
@@ -828,7 +899,7 @@ const Home = () => {
           </h2>
 
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 gap-6 px-6">
-            {firstgrid.map((product) => (
+            {filteredFirstGrid.map((product) => (
               <div
                 key={product.id}
                 className="bg-white rounded-3xl  shadow-md hover:shadow-xl transition overflow-hidden relative group cursor-pointer"
@@ -836,21 +907,11 @@ const Home = () => {
                 {/* Image */}
                 <div className="w-full  mb-5 aspect-[3/4] flex items-center justify-center bg-gray-100 overflow-hidden rounded-2xl shadow-md">
                   <img
+                     
                     src={product.image}
                     alt={product.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                       onClick={(e) => {
-                        e.stopPropagation();
-                        if (product.id >= 1 && product.id <= 11) {
-                          navigate(`/laptopsleeve/${product.id}`);
-                        } else if (product.id >= 12 && product.id <= 17) {
-                          navigate(`/funnybagdetails/${product.id}`);
-                        } else if (product.id >= 18 && product.id <= 25) {
-                          navigate(`/minibagdetails/${product.id}`);
-                        } else {
-                          navigate(`/phonedetails/${product.id}`);
-                        }
-                      }}
+                 
                   />
                 </div>
 
@@ -880,9 +941,20 @@ const Home = () => {
                     <Eye className="w-5 h-5" />
                   </button>
                 </div>
-
+                
                 {/* Product Info */}
-                <div className="p-4 text-center">
+                <div className="p-4 text-center"    onClick={(e) => {
+                        e.stopPropagation();
+                        if (product.id >= 1 && product.id <= 11) {
+                          navigate(`/laptopsleeve/${product.id}`);
+                        } else if (product.id >= 12 && product.id <= 17) {
+                          navigate(`/funnybagdetails/${product.id}`);
+                        } else if (product.id >= 18 && product.id <= 25) {
+                          navigate(`/minibagdetails/${product.id}`);
+                        } else {
+                          navigate(`/phonedetails/${product.id}`);
+                        }
+                      }}>
                   <h3 className="text-base font-semibold mb-2 line-clamp-2">
                     {product.title || product.name}
                   </h3>
@@ -919,7 +991,7 @@ const Home = () => {
               }}
               className="px-6"
             >
-              {products2.map((product) => (
+             {filteredProducts2.map((product) => (
                 <SwiperSlide key={product.id}>
                   <div className="bg-white py-12 rounded-2xl shadow-md hover:shadow-lg transition overflow-hidden relative group">
                     {/* ❤️ فيفوريت */}
@@ -1011,7 +1083,7 @@ const Home = () => {
               }}
               className="px-6"
             >
-              {featuredProducts.map((product) => (
+              {filteredFeatured.map((product) => (
                 <SwiperSlide key={product.id}>
                   <div className="bg-white rounded-2xl shadow-md hover:shadow-lg transition overflow-hidden relative group">
                     {/* ❤️ Favorite */}
@@ -1092,7 +1164,7 @@ const Home = () => {
           </h2>
 
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 gap-6 px-6">
-            {morecases.map((product) => (
+            {filteredMoreCases.map((product) => (
               <div
                 key={product.id}
                 className="bg-white rounded-3xl  shadow-md hover:shadow-xl transition overflow-hidden relative group cursor-pointer"
@@ -1180,7 +1252,7 @@ const Home = () => {
               }}
               className="px-6"
             >
-              {laptopsleeve.map((product) => (
+              {filteredLaptopSleeve.map((product) => (
                 <SwiperSlide key={product.id}>
                   <div className="bg-white py-12 rounded-2xl shadow-md hover:shadow-lg transition overflow-hidden relative group">
                     {/* ❤️ فيفوريت */}

@@ -44,35 +44,37 @@ export const CartProvider = ({ children }) => {
   };
 
   // ✅ إضافة المنتج للسلة
-  const addToCart = (item, quantityToAdd = 1) => {
-    const normalizedItem = {
-      ...item,
-      phoneBrand: item.phoneBrand || item.brand || "Not Selected",
-      phoneModel: item.phoneModel || item.model || "Not Selected",
-      province: item.province || "",
-      size: item.size || "",
-    };
-
-    const existingItem = cartState.find((cartItem) =>
-      isSameItem(cartItem, normalizedItem)
-    );
-
-    let newCart;
-    if (existingItem) {
-      // لو المنتج موجود → زود الكمية
-      newCart = cartState.map((cartItem) =>
-        isSameItem(cartItem, normalizedItem)
-          ? { ...cartItem, quantity: cartItem.quantity + quantityToAdd }
-          : cartItem
-      );
-    } else {
-      // منتج جديد
-      newCart = [...cartState, { ...normalizedItem, quantity: quantityToAdd }];
-    }
-
-    setCartState(newCart);
-    if (user) updateCart(newCart);
+const addToCart = (item, quantityToAdd = 1) => {
+  const normalizedItem = {
+    ...item,
+    phoneBrand: item.phoneBrand || item.brand || "Not Selected",
+    phoneModel: item.phoneModel || item.model || "Not Selected",
+    province: item.province || "",
+    size: item.size || "",
   };
+
+  const existingItem = cartState.find((cartItem) =>
+    isSameItem(cartItem, normalizedItem)
+  );
+
+  // 👇 استخدم الكمية اللي جاية من المنتج لو موجودة
+  const addQuantity = item.quantity || quantityToAdd;
+
+  let newCart;
+  if (existingItem) {
+    newCart = cartState.map((cartItem) =>
+      isSameItem(cartItem, normalizedItem)
+        ? { ...cartItem, quantity: cartItem.quantity + addQuantity }
+        : cartItem
+    );
+  } else {
+    newCart = [...cartState, { ...normalizedItem, quantity: addQuantity }];
+  }
+
+  setCartState(newCart);
+  if (user) updateCart(newCart);
+};
+
 
   // ✅ تقليل الكمية من منتج
  const removeFromCart = (id, size, phoneModel, province, quantity) => {

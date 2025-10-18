@@ -19,11 +19,13 @@ import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
 
 // BabeShark images
 const imagesPage1 = [
-  { src: "/porche 911/photo_1_2025-10-10_17-30-00.jpg", name:"Pink 911", price: 130 },
-  { src: "/porche 911/photo_2_2025-10-10_17-30-00.jpg", name:"Pink GT3", price: 130 },
-  { src: "/porche 911/photo_3_2025-10-10_17-30-00.jpg", name:"Pink Porsche 911 ", price: 130 },
-  { src: "/porche 911/photo_4_2025-10-10_17-30-00.jpg", name:"White 911", price: 130 },
-  { src: "/porche 911/photo_5_2025-10-10_17-30-00.jpg", name:"Grey 911", price: 130 },
+  { id: 42, name: "Pink 911", price: 130, oldPrice: 160, src: "/top pick photos/photo_20_2025-10-10_07-18-14.jpg" },
+  { id: 43, name: "Pink GT3", price: 130, oldPrice: 160, src: "/top pick photos/photo_21_2025-10-10_07-18-14.jpg" },
+  { id: 44, name: "Pink Porsche 911", price: 130, oldPrice: 160, src: "/top pick photos/photo_22_2025-10-10_07-18-14.jpg" },
+  { id: 45, name: "White 911", price: 130, oldPrice: 160, src: "/top pick photos/photo_23_2025-10-10_07-18-14.jpg" },
+  { id: 46, name: "Grey 911", price: 130, oldPrice: 160, src: "/top pick photos/photo_24_2025-10-10_07-18-14.jpg" },
+  { id: 47, name: "Bronze 911", price: 130, oldPrice: 160, src: "/top pick photos/photo_25_2025-10-10_07-18-14.jpg" },
+ 
 ];
 
 
@@ -66,12 +68,11 @@ const Porche911 = () => {
 
 
     addToCart({
-      name: "BabeShark Case",
+      name: selectedProduct.name,
       price: selectedProduct.price,
       image: selectedProduct.src,
       brand: selectedBrand,
       phoneModel: selectedPhoneType,
-
       quantity,
     });
 
@@ -118,7 +119,7 @@ const Porche911 = () => {
           <ShoppingBag size={18} />
         </button>
         <button
-          onClick={() => addToFavorites({ name: "BabeShark Case", image: product.src, price: product.price })}
+          onClick={() => addToFavorites({id:product.id, name: product.name, image: product.src, price: product.price })}
           className="bg-white p-2 rounded-full shadow hover:bg-gray-100"
         >
           <Heart size={18} />
@@ -279,7 +280,7 @@ const Porche911 = () => {
           setSelectedPhoneType("");
           setQuantity(1);
         }}
-                className="mt-auto w-full bg-black font-thin text-white font-semibold py-3 rounded-lg shadow-md hover:scale-105 transition"
+                className="mt-auto w-full bg-black font-thin text-white py-3 rounded-lg shadow-md hover:scale-105 transition"
       >
         Confirm Add to Cart
       </button>

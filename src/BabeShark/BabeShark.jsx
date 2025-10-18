@@ -22,20 +22,78 @@ import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
 
 // BabeShark images
 const imagesPage1 = [
-  { src: "/babesharkcase/shark1.jpg", name: "Red babe shark" , price: 130 },
-  { src: "/babesharkcase/shark2.jpg",name: "Militairy - black babe shark" , price: 130 },
-  { src: "/babesharkcase/shark3.jpg",name: "Blue - purple babe shark" , price: 130 },
-  { src: "/babesharkcase/shark4.jpg",name: "White military babe shark" , price: 130 },
-  { src: "/babesharkcase/shark5.jpg",name: "Dark militairy babe shark" , price: 130 },
+{
+    id: 61,
+    name: "Red Babe Shark",
+    oldPrice: 160,
+    price: 130,
+    src: "/top pick photos/photo_1_2025-09-29_20-49-37.jpg",
+  },
+  {
+    id: 65,
+    name: "Militairy - black babe  shark",
+    oldPrice: 160,
+    price: 130,
+    src: "/top pick photos/photo_3_2025-09-29_20-49-37.jpg",
+  },
+    {
+    id: 63,
+    name: "Blue - Purple babe shark",
+    oldPrice: 160,
+    price: 130,
+    src: "/top pick photos/photo_2_2025-09-29_20-49-37.jpg",
+  },
+    {
+      id:112 ,
+      src: "/babesharkcase/shark4.jpg",
+      name: "White military babe shark" ,
+      price: 130,
+      oldPrice: 160,
+
+    },
+  {
+    id: 69,
+    name: "Dark militairy - black babe shark",
+    oldPrice: 160,
+    price: 130,
+    src: "/top pick photos/photo_6_2025-09-29_20-49-37.jpg",
+  },
 ];
 
 const imagesPage2 = [
-  { src: "/babesharkcase/shark6.jpg",name: "Purple - Mint green babe shark" , price: 130 },
-  { src: "/babesharkcase/shark7.jpg",name: "Black babe shark" , price: 130 },
-  { src: "/babesharkcase/shark8.jpg",name: "Black - militairy babe shark" , price: 130 },
-  { src: "/babesharkcase/shark9.jpg",name: "Pink babe shark" , price: 130 },
-  { src: "/babesharkcase/shark10.jpg",name: "Red -black babe shark" , price: 130 },
-];
+             {
+    id: 73,
+    name: "Purple - mint babe shark",
+    oldPrice: 160,
+    price: 130,
+    src: "/top pick photos/photo_8_2025-09-29_20-49-37.jpg",
+  },
+          {
+    id: 71,
+    name: "Black babe shark",
+    oldPrice: 160,
+    price: 130,
+    src: "/top pick photos/photo_7_2025-09-29_20-49-37.jpg",
+  },
+  {
+    id: 65,
+    name: "Militairy - black babe  shark",
+    oldPrice: 160,
+    price: 130,
+    src: "/top pick photos/photo_3_2025-09-29_20-49-37.jpg",
+  },
+    { src: "/babesharkcase/shark9.jpg",
+      id: 111,   
+      oldPrice: 160,
+      name: "Pink babe shark" ,
+      price: 130 },
+{
+    id: 61,
+    name: "Red Babe Shark",
+    oldPrice: 160,
+    price: 130,
+    src: "/top pick photos/photo_1_2025-09-29_20-49-37.jpg",
+  },];
 
 // Phone Brands & Models
 const phoneBrands = {
@@ -128,7 +186,7 @@ const BabeShark = () => {
           <ShoppingBag size={18} />
         </button>
         <button
-          onClick={() => addToFavorites({ name: "", image: product.src, price: product.price })}
+          onClick={() => addToFavorites({id: product.id, name:product.name, image: product.src, price: product.price })}
           className="bg-white p-2 rounded-full shadow hover:bg-gray-100"
         >
           <Heart size={18} />
@@ -288,7 +346,7 @@ const BabeShark = () => {
           setSelectedPhoneType("");
           setQuantity(1);
         }}
-                className="mt-auto w-full bg-black font-thin text-white font-semibold py-3 rounded-lg shadow-md hover:scale-105 transition"
+                className="mt-auto w-full bg-black font-thin text-white  py-3 rounded-lg shadow-md hover:scale-105 transition"
       >
         Confirm Add to Cart
       </button>

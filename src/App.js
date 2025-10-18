@@ -36,7 +36,7 @@ import Funnybagdetails from "./Funnybagdetails/Funnybagdetails"
 import Minibagdetails from "./Minibagdetails/Minibagdetails"
 import Productdetails from "./Productdetails/Productdetails"
 import Phonecoverdetails from "./Phonecoverdetails/Phonecoverdetails";
-
+import ScrollToTop from "./ScrollToTop";
 
 const ProtectedRoute = ({ children }) => {
   const { user } = useContext(AuthContext);
@@ -51,7 +51,7 @@ const App = () => {
     <AuthProvider>
       <CartProvider>
         <FavoritesProvider>
-          
+                <ScrollToTop /> 
           <div>
             <Routes>
               <Route path="/shoppingbag" element={<Shoppingbag />} />

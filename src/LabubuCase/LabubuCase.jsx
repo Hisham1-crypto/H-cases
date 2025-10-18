@@ -19,11 +19,13 @@ import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
 
 // BabeShark images
 const imagesPage1 = [
-  { src: "/Labubu cases/photo_1_2025-10-10_17-58-15.jpg", name:"Pink Labubu", price: 130 },
-  { src: "/Labubu cases/photo_2_2025-10-10_17-58-15.jpg", name:"Blue Labubu", price: 130 },
-  { src: "/Labubu cases/photo_3_2025-10-10_17-58-15.jpg", name:"brown Labubu", price: 130 },
-  { src: "/Labubu cases/photo_4_2025-10-10_17-58-15.jpg", name:"Dark brown Labubu", price: 130 },
-  { src: "/Labubu cases/photo_5_2025-10-10_17-58-15.jpg", name:"Light Pink Labubu", price: 130 },
+ { id: 51, name: "Pink Labubu", price: 130, oldPrice: 180, src: "/top pick photos/photo_34_2025-10-10_07-18-14.jpg" },
+  { id: 52, name: "Blue Labubu ", price: 130, oldPrice: 160, src: "/top pick photos/photo_35_2025-10-10_07-18-14.jpg" },
+  { id: 53, name: "Brown Labubu", price: 130, oldPrice: 160, src: "/top pick photos/photo_36_2025-10-10_07-18-14.jpg" },
+  { id: 54, name: "Dark Brown Labubu", price: 130, oldPrice: 160, src: "/top pick photos/photo_37_2025-10-10_07-18-14.jpg" },
+  { id: 55, name: "Light Pink Labubu", price: 130, oldPrice: 160, src: "/top pick photos/photo_38_2025-10-10_07-18-14.jpg" },
+  { id: 56, name: "Angry Pink Labubu ", price: 130, oldPrice: 160, src: "/top pick photos/photo_39_2025-10-10_07-18-14.jpg" },
+ 
 ];
 
 
@@ -66,7 +68,7 @@ const LabubuCase = () => {
 
 
     addToCart({
-      name: "BabeShark Case",
+      name: selectedProduct.name,
       price: selectedProduct.price,
       image: selectedProduct.src,
       brand: selectedBrand,
@@ -118,7 +120,7 @@ const LabubuCase = () => {
           <ShoppingBag size={18} />
         </button>
         <button
-          onClick={() => addToFavorites({ name: "BabeShark Case", image: product.src, price: product.price })}
+          onClick={() => addToFavorites({id:product.id, name: product.name, image: product.src, price: product.price })}
           className="bg-white p-2 rounded-full shadow hover:bg-gray-100"
         >
           <Heart size={18} />
@@ -279,7 +281,7 @@ const LabubuCase = () => {
           setSelectedPhoneType("");
           setQuantity(1);
         }}
-                className="mt-auto w-full bg-black font-thin text-white font-semibold py-3 rounded-lg shadow-md hover:scale-105 transition"
+                className="mt-auto w-full bg-black font-thin text-white  py-3 rounded-lg shadow-md hover:scale-105 transition"
       >
         Confirm Add to Cart
       </button>

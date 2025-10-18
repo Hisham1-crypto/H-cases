@@ -19,11 +19,13 @@ import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
 
 // BabeShark images
 const imagesPage1 = [
-  { src: "/evileeye/photo_1_2025-10-10_17-14-24.jpg", name:"Sky Evile eye", price: 130 },
-  { src: "/evileeye/photo_2_2025-10-10_17-14-24.jpg", name:"Blue Evile eye", price: 130 },
-  { src: "/evileeye/photo_3_2025-10-10_17-14-24.jpg", name:"Pink Evile eye", price: 130 },
-  { src: "/evileeye/photo_4_2025-10-10_17-14-24.jpg", name:"Black Evile eye", price: 130 },
-  { src: "/evileeye/photo_5_2025-10-10_17-14-24.jpg", name:"Special Evile eye", price: 130 },
+ { id: 36, name: "Sky Evile Eye", price: 130, oldPrice: 160, src: "/top pick photos/photo_11_2025-10-10_07-18-14.jpg" },
+  { id: 37, name: "Blue Evile Eye", price: 130, oldPrice: 160, src: "/top pick photos/photo_12_2025-10-10_07-18-14.jpg" },
+  { id: 38, name: "Pink Evile Eye", price: 130, oldPrice: 160, src: "/top pick photos/photo_13_2025-10-10_07-18-14.jpg" },
+  { id: 39, name: "Black Evile Eye", price: 130, oldPrice: 160, src: "/top pick photos/photo_14_2025-10-10_07-18-14.jpg" },
+  { id: 40, name: "Special Evile Eye", price: 130, oldPrice: 160, src: "/top pick photos/photo_15_2025-10-10_07-18-14.jpg" },
+  { id: 41, name: "Special Evile Eye", price: 130, oldPrice: 160, src: "/top pick photos/photo_16_2025-10-10_07-18-14.jpg" },
+ 
 ];
 
 
@@ -66,7 +68,7 @@ const EvileEye = () => {
 
 
     addToCart({
-      name: "BabeShark Case",
+      name: selectedProduct.name,
       price: selectedProduct.price,
       image: selectedProduct.src,
       brand: selectedBrand,
@@ -98,7 +100,7 @@ const EvileEye = () => {
     <div key={idx} className="relative border rounded-lg overflow-hidden shadow hover:shadow-lg transition cursor-pointer">
       <img
         src={product.src}
-        alt={`BabeShark ${idx + 1}`}
+        alt={`evileeye ${idx + 1}`}
         className="w-full h-auto object-cover transition-transform duration-300 hover:scale-105"
         onClick={() => handleAddToCartClick(product)}
       />
@@ -117,7 +119,7 @@ const EvileEye = () => {
           <ShoppingBag size={18} />
         </button>
         <button
-          onClick={() => addToFavorites({ name: "BabeShark Case", image: product.src, price: product.price })}
+          onClick={() => addToFavorites({id:product.id, name: product.name, image: product.src, price: product.price })}
           className="bg-white p-2 rounded-full shadow hover:bg-gray-100"
         >
           <Heart size={18} />
@@ -264,7 +266,7 @@ const EvileEye = () => {
           setSelectedPhoneType("");
           setQuantity(1);
         }}
-                className="mt-auto w-full bg-black font-thin text-white font-semibold py-3 rounded-lg shadow-md hover:scale-105 transition"
+                className="mt-auto w-full bg-black font-thin text-white py-3 rounded-lg shadow-md hover:scale-105 transition"
       >
         Confirm Add to Cart
       </button>

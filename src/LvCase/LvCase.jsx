@@ -18,31 +18,14 @@ import {
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
 
 // Provinces + shipping
-const allProvinces = [
-  { name: "Cairo", shipping: 60 }, { name: "Giza", shipping: 60 },
-  { name: "Alexandria", shipping: 63 }, { name: "Beheira", shipping: 63 },
-  { name: "Kafr El-Sheikh", shipping: 70 }, { name: "Damietta", shipping: 70 },
-  { name: "Port Said", shipping: 70 }, { name: "Monufia", shipping: 70 },
-  { name: "Qalyubia", shipping: 70 }, { name: "Gharbia", shipping: 70 },
-  { name: "Sharqia", shipping: 70 }, { name: "Suez", shipping: 70 },
-  { name: "Dakahlia", shipping: 70 }, { name: "Ismailia", shipping: 70 },
-  { name: "Sohag", shipping: 81 }, { name: "Beni Suef", shipping: 81 },
-  { name: "Minya", shipping: 81 }, { name: "Fayoum", shipping: 81 },
-  { name: "Assiut", shipping: 81 }, { name: "Marsa Matrouh", shipping: 92 },
-  { name: "Qena", shipping: 92 }, { name: "Red Sea", shipping: 92 },
-  { name: "Luxor", shipping: 92 }, { name: "Aswan", shipping: 92 },
-  { name: "North Coast", shipping: 95 }, { name: "South Sinai", shipping: 110 },
-  { name: "New Valley", shipping: 110 }, { name: "North Sinai", shipping: 110 },
-  { name: "Other", shipping: 100 },
-];
 
 // BabeShark images
 const imagesPage1 = [
-  { src: "/LV cases/photo_1_2025-10-10_17-04-36.jpg", name: "Blue LV case" , price: 130 },
-  { src: "/LV cases/photo_2_2025-10-10_17-04-36.jpg",name: "Black - white LV case" , price: 130 },
-  { src: "/LV cases/photo_3_2025-10-10_17-04-36.jpg",name: "LV case" , price: 130 },
-  { src: "/LV cases/photo_4_2025-10-10_17-04-36.jpg",name: "Black LV case" , price: 130 },
-  { src: "/LV cases/photo_5_2025-10-10_17-04-36.jpg",name: "Brown LV case" , price: 130 },
+  {id: 70, name: "Blue LV", oldPrice: 160, price: 130, src: "/top pick photos/photo_6_2025-10-10_07-18-14.jpg"},
+  {id: 72, name: "Black - white LV", oldPrice: 160, price: 130, src: "/top pick photos/photo_7_2025-10-10_07-18-14.jpg"}, 
+  { id: 26, name: "LV", price: 130, oldPrice: 160, src: "/top pick photos/photo_8_2025-10-10_07-18-14.jpg" },
+  { id: 32, name: "Black LV", price: 130, oldPrice: 160, src: "/top pick photos/photo_9_2025-10-10_07-18-14.jpg" },
+  { id: 35, name: "Brown LV", price: 130, oldPrice: 160, src: "/top pick photos/photo_10_2025-10-10_07-18-14.jpg" },
 ];
 
 const imagesPage2 = [
@@ -144,7 +127,7 @@ const LvCase = () => {
           <ShoppingBag size={18} />
         </button>
         <button
-          onClick={() => addToFavorites({ name: "", image: product.src, price: product.price })}
+          onClick={() => addToFavorites({id:product.id, name: product.name, image: product.src, price: product.price })}
           className="bg-white p-2 rounded-full shadow hover:bg-gray-100"
         >
           <Heart size={18} />
@@ -304,7 +287,7 @@ const LvCase = () => {
           setSelectedPhoneType("");
           setQuantity(1);
         }}
-                className="mt-auto w-full bg-black font-thin text-white font-semibold py-3 rounded-lg shadow-md hover:scale-105 transition"
+                className="mt-auto w-full bg-black font-thin text-white  py-3 rounded-lg shadow-md hover:scale-105 transition"
       >
         Confirm Add to Cart
       </button>

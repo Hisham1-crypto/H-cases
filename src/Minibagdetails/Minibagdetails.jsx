@@ -10,54 +10,53 @@ import { Navigation } from "swiper/modules";
 const products = [
       {
     id: 18,
-    name: "mini bag",
+    name: "Deep Ocean Mini Bag",
     image: "/minibag/photo_1_2025-10-14_18-49-08.jpg",
-    price: 200,
+    price: 400,
   },
   {
     id: 19,
-    name: "mini bag",
+    name: "Graffiti Vibe Mini Bag",
     image: "/minibag/photo_2_2025-10-14_18-49-08.jpg",
-    price: 250,
+    price: 400,
   },
   {
     id: 20,
-    name: "mini bag",
+    name: "Black - White Mini Bag",
     image: "/minibag/photo_3_2025-10-14_18-49-08.jpg",
-    price: 300,
+    price: 400,
   },
     {
     id: 21,
-    name: "mini bag",
+    name: "Color Pop Mini Bag",
     image: "/minibag/photo_4_2025-10-14_18-49-08.jpg",
-    price: 300,
+    price: 400,
   },
       {
     id: 22,
-    name: "mini bag",
+    name: "Retro Pop Mini Bag",
     image: "/minibag/photo_5_2025-10-14_18-49-08.jpg",
-    price: 300,
+    price: 400,
   },
       {
     id: 23,
-    name: "mini bag",
+    name: "Wild Berry Mini Bag",
     image: "/minibag/photo_6_2025-10-14_18-49-08.jpg",
-    price: 300,
+    price: 400,
   },  
        {
     id: 24,
-    name: "mini bag",
+    name: "Fashion Girl Mini Bag",
     image: "/minibag/photo_7_2025-10-14_18-49-08.jpg",
-    price: 300,
+    price: 400,
   },  
        {
     id: 25,
-    name: "mini bag",
+    name: "Blue Vibes Mini Bag",
     image: "/minibag/photo_8_2025-10-14_18-49-08.jpg",
-    price: 300,
+    price: 400,
   },      
 ];
-
 
 const ProductDetails = () => {
   const { id } = useParams();

@@ -10,42 +10,43 @@ import { Swiper, SwiperSlide } from "swiper/react";
 const products =  [
  {
     id: 12,
-    name: "funny bag",
+    name: "Street Art Fanny Pack",
     image: "/funny bag/photo_1_2025-10-14_18-15-04.jpg",
-    price: 200,
+    price: 450,
   },
   {
     id: 13,
-    name: "funny bag",
+    name: "Blue Pulse Fanny Pack",
     image: "/funny bag/photo_2_2025-10-14_18-15-04.jpg",
-    price: 250,
+    price: 450,
   },
   {
     id: 14,
-    name: "funny bag",
+    name: "Color Pop Fanny Pack",
     image: "/funny bag/photo_3_2025-10-14_18-15-04.jpg",
-    price: 300,
+    price: 450,
   },
     {
     id: 15,
-    name: "funny bag",
+    name: "Smoke Splash Fanny Pack",
     image: "/funny bag/photo_4_2025-10-14_18-15-04.jpg",
-    price: 300,
+    price: 450,
   },
       {
     id: 16,
-    name: "funny bag",
+    name: "Black - White Fanny Pack",
     image: "/funny bag/photo_5_2025-10-14_18-15-04.jpg",
-    price: 300,
+    price: 450,
   },
       {
     id: 17,
-    name: "funny bag",
+    name: "Neon Evile Eye Fanny Pack",
     image: "/funny bag/photo_6_2025-10-14_18-15-04.jpg",
-    price: 300,
+    price: 450,
   },  
     
 ];
+
 
 const ProductDetails = () => {
   const { id } = useParams();

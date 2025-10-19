@@ -37,10 +37,10 @@ const featuredProducts = [
   },
          {
     id: 25,
-    title: "mini bag",
+    title: "Blue Vibes Mini Bag",
     image: "/minibag/photo_8_2025-10-14_18-49-08.jpg",
-    price: 300,
-    oldPrice: 160,
+    price: 400,
+    oldPrice: 500,
 
   },      
   {
@@ -215,25 +215,25 @@ const morecases = [
   },
    {
     id: 18,
-    name: "mini bag",
+    name: "Deep Ocean Mini Bag",
     image: "/minibag/photo_1_2025-10-14_18-49-08.jpg",
     price: 400,
   },
  {
     id: 23,
-    name: "mini bag",
+    name: "Wild Berry Mini Bag",
     image: "/minibag/photo_6_2025-10-14_18-49-08.jpg",
     price: 400,
   },  
        {
     id: 24,
-    name: "mini bag",
+    name: "Fashion Girl Mini Bag",
     image: "/minibag/photo_7_2025-10-14_18-49-08.jpg",
     price: 400,
   },  
     {
     id: 21,
-    name: "mini bag",
+    name: "Color Pop Mini Bag",
     image: "/minibag/photo_4_2025-10-14_18-49-08.jpg",
     price: 400,
   },
@@ -260,7 +260,7 @@ const morecases = [
   },
    {
     id: 12,
-    name: "funny bag",
+    name: "Street Art Fanny Pack",
     image: "/funny bag/photo_1_2025-10-14_18-15-04.jpg",
     price: 450,
   },
@@ -281,13 +281,13 @@ const morecases = [
   },
     {
     id: 13,
-    name: "funny bag",
+    name: "Blue Pulse Fanny Pack",
     image: "/funny bag/photo_2_2025-10-14_18-15-04.jpg",
     price: 450,
   },
       {
     id: 17,
-    name: "funny bag",
+    name: "Neon Evile Eye Fanny Pack",
     image: "/funny bag/photo_6_2025-10-14_18-15-04.jpg",
     price: 450,
   },  
@@ -336,7 +336,7 @@ const morecases = [
   },
   {
     id: 60,
-    title: "Lufu",
+    title: "Lufi",
     price: 130,
     oldPrice: 160,
     image: "/top pick photos/photo_32_2025-10-10_07-18-14.jpg",
@@ -356,7 +356,7 @@ const products2 = [
       {
     id: 23,
     oldPrice: 500,
-    title: "mini bag",
+    title: "Wild Berry Mini Bag",
     image: "/minibag/photo_6_2025-10-14_18-49-08.jpg",
     price: 400,
   },  
@@ -369,7 +369,7 @@ const products2 = [
   },
     {
     id: 19,
-    title: "mini bag",
+    title: "Graffiti Vibe Mini Bag",
     oldPrice: 500,
     image: "/minibag/photo_2_2025-10-14_18-49-08.jpg",
     price: 400,
@@ -523,7 +523,7 @@ const firstgrid = [
   },
       {
     id:  13,
-    title: "fanny pack",
+    title: "Street Art Fanny Pack",
     oldPrice: 500,
     image: "/funny bag/photo_2_2025-10-14_18-15-04.jpg",
     price: 450,
@@ -537,20 +537,20 @@ const firstgrid = [
   },
 {   id: 20,
     oldPrice: 500,
-    name: "mini bag",
+    name: "Black - White Mini Bag",
     image: "/minibag/photo_3_2025-10-14_18-49-08.jpg",
     price: 400,
   }, 
        {
     id: 22,
-    name: "mini bag",
+    name: "Retro Pop Mini Bag",
     oldPrice: 500,
     image: "/minibag/photo_5_2025-10-14_18-49-08.jpg",
     price: 400,
   },
    {
     id: 14,
-    name: "funny bag",
+    name:  "Color Pop Fanny Pack",
     oldPrice: 500,
     image: "/funny bag/photo_3_2025-10-14_18-15-04.jpg",
     price: 450,

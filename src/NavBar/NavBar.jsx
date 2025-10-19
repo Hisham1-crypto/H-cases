@@ -138,9 +138,9 @@ const NavBar = ({ onSearch }) => {
             </div>
           </div>
 
-          <Link to="/laptopsleeve" className="hover:text-[#56cfe1] transition">Laptop Sleeve</Link>
-          <Link to="/funnybag" className="hover:text-[#56cfe1] transition">Funny bag</Link>
-          <Link to="/minibag" className="hover:text-[#56cfe1] transition">Mini bag</Link>
+          <Link to="/laptopsleeve" className="hover:text-[#56cfe1] transition">Laptop Sleeves</Link>
+          <Link to="/funnybag" className="hover:text-[#56cfe1] transition">Fanny Packs</Link>
+          <Link to="/minibag" className="hover:text-[#56cfe1] transition">Mini Bags</Link>
 
         </div>
 
@@ -256,9 +256,9 @@ const NavBar = ({ onSearch }) => {
             </div>
 
             {/* <Link to="/tigercase" onClick={toggleSidebar} className="hover:text-[#56cfe1]">Tiger Case</Link> */}
-            <Link to="/laptopsleeve" onClick={toggleSidebar} className="hover:text-[#56cfe1]">Laptop sleeve</Link>
-            <Link to="/funnybag" onClick={toggleSidebar} className="hover:text-[#56cfe1]">Funny bag</Link>
-            <Link to="/minibag" onClick={toggleSidebar} className="hover:text-[#56cfe1]">Mini bag</Link>
+            <Link to="/laptopsleeve" onClick={toggleSidebar} className="hover:text-[#56cfe1]">Laptop Sleeves</Link>
+            <Link to="/funnybag" onClick={toggleSidebar} className="hover:text-[#56cfe1]">Fanny Packs</Link>
+            <Link to="/minibag" onClick={toggleSidebar} className="hover:text-[#56cfe1]">Mini Bags</Link>
 
             {/* ✅ User Icon (تحت اللينكات) */}
             <button

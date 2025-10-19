@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Heart } from "lucide-react";
 import NavBar from "../NavBar/NavBar";
@@ -58,6 +58,12 @@ const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
   const relatedProducts = products.filter((p) => p.id !== product.id);
   const [selectedSize, setSelectedSize] = useState("");
+  const [mainImage, setMainImage] = useState(product.image);
+
+
+  useEffect(() => {
+    setMainImage(product.image);
+  }, [product]);
 
   if (!product) return <div>Product not found</div>;
 
@@ -117,14 +123,48 @@ const ProductDetails = () => {
       <div className="p-6 mt-20">
         <div className="flex flex-col md:flex-row gap-10 items-start">
           {/* صورة المنتج */}
-          <div className="md:w-1/2 bg-gray-50 p-4 rounded-lg">
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-auto rounded-lg object-cover"
-            />
-          </div>
+<div className="md:w-1/2 bg-gray-50 p-4 rounded-lg flex flex-col items-center">
+  {/* الصورة الرئيسية */}
+  <img
+    src={mainImage}
+    alt={product.name}
+    className="w-full h-auto rounded-lg object-cover mb-4 transition-all duration-300"
+  />
 
+  {/* الصور المصغرة */}
+  <div className="flex gap-3 justify-center">
+    <img
+      src={product.image}
+      alt="Main"
+      className={`w-24 h-24 object-cover rounded-lg border cursor-pointer transition ${
+        mainImage === product.image
+          ? "border-lime-400"
+          : "border-gray-300 hover:opacity-80"
+      }`}
+      onClick={() => setMainImage(product.image)}
+    />
+    <img
+      src="/funny bag/details 2.jpg"
+      alt="Extra 1"
+      className={`w-24 h-24 object-cover rounded-lg border cursor-pointer transition ${
+        mainImage === "/funny bag/details 2.jpg"
+          ? "border-lime-400"
+          : "border-gray-300 hover:opacity-80"
+      }`}
+      onClick={() => setMainImage("/funny bag/details 2.jpg")}
+    />
+    <img
+      src="/funny bag/details1.jpg"
+      alt="Extra 2"
+      className={`w-24 h-24 object-cover rounded-lg border cursor-pointer transition ${
+        mainImage === "/funny bag/details1.jpg"
+          ? "border-lime-400"
+          : "border-gray-300 hover:opacity-80"
+      }`}
+      onClick={() => setMainImage("/funny bag/details1.jpg")}
+    />
+  </div>
+</div>
           {/* بيانات المنتج */}
           <div className="md:w-1/2 flex flex-col gap-6">
             {/* الاسم */}

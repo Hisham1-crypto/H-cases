@@ -7,15 +7,6 @@ import { AuthContext } from "../AuthProvider";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
 
-import {
-  FooterCopyright,
-  FooterDivider,
-  FooterIcon,
-  FooterLink,
-  FooterLinkGroup,
-  FooterTitle,
-  Footer,
-} from "flowbite-react";
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
 
 
@@ -99,7 +90,40 @@ const imagesPage2 = [
 const phoneBrands = {
   "Apple": ["iPhone 14", "iPhone 14 Pro", "iPhone 13", "iPhone 13 Pro", "iPhone 12", "iPhone 12 Pro"],
   "Samsung": ["Samsung S23", "Samsung S23 Ultra", "Samsung S22", "Samsung S22 Plus", "Samsung S21", "Samsung S21 Ultra"],
-  "Google": ["Google Pixel 8", "Google Pixel 7"]
+  "Google": ["Google Pixel 8", "Google Pixel 7"],
+  "Huawie" :["Honor 10",
+    "Honor 10Lite",
+    "Honor 100",
+    "Honor 100",
+    "Honor 10i",
+    "Honor 10x lite",
+    "Honor 20",
+    "Honor 20pro",
+    "Honor 200",
+    "Honor 200lite",
+    "Honor 200pro",
+    "Honor 400",
+    "Honor 400 pro",
+    "Honor 50",
+    "Honor 50 lite",
+    "Honor 50 se",
+    "Honor 70",
+    "Honor 70 Lite",
+    "Honor 7x",
+    "Honor 8",
+    "Honor 8a",
+    "Honor 8s",
+    "Honor 8x",
+    "Honor 8x max",
+    "Honor 9",
+   "Honor 9 Lite",
+      "Honor 90",
+         "Honor 90 lite ",
+
+
+
+
+  ],
 };
 
 const BabeShark = () => {
@@ -353,42 +377,7 @@ const BabeShark = () => {
     </div>
   </div>
 )}
-        {/* Footer */}
-        <Footer container>
-          <div className="w-full">
-            <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
-              <div className="grid grid-cols-2 gap-8 sm:mt-4 sm:grid-cols-3 sm:gap-6">
-                <div>
-                  <FooterTitle title="Follow us" />
-                  <FooterLinkGroup col>
-                    <FooterLink href="#">Instagram</FooterLink>
-                    <FooterLink href="#">Facebook</FooterLink>
-                  </FooterLinkGroup>
-                </div>
-                <div>
-                  <FooterTitle title="Legal" />
-                  <FooterLinkGroup col>
-                    <FooterLink href="#">Privacy Policy</FooterLink>
-                    <FooterLink href="#">Terms & Conditions</FooterLink>
-                  </FooterLinkGroup>
-                </div>
-              </div>
-            </div>
-            <FooterDivider />
-            <div className="w-full sm:flex sm:items-center sm:justify-between">
-              <FooterCopyright
-                href="#"
-                by="H-Cases"
-                year={new Date().getFullYear()}
-              />
-              <div className="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
-                <FooterIcon href="#" icon={BsFacebook} />
-                <FooterIcon href="#" icon={BsInstagram} />
-                <FooterIcon href="#" icon={BsTwitter} />
-              </div>
-            </div>
-          </div>
-        </Footer>
+
       </div>
     </div>
   );

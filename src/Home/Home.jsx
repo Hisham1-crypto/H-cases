@@ -167,30 +167,38 @@ const featuredProducts = [
 const morecases = [
    {
     id: 1,
-    name: "Laptop Sleeve 13 inch",
+    name: "Lazy Black Cat Laptop Sleeve",
     image: "/laptopsleeve/photo_1_2025-10-14_15-29-33.jpg",
     price: 450,
+    oldPrice: 550,
+
   },
 
 
   {
     id: 8,
-    name: "Laptop Sleeve 17 inch",
+    name: "Neon Evile Eye Laptop Sleeve",
     image: "/laptopsleeve/photo_8_2025-10-14_15-29-33.jpg",
     price: 450,
+        oldPrice: 550,
+
   },
   {
     id: 9,
-    name: "Laptop Sleeve 17 inch",
+    name: "Desktop Error Laptop Sleeve",
     image: "/laptopsleeve/photo_9_2025-10-14_15-29-33.jpg",
     price: 450,
+        oldPrice: 550,
+
   },
 
   {
     id: 11,
-    name: "Laptop Sleeve 17 inch",
+    name: "Blue Porsche Laptop Sleeve",
     image: "/laptopsleeve/photo_11_2025-10-14_15-29-33.jpg",
     price: 450,
+        oldPrice: 550,
+
   },
   {
     id: 46,
@@ -218,44 +226,52 @@ const morecases = [
     name: "Deep Ocean Mini Bag",
     image: "/minibag/photo_1_2025-10-14_18-49-08.jpg",
     price: 400,
+        oldPrice: 500,
+
   },
  {
     id: 23,
     name: "Wild Berry Mini Bag",
     image: "/minibag/photo_6_2025-10-14_18-49-08.jpg",
     price: 400,
+    oldPrice: 500,
+
   },  
        {
     id: 24,
     name: "Fashion Girl Mini Bag",
     image: "/minibag/photo_7_2025-10-14_18-49-08.jpg",
     price: 400,
+    oldPrice: 500,
+
   },  
     {
     id: 21,
     name: "Color Pop Mini Bag",
     image: "/minibag/photo_4_2025-10-14_18-49-08.jpg",
     price: 400,
+    oldPrice: 500,
+
   },
   {
     id: 49,
     title: "Lufi",
     price: 130,
-    oldPrice: 180,
+    oldPrice: 160,
     image: "/top pick photos/photo_27_2025-10-10_07-18-14.jpg",
   },
   {
     id: 50,
     title: "Lufi",
     price: 130,
-    oldPrice: 180,
+    oldPrice: 160,
     image: "/top pick photos/photo_28_2025-10-10_07-18-14.jpg",
   },
   {
     id: 51,
     title: "Pink Labubu",
     price: 130,
-    oldPrice: 180,
+    oldPrice: 160,
     image: "/top pick photos/photo_34_2025-10-10_07-18-14.jpg",
   },
    {
@@ -263,6 +279,8 @@ const morecases = [
     name: "Street Art Fanny Pack",
     image: "/funny bag/photo_1_2025-10-14_18-15-04.jpg",
     price: 450,
+    oldPrice: 500,
+
   },
 
   {
@@ -284,12 +302,16 @@ const morecases = [
     name: "Blue Pulse Fanny Pack",
     image: "/funny bag/photo_2_2025-10-14_18-15-04.jpg",
     price: 450,
+    oldPrice: 500,
+
   },
       {
     id: 17,
     name: "Neon Evile Eye Fanny Pack",
     image: "/funny bag/photo_6_2025-10-14_18-15-04.jpg",
     price: 450,
+    oldPrice: 500,
+
   },  
     
   {
@@ -427,99 +449,89 @@ const laptopsleeve =[
   {
     id: 1,
     title: "Laptop Sleeve 13 inch",
-        oldPrice: 160,
+        oldPrice: 550,
 
     image: "/laptopsleeve/photo_1_2025-10-14_15-29-33.jpg",
-    price: 200,
+    price: 450,
   },
   {
     id: 2,
-    title: "Laptop Sleeve 15 inch",
+    title:"Black - White Laptop Sleeve",
     oldPrice: 550,
-
     image: "/laptopsleeve/photo_2_2025-10-14_15-29-33.jpg",
     price: 450,
   },
   {
     id: 3,
-    title: "Laptop Sleeve 17 inch",
+    title: "Blue Pulse Laptop Sleeve",
     oldPrice: 500,
-
     image: "/laptopsleeve/photo_3_2025-10-14_15-29-33.jpg",
     price: 450,
   },
     {
     id: 4,
-    title: "Laptop Sleeve 17 inch",
-        oldPrice: 550,
-
+    title: "Colored Flowers Laptop Sleeve",
+    oldPrice: 550,
     image: "/laptopsleeve/photo_4_2025-10-14_15-29-33.jpg",
     price: 450,
   },
       {
     id: 5,
-    title: "Laptop Sleeve 17 inch",
-        oldPrice: 550,
-
+    title: "Black Laptop Sleeve",
+    oldPrice: 550,
     image: "/laptopsleeve/photo_5_2025-10-14_15-29-33.jpg",
     price: 450,
   },
       {
     id: 6,
-    title: "Laptop Sleeve 17 inch",
-        oldPrice: 550,
-
+    title: "White Evile Eye Laptop Sleeve",
+    oldPrice: 550,
     image: "/laptopsleeve/photo_6_2025-10-14_15-29-33.jpg",
     price: 450,
   },  
     {
     id: 7,
-    title: "Laptop Sleeve 17 inch",
-        oldPrice: 550,
-
+    title: "Yellow Flowers Laptop Sleeve",
+    oldPrice: 550,
     image: "/laptopsleeve/photo_7_2025-10-14_15-29-33.jpg",
     price: 450,
   },
     {
     id: 8,
-    title: "Laptop Sleeve 17 inch",
-        oldPrice: 550,
-
+    title: "Neon Evile Eye Laptop Sleeve",
+    oldPrice: 550,
     image: "/laptopsleeve/photo_8_2025-10-14_15-29-33.jpg",
     price: 450,
   },
     {
     id: 9,
-    title: "Laptop Sleeve 17 inch",
-        oldPrice: 550,
-
+    title: "Desktop Error Laptop Sleeve",
+    oldPrice: 550,
     image: "/laptopsleeve/photo_9_2025-10-14_15-29-33.jpg",
     price: 450,
   },
     {
     id: 10,
-    title: "Laptop Sleeve 17 inch",
-        oldPrice: 550,
-
+    title:  "Dark Laptop Sleeve",
+    oldPrice: 550,
     image: "/laptopsleeve/photo_10_2025-10-14_15-29-33.jpg",
     price: 450,
   },
     {
     id: 11,
-    title: "Laptop Sleeve 17 inch",
-        oldPrice: 550,
-
+    title:  "Blue Porsche Laptop Sleeve",
+    oldPrice: 550,
     image: "/laptopsleeve/photo_11_2025-10-14_15-29-33.jpg",
     price: 450,
   },
 ];
 const firstgrid = [
     {
-    id: 1,
+    id: 40,
     title: "Special Evile Eye",
     oldPrice: 160,
     image: "/evileeye/photo_5_2025-10-10_17-14-24.jpg",
-    price: 200,
+    price: 130,
   },
       {
     id:  13,
@@ -528,9 +540,9 @@ const firstgrid = [
     image: "/funny bag/photo_2_2025-10-14_18-15-04.jpg",
     price: 450,
   },
-       {
+ {
     id: 2,
-    title: "Laptop Sleeve",
+    title:"Black - White Laptop Sleeve",
     oldPrice: 550,
     image: "/laptopsleeve/photo_2_2025-10-14_15-29-33.jpg",
     price: 450,
@@ -870,7 +882,7 @@ const Home = () => {
             />
             <div className="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition" />
             <h3 className="absolute inset-0 flex items-center justify-center text-white text-xl sm:text-2xl font-bold drop-shadow-lg text-center px-2">
-              Funny Bags
+              Fanny Packs
             </h3>
           </div>
 
@@ -1194,31 +1206,34 @@ const Home = () => {
                 </div>
 
                 {/* Overlay on hover */}
-                <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-3">
-                  <button
-                    onClick={() => addToFavorites(product)}
-                    className="p-2 bg-white rounded-full shadow hover:scale-110 transition"
-                  >
-                    <Heart className="w-5 h-5 text-red-500" />
-                  </button>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      if (product.id >= 1 && product.id <= 11) {
-                        navigate(`/laptopsleeve/${product.id}`);
-                      } else if (product.id >= 12 && product.id <= 17) {
-                        navigate(`/funnybagdetails/${product.id}`);
-                      } else if (product.id >= 18 && product.id <= 25) {
-                        navigate(`/minibagdetails/${product.id}`);
-                      } else {
-                        navigate(`/phonedetails/${product.id}`);
-                      }
-                    }}
-                    className="absolute top-3 right-3 p-2 bg-gray-100 rounded-full shadow hover:bg-black hover:text-white hover:scale-110 transition z-10 flex items-center gap-1"
-                  >
-                    <Eye className="w-5 h-5" />
-                  </button>
-                </div>
+              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-3">
+  {/* الزر بتاع القلب */}
+  <button
+    onClick={() => addToFavorites(product)}
+    className="p-2 bg-white rounded-full shadow hover:scale-110 transition"
+  >
+    <Heart className="w-5 h-5 text-red-500" />
+  </button>
+
+  {/* الزر بتاع العين */}
+  <button
+    onClick={(e) => {
+      e.stopPropagation();
+      if (product.id >= 1 && product.id <= 11) {
+        navigate(`/laptopsleeve/${product.id}`);
+      } else if (product.id >= 12 && product.id <= 17) {
+        navigate(`/funnybagdetails/${product.id}`);
+      } else if (product.id >= 18 && product.id <= 25) {
+        navigate(`/minibagdetails/${product.id}`);
+      } else {
+        navigate(`/phonedetails/${product.id}`);
+      }
+    }}
+    className="p-2 bg-white rounded-full shadow hover:scale-110 transition"
+  >
+    <Eye className="w-5 h-5 text-gray-800" />
+  </button>
+</div>
 
                 {/* Product Info */}
                 <div className="p-4 text-center">

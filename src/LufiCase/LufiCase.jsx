@@ -6,15 +6,6 @@ import { AuthContext } from "../AuthProvider";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
 
-import {
-  FooterCopyright,
-  FooterDivider,
-  FooterIcon,
-  FooterLink,
-  FooterLinkGroup,
-  FooterTitle,
-  Footer,
-} from "flowbite-react";
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
 
 // BabeShark images
@@ -24,7 +15,7 @@ const imagesPage1 = [
   { id: 57, name: "Lufi", price: 130, oldPrice: 160, src: "/top pick photos/photo_29_2025-10-10_07-18-14.jpg" },
   { id: 58, name: "Lufi ", price: 130, oldPrice: 160, src: "/top pick photos/photo_30_2025-10-10_07-18-14.jpg" },
   { id: 59, name: "Lufi", price: 130, oldPrice: 160, src: "/top pick photos/photo_31_2025-10-10_07-18-14.jpg" },
-  { id: 60, name: "Lufu", price: 130, oldPrice: 160, src: "/top pick photos/photo_32_2025-10-10_07-18-14.jpg" },
+  { id: 60, name: "Lufi", price: 130, oldPrice: 160, src: "/top pick photos/photo_32_2025-10-10_07-18-14.jpg" },
    
 ];
 
@@ -101,7 +92,7 @@ const LufiCase = () => {
     <div key={idx} className="relative border rounded-lg overflow-hidden shadow hover:shadow-lg transition cursor-pointer">
       <img
         src={product.src}
-        alt={`BabeShark ${idx + 1}`}
+        alt={`lufi ${idx + 1}`}
         className="w-full h-auto object-cover transition-transform duration-300 hover:scale-105"
         onClick={() => handleAddToCartClick(product)}
       />
@@ -166,7 +157,7 @@ const LufiCase = () => {
       <div className="flex flex-col items-center text-center mb-6">
         <img
           src={selectedProduct.src}
-          alt="BabeShark Case"
+          alt="lufi Case"
           className="w-40 h-40 object-contain mb-4"
         />
         <h3 className="text-lg font-semibold">{selectedProduct.name}</h3>
@@ -289,41 +280,7 @@ const LufiCase = () => {
   </div>
 )}
         {/* Footer */}
-        <Footer container className="mt-20">
-          <div className="w-full">
-            <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
-              <div className="grid grid-cols-2 gap-8 sm:mt-4 sm:grid-cols-3 sm:gap-6">
-                <div>
-                  <FooterTitle title="Follow us" />
-                  <FooterLinkGroup col>
-                    <FooterLink href="#">Instagram</FooterLink>
-                    <FooterLink href="#">Facebook</FooterLink>
-                  </FooterLinkGroup>
-                </div>
-                <div>
-                  <FooterTitle title="Legal" />
-                  <FooterLinkGroup col>
-                    <FooterLink href="#">Privacy Policy</FooterLink>
-                    <FooterLink href="#">Terms & Conditions</FooterLink>
-                  </FooterLinkGroup>
-                </div>
-              </div>
-            </div>
-            <FooterDivider />
-            <div className="w-full sm:flex sm:items-center sm:justify-between">
-              <FooterCopyright
-                href="#"
-                by="H-Cases"
-                year={new Date().getFullYear()}
-              />
-              <div className="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
-                <FooterIcon href="#" icon={BsFacebook} />
-                <FooterIcon href="#" icon={BsInstagram} />
-                <FooterIcon href="#" icon={BsTwitter} />
-              </div>
-            </div>
-          </div>
-        </Footer>
+
       </div>
     </div>
   );

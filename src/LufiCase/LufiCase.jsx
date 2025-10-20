@@ -1038,7 +1038,8 @@ const LufiCase = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-
+const [showBrandDropdown, setShowBrandDropdown] = useState(false);
+const [showModelDropdown, setShowModelDropdown] = useState(false);
   const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedPhoneType, setSelectedPhoneType] = useState("");
   const [quantity, setQuantity] = useState(1);
@@ -1172,57 +1173,78 @@ addToCart({
       </h2>
 
       {/* ✅ Brand */}
-      <div className="mb-5">
-        <label className="block text-sm font-semibold text-gray-600 mb-2">
-          Brand
-        </label>
-        <div className="relative">
-          <select
-            value={selectedBrand}
-            onChange={(e) => {
-              setSelectedBrand(e.target.value);
-              setSelectedPhoneType("");
-            }}
-            className="w-full max-h-48 overflow-y-auto sm:max-h-60 appearance-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-10 text-gray-800 shadow-md  focus:ring-2  transition-all outline-none"
-          >
-            <option value="">Choose your phone brand</option>
-            {Object.keys(phoneBrands).map((brand) => (
-              <option key={brand} value={brand}>
-                {brand}
-              </option>
-            ))}
-          </select>
-          <span className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
-            ▼
-          </span>
-        </div>
-      </div>
+{/* ✅ Brand Dropdown */}
+<div className="mb-5 relative">
+  <label className="block text-sm font-semibold text-gray-600 mb-2">
+    Brand
+  </label>
 
-      {/* ✅ Model */}
-      {selectedBrand && (
-        <div className="mb-5">
-          <label className="block text-sm font-semibold text-gray-600 mb-2">
-            Model
-          </label>
-          <div className="relative">
-            <select
-              value={selectedPhoneType}
-              onChange={(e) => setSelectedPhoneType(e.target.value)}
-              className="w-full max-h-48 overflow-y-auto sm:max-h-60 appearance-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-10 text-gray-800 shadow-md focus:ring-2  transition-all outline-none"
-            >
-              <option value="">Choose phone model</option>
-              {phoneBrands[selectedBrand].map((model) => (
-                <option key={model} value={model}>
-                  {model}
-                </option>
-              ))}
-            </select>
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
-              ▼
-            </span>
-          </div>
+  <div
+    onClick={() => {
+      setShowBrandDropdown(!showBrandDropdown);
+      setShowModelDropdown(false);
+    }}
+    className="w-full border rounded-xl p-3 bg-gray-50 cursor-pointer flex justify-between items-center"
+  >
+    <span>{selectedBrand || "Choose your phone brand"}</span>
+    <span className="text-gray-400">▼</span>
+  </div>
+
+  {showBrandDropdown && (
+    <div className="absolute z-50 bg-white border rounded-xl mt-1 w-full max-h-48 overflow-y-auto shadow-lg">
+      {Object.keys(phoneBrands).map((brand) => (
+        <div
+          key={brand}
+          onClick={() => {
+            setSelectedBrand(brand);
+            setSelectedPhoneType("");
+            setShowBrandDropdown(false);
+          }}
+          className="p-3 hover:bg-blue-100 cursor-pointer text-gray-700"
+        >
+          {brand}
         </div>
-      )}
+      ))}
+    </div>
+  )}
+</div>
+
+{/* ✅ Model Dropdown */}
+{selectedBrand && (
+  <div className="mb-5 relative">
+    <label className="block text-sm font-semibold text-gray-600 mb-2">
+      Model
+    </label>
+
+    <div
+      onClick={() => {
+        setShowModelDropdown(!showModelDropdown);
+        setShowBrandDropdown(false);
+      }}
+      className="w-full border rounded-xl p-3 bg-gray-50 cursor-pointer flex justify-between items-center"
+    >
+      <span>{selectedPhoneType || "Choose phone model"}</span>
+      <span className="text-gray-400">▼</span>
+    </div>
+
+    {showModelDropdown && (
+      <div className="absolute z-50 bg-white border rounded-xl mt-1 w-full max-h-48 overflow-y-auto shadow-lg">
+        {phoneBrands[selectedBrand].map((model) => (
+          <div
+            key={model}
+            onClick={() => {
+              setSelectedPhoneType(model);
+              setShowModelDropdown(false);
+            }}
+            className="p-3 hover:bg-blue-100 cursor-pointer text-gray-700"
+          >
+            {model}
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+)}
 
       {/* ✅ Quantity */}
       <div className="mb-5">

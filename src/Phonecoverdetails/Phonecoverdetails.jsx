@@ -1174,17 +1174,19 @@ const phoneData = {
 const Phonecoverdetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-const product = products.find((p) => p.id === Number(id));
-const isFavorite = (id) => favorites.some((fav) => fav.id === id);
+  const product = products.find((p) => p.id === Number(id));
 
-  const relatedProducts = products.filter((p) => p.id !== product.id);
-
+  const { favorites, addToFavorites, removeFromFavorites } = useContext(FavoritesContext);
   const { addToCart } = useContext(CartContext);
-const { favorites, addToFavorites, removeFromFavorites } = useContext(FavoritesContext);
+
+  const isFavorite = (id) => favorites.some((fav) => fav.id === id);
 
   const [quantity, setQuantity] = useState(1);
   const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedModel, setSelectedModel] = useState("");
+
+  const [showBrandDropdown, setShowBrandDropdown] = useState(false);
+  const [showModelDropdown, setShowModelDropdown] = useState(false);
 
   if (!product) return <div>Product not found</div>;
 
@@ -1201,43 +1203,42 @@ const { favorites, addToFavorites, removeFromFavorites } = useContext(FavoritesC
     addToCart(cartItem);
   };
 
-const handleFavorite = () => {
-  const favoriteItem = {
-    id: product.id,
-    name: product.title,
-    image: product.image,
-    price: product.price,
+  const handleFavorite = () => {
+    const favoriteItem = {
+      id: product.id,
+      name: product.title,
+      image: product.image,
+      price: product.price,
+    };
+
+    if (isFavorite(product.id)) {
+      removeFromFavorites(product.id);
+    } else {
+      addToFavorites(favoriteItem);
+    }
   };
 
-  if (isFavorite(product.id)) {
-    removeFromFavorites(product.id);
-  } else {
-    addToFavorites(favoriteItem);
-  }
-};
-
-const handleBuyNow = () => {
-  const checkoutItem = {
-    id: product.id,
-    name: product.title,
-    image: product.image,
-    price: product.price,
-    phoneBrand: selectedBrand,   // ✅ لازم الاسم كده علشان CartContext و Checkout يقرؤوه صح
-    phoneModel: selectedModel,   // ✅ نفس الشيء
-    quantity,
+  const handleBuyNow = () => {
+    const checkoutItem = {
+      id: product.id,
+      name: product.title,
+      image: product.image,
+      price: product.price,
+      phoneBrand: selectedBrand,
+      phoneModel: selectedModel,
+      quantity,
+    };
+    localStorage.setItem("checkout_item", JSON.stringify(checkoutItem));
+    navigate("/checkout");
   };
 
-  // ✅ خزن المنتج في localStorage
-  localStorage.setItem("checkout_item", JSON.stringify(checkoutItem));
-
-  // ✅ روح لصفحة الدفع
-  navigate("/checkout");
-};
+  const relatedProducts = products.filter((p) => p.id !== product.id);
 
   return (
     <div className="min-h-screen bg-gray-50 mb-20">
       <NavBar />
-<div className="h-20"></div>
+      <div className="h-20"></div>
+
       <div className="max-w-6xl mx-auto px-6 py-20 flex flex-col md:flex-row gap-10 mt-20">
         {/* صورة المنتج */}
         <div className="md:w-1/2 bg-white rounded-2xl shadow-md overflow-hidden">
@@ -1254,63 +1255,88 @@ const handleBuyNow = () => {
 
           {/* السعر */}
           <div className="flex items-center gap-3">
-           
-            <span className="text-green-600 text-2xl font-bold">
-              EGP {product.price}
-            </span>
+            <span className="text-green-600 text-2xl font-bold">EGP {product.price}</span>
             <span className="bg-yellow-300 text-xs font-semibold px-2 py-1 rounded-full text-gray-700">
               SALE
             </span>
           </div>
 
-          {/* اختيار البراند */}
-          <div>
-            <label className="block text-gray-700 font-semibold mb-2">
-              Select Brand
-            </label>
-            <select
-              value={selectedBrand}
-              onChange={(e) => {
-                setSelectedBrand(e.target.value);
-                setSelectedModel("");
-              }}
-              className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-green-400 outline-nonemax-h-48 overflow-y-auto sm:max-h-60"
-            >
-              <option value="">-- Choose Brand --</option>
-              {Object.keys(phoneData).map((brand) => (
-                <option key={brand} value={brand}>
-                  {brand}
-                </option>
-              ))}
-            </select>
+          {/* ✅ اختيار البراند */}
+          <div className="relative">
+            <label className="block text-gray-700 font-semibold mb-2">Select Brand</label>
+
+<div
+  onClick={() => {
+    setShowBrandDropdown(!showBrandDropdown);
+    setShowModelDropdown(false);
+  }}
+  className="w-full border text-gray-400 rounded-lg p-3 flex items-center justify-between focus:ring-2 focus:ring-green-400 outline-none cursor-pointer bg-white"
+>
+  <span>{selectedBrand || "-- Choose Brand --"}</span>
+  <span className="text-gray-400">▼</span>
+</div>
+
+
+
+
+            {showBrandDropdown && (
+              <div className="absolute z-50 bg-white border rounded-lg mt-1 w-full max-h-48 overflow-y-auto shadow-lg">
+                {Object.keys(phoneData).map((brand) => (
+                  <div
+                    key={brand}
+                    onClick={() => {
+                      setSelectedBrand(brand);
+                      setSelectedModel("");
+                      setShowBrandDropdown(false);
+                    }}
+                    className="p-3 hover:bg-green-100 cursor-pointer text-gray-700"
+                  >
+                    {brand}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
-          {/* اختيار الموديل */}
+          {/* ✅ اختيار الموديل */}
           {selectedBrand && (
-            <div>
-              <label className="block text-gray-700 font-semibold mb-2">
-                Select Model
-              </label>
-              <select
-                value={selectedModel}
-                onChange={(e) => setSelectedModel(e.target.value)}
-                className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-green-400 outline-none max-h-48 overflow-y-auto sm:max-h-60"
+            <div className="relative">
+              <label className="block text-gray-700 font-semibold mb-2">Select Model</label>
+
+              <div
+                onClick={() => {
+                  setShowModelDropdown(!showModelDropdown);
+                  setShowBrandDropdown(false);
+                }}
+  className="w-full border text-gray-400 rounded-lg p-3 flex items-center justify-between focus:ring-2 focus:ring-green-400 outline-none cursor-pointer bg-white"
               >
-                <option value="">-- Choose Model --</option>
-                {phoneData[selectedBrand].map((model) => (
-                  <option key={model} value={model}>
-                    {model}
-                  </option>
-                ))}
-              </select>
+                {selectedModel || "-- Choose Model --"}
+                  <span className="text-gray-400">▼</span>
+
+              </div>
+
+              {showModelDropdown && (
+                <div className="absolute z-50 bg-white border rounded-lg mt-1 w-full max-h-48 overflow-y-auto shadow-lg">
+                  {phoneData[selectedBrand].map((model) => (
+                    <div
+                      key={model}
+                      onClick={() => {
+                        setSelectedModel(model);
+                        setShowModelDropdown(false);
+                      }}
+                      className="p-3 hover:bg-green-100 cursor-pointer text-gray-700"
+                    >
+                      {model}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 
           {/* الكمية */}
           <div>
-            <label className="block text-gray-700 font-semibold mb-2">
-              Quantity
-            </label>
+            <label className="block text-gray-700 font-semibold mb-2">Quantity</label>
             <div className="flex items-center gap-4">
               <button
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
@@ -1330,19 +1356,18 @@ const handleBuyNow = () => {
 
           {/* الأزرار */}
           <div className="flex flex-wrap gap-4 mt-6">
-<button
-  onClick={handleFavorite}
-  className="flex items-center justify-center gap-2 border border-gray-300 bg-white hover:bg-gray-100 text-gray-800 px-5 py-3 rounded-full font-medium shadow-sm transition-all"
->
-  <Heart
-    className="transition"
-    size={22}
-    fill={isFavorite(product.id) ? "rgb(236,72,153)" : "none"}   // يتملي لو مضاف
-  color={isFavorite(product.id) ? "rgb(236,72,153)" : "rgb(236,72,153)"}  // اللون الأساسي بينك دايمًا
-  />
-  Add to Favorites
-</button>
-
+            <button
+              onClick={handleFavorite}
+              className="flex items-center justify-center gap-2 border border-gray-300 bg-white hover:bg-gray-100 text-gray-800 px-5 py-3 rounded-full font-medium shadow-sm transition-all"
+            >
+              <Heart
+                className="transition"
+                size={22}
+                fill={isFavorite(product.id) ? "rgb(236,72,153)" : "none"}
+                color="rgb(236,72,153)"
+              />
+              Add to Favorites
+            </button>
 
             <button
               onClick={handleAddToCart}
@@ -1371,24 +1396,19 @@ const handleBuyNow = () => {
 
           {/* تفاصيل المنتج */}
           <div className="mt-8 border-t pt-5">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-3">
-              Product Details
-            </h2>
+            <h2 className="text-2xl font-semibold text-gray-800 mb-3">Product Details</h2>
             <ul className="space-y-2 text-gray-700">
-              <li>• Soft and flexable silicon cover.</li>
-              <li>• Printed with hight quality inks.</li>
+              <li>• Soft and flexible silicon cover.</li>
+              <li>• Printed with high-quality inks.</li>
               <li>• Transparent Frame</li>
-           
             </ul>
           </div>
         </div>
       </div>
-      
-      {/* 🔻 Things You May Like Section */}
+
+      {/* 🔻 Things You May Like */}
       <div className="max-w-6xl mx-auto px-6 mt-20 mb-20">
-        <h2 className="text-3xl font-bold text-gray-800 mb-6">
-          Things You May Like
-        </h2>
+        <h2 className="text-3xl font-bold text-gray-800 mb-6">Things You May Like</h2>
         <Swiper
           modules={[Navigation]}
           spaceBetween={20}
@@ -1412,17 +1432,15 @@ const handleBuyNow = () => {
                   alt={item.title}
                   className="w-full h-48 object-cover rounded-lg mb-3"
                 />
-                <h3 className="text-lg font-semibold text-gray-700 truncate">
-                  {item.title}
-                </h3>
+                <h3 className="text-lg font-semibold text-gray-700 truncate">{item.title}</h3>
                 <p className="text-green-600 font-bold">EGP {item.price}</p>
               </div>
             </SwiperSlide>
           ))}
         </Swiper>
       </div>
-            <div><Footerr/></div>
-      
+
+      <Footerr />
     </div>
   );
 };

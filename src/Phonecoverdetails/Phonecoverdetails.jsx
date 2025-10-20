@@ -1274,7 +1274,7 @@ const handleBuyNow = () => {
                 setSelectedBrand(e.target.value);
                 setSelectedModel("");
               }}
-              className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-green-400 outline-none overflow-y-auto"
+              className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-green-400 outline-none sm:overflow-y"
             >
               <option value="">-- Choose Brand --</option>
               {Object.keys(phoneData).map((brand) => (
@@ -1294,7 +1294,7 @@ const handleBuyNow = () => {
               <select
                 value={selectedModel}
                 onChange={(e) => setSelectedModel(e.target.value)}
-                className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-green-400 outline-none overflow-y-auto"
+                className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-green-400 outline-none sm:overflow-y"
               >
                 <option value="">-- Choose Model --</option>
                 {phoneData[selectedBrand].map((model) => (

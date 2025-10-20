@@ -8,6 +8,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
+import Footerr from "../Footerr/Footerr";
 
 const products = [
   {
@@ -131,14 +132,16 @@ const handleBuyNow = () => {
     image: product.image,
     price: product.price,
     size: selectedSize,
-    quantity: quantity,
+    quantity: quantity, // ✅ الكمية
   };
 
-  // ✅ حفظ المنتج في localStorage علشان صفحة Checkout تقدر تجيبه
+  // ✅ نحفظ المنتج في localStorage علشان نستخدمه في صفحة Checkout
   localStorage.setItem("checkout_item", JSON.stringify(buyNowProduct));
 
+  // ✅ بعد كده ننتقل مباشرة لصفحة الـ Checkout
   navigate("/checkout");
 };
+
 
   // ✅ منتجات مشابهة (غير المنتج الحالي)
   const relatedProducts = products.filter((p) => p.id !== product.id);
@@ -290,6 +293,8 @@ const handleBuyNow = () => {
                 ))}
               </Swiper>
             </div>
+                  <div><Footerr/></div>
+            
     </div>
   );
 };

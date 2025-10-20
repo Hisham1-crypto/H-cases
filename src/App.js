@@ -18,10 +18,8 @@ import { CartProvider } from "./CartContext";
 import { FavoritesProvider } from "./FavoritesProvider";
 import Payment from "./Payment/Payment";
 import AuthProvider, { AuthContext } from "./AuthProvider";
-import RapScene from "./RapScene/RapScene"
 import BabeShark from "./BabeShark/BabeShark"
 import TigerCase from "./TigerCase/TigerCase"
-import CarCase from "./CarCase/CarCase"
 import LvCase from "./LvCase/LvCase";
 import EvileEye from "./EvileEye/EvileEye";
 import Porche911 from "./Porche911/Porche911";
@@ -34,7 +32,6 @@ import Laptopsleeve from "./Laptopsleeve/Laptopsleeve";
 import Laptopsleeve1 from "./Laptopsleeve1/Laptopsleeve1";
 import Funnybagdetails from "./Funnybagdetails/Funnybagdetails"
 import Minibagdetails from "./Minibagdetails/Minibagdetails"
-import Productdetails from "./Productdetails/Productdetails"
 import Phonecoverdetails from "./Phonecoverdetails/Phonecoverdetails";
 import ScrollToTop from "./ScrollToTop";
 
@@ -61,7 +58,6 @@ const App = () => {
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/payment" element={<Payment />} />
-              <Route path="/rapscene" element={<RapScene/>}/>
               <Route path="/babeshark" element={<BabeShark/>}/>
               <Route path="/tigercase" element={<TigerCase/>}/>
               <Route path="/evileeye" element={<EvileEye/>}/>
@@ -76,7 +72,6 @@ const App = () => {
               <Route path="/funnybagdetails/:id" element={<Funnybagdetails/>}/>
               <Route path="/laptopsleeve" element={<Laptopsleeve/>}/>
               <Route path="/laptopsleeve/:id" element={<Laptopsleeve1/>}/>
-              <Route path="/product/:id" element={<Productdetails/>}/>
               <Route path="/phonedetails/:id" element={<Phonecoverdetails/>}/>
 
 

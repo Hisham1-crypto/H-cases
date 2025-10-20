@@ -6,6 +6,7 @@ import { CartContext } from "../CartContext";
 import { FavoritesContext } from "../FavoritesProvider";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import Footerr from "../Footerr/Footerr";
 
 const products =  [
  {
@@ -97,20 +98,20 @@ const ProductDetails = () => {
   addToFavorites(favoriteItem);
 };
 
- const handleBuyNow = () => {
+const handleBuyNow = () => {
 
   const buyNowProduct = {
     id: product.id,
     name: product.name,
     image: product.image,
     price: product.price,
-    size: selectedSize,
-    quantity: quantity,
+    quantity: quantity, // ✅ الكمية
   };
 
-  // ✅ حفظ المنتج في localStorage علشان صفحة Checkout تقدر تجيبه
+  // ✅ نحفظ المنتج في localStorage علشان نستخدمه في صفحة Checkout
   localStorage.setItem("checkout_item", JSON.stringify(buyNowProduct));
 
+  // ✅ بعد كده ننتقل مباشرة لصفحة الـ Checkout
   navigate("/checkout");
 };
 
@@ -342,6 +343,8 @@ const ProductDetails = () => {
                 ))}
               </Swiper>
             </div>
+                  <div><Footerr/></div>
+            
     </div>
   );
 };

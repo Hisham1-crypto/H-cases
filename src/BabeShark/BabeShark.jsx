@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
 
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
+import Footerr from "../Footerr/Footerr";
 
 
 
@@ -116,9 +117,9 @@ const phoneBrands = {
     "Honor 8x",
     "Honor 8x max",
     "Honor 9",
-   "Honor 9 Lite",
-      "Honor 90",
-         "Honor 90 lite ",
+    "Honor 9 Lite",
+    "Honor 90",
+    "Honor 90 lite ",
 
 
 
@@ -157,15 +158,17 @@ const BabeShark = () => {
     if (!selectedPhoneType) return alert("Please choose your phone model.");
 
 
-    addToCart({
-      name: "",
-      price: selectedProduct.price,
-      image: selectedProduct.src,
-      brand: selectedBrand,
-      phoneModel: selectedPhoneType,
+addToCart({
+  id: selectedProduct.id,
+  name: selectedProduct.name,
+  price: selectedProduct.price,
+  image: selectedProduct.src,
+  phoneBrand: selectedBrand,   // ✅ لازم الاسم كده بالضبط
+  phoneModel: selectedPhoneType, // ✅ لازم الاسم كده كمان
+  quantity,
+});
 
-      quantity,
-    });
+
 
     // Reset drawer state
     setDrawerOpen(false);
@@ -193,7 +196,18 @@ const BabeShark = () => {
         src={product.src}
         alt={`BabeShark ${idx + 1}`}
         className="w-full h-auto object-cover transition-transform duration-300 hover:scale-105"
-        onClick={() => handleAddToCartClick(product)}
+            onClick={(e) => {
+      e.stopPropagation();
+      if (product.id >= 1 && product.id <= 11) {
+        navigate(`/laptopsleeve/${product.id}`);
+      } else if (product.id >= 12 && product.id <= 17) {
+        navigate(`/funnybagdetails/${product.id}`);
+      } else if (product.id >= 18 && product.id <= 25) {
+        navigate(`/minibagdetails/${product.id}`);
+      } else {
+        navigate(`/phonedetails/${product.id}`);
+      }
+    }}
       />
 
       {/* اسم وسعر المنتج */}
@@ -350,35 +364,75 @@ const BabeShark = () => {
       </div>
 
       {/* ✅ Confirm Button */}
-      <button
-        onClick={() => {
-          if (!selectedBrand) return alert("Please choose a brand.");
-          if (!selectedPhoneType) return alert("Please choose your phone model.");
+{/* ✅ Confirm + Buy Now Buttons */}
+<div className="mt-auto flex flex-col gap-3">
+  {/* Add to Cart */}
+  <button
+    onClick={() => {
+      if (!selectedBrand) return alert("Please choose a brand.");
+      if (!selectedPhoneType) return alert("Please choose your phone model.");
 
-        addToCart({
-  name:  selectedProduct.name,
-  price: selectedProduct.price,
+      addToCart({
+        name: selectedProduct.name,
+        price: selectedProduct.price,
+        image: selectedProduct.src,
+        brand: selectedBrand,
+        model: selectedPhoneType,
+        quantity,
+      });
+
+      setDrawerOpen(false);
+      setSelectedProduct(null);
+      setSelectedBrand("");
+      setSelectedPhoneType("");
+      setQuantity(1);
+    }}
+    className="w-full bg-black text-white py-3 font-thin rounded-lg shadow-md hover:scale-[1.02] transition-all"
+  >
+  Confirm Add To Cart
+  </button>
+
+  {/* Buy Now */}
+  <button
+    onClick={() => {
+      if (!selectedBrand) return alert("Please choose a brand.");
+      if (!selectedPhoneType) return alert("Please choose your phone model.");
+const buyNowProduct = {
+  id: selectedProduct.id,
+  name: selectedProduct.name,
   image: selectedProduct.src,
-  brand: selectedBrand,
-  model: selectedPhoneType,
+  price: selectedProduct.price,
+  phoneBrand: selectedBrand,
+  phoneModel: selectedPhoneType,
   quantity,
-});
+};
 
-          setDrawerOpen(false);
-          setSelectedProduct(null);
-          setSelectedBrand("");
-          setSelectedPhoneType("");
-          setQuantity(1);
-        }}
-                className="mt-auto w-full bg-black font-thin text-white  py-3 rounded-lg shadow-md hover:scale-105 transition"
-      >
-        Confirm Add to Cart
-      </button>
+localStorage.setItem("checkout_item", JSON.stringify(buyNowProduct));
+setDrawerOpen(false);
+navigate("/checkout");
+
+
+localStorage.setItem("checkout_item", JSON.stringify(buyNowProduct));
+setDrawerOpen(false);
+navigate("/checkout");
+
+
+      localStorage.setItem("checkout_item", JSON.stringify(buyNowProduct));
+      setDrawerOpen(false);
+      navigate("/checkout");
+    }}
+    className="w-full bg-[#56cfe1] text-white font-thin py-3 rounded-lg shadow-md hover:bg-orange-600 hover:scale-[1.02] transition-all"
+  >
+    Buy It Now
+  </button>
+</div>
+
     </div>
   </div>
 )}
 
       </div>
+      <div><Footerr/></div>
     </div>
   );
 };

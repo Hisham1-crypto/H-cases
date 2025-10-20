@@ -1,84 +1,41 @@
-import {
-  Footer,
-  FooterCopyright,
-  FooterDivider,
-  FooterIcon,
-  FooterLink,
-  FooterLinkGroup,
-  FooterTitle,
-} from "flowbite-react";
+import { Link } from "react-router-dom";
 import React from "react";
-import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
+import { BsFacebook, BsInstagram, BsTiktok } from "react-icons/bs";
 
 const Footerr = () => {
   return (
-    <div>
-      {/* Footer */}
-      <Footer container className="mt-20">
-        <div className="w-full">
-          <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
-            <div className="grid grid-cols-2 gap-8 sm:mt-4 sm:grid-cols-3 sm:gap-6">
-              <div>
-                <FooterTitle title="Follow us" />
-                <FooterLinkGroup col>
-                  <FooterLink href="#">Instagram</FooterLink>
-                  <FooterLink href="#">Facebook</FooterLink>
-                </FooterLinkGroup>
-              </div>
-              <div>
-                <FooterTitle title="Legal" />
-                <FooterLinkGroup col>
-                  <FooterLink href="#">Privacy Policy</FooterLink>
-                  <FooterLink href="#">Terms & Conditions</FooterLink>
-                </FooterLinkGroup>
-              </div>
-            </div>
-          </div>
-          <FooterDivider />
-          <div className="w-full sm:flex sm:items-center sm:justify-between">
-            <FooterCopyright
-              href="#"
-              by="H-Cases"
-              year={new Date().getFullYear()}
-            />
-            <div
-              className="flex justify-center items-center gap-2 py-5 border-t border-gray-200 bg-gradient-to-r from-gray-50 to-white"
-              style={{
-                fontSize: "16px",
-                fontWeight: "500",
-                color: "#666",
-                letterSpacing: "1px",
-              }}
-            >
-              <p className="flex items-center gap-2 m-0">
-                Powered By{" "}
-                <span style={{ color: "#2563eb", fontWeight: "600" }}>
-                  Hisham Hani
-                </span>
-                <FooterIcon
-                  href="#"
-                  icon={BsInstagram}
-                  className="text-pink-600 hover:text-pink-500 transition-colors duration-200"
-                />
-              </p>
-            </div>
-
-            <div className="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
-              <FooterIcon
-                href="#"
-                icon={BsFacebook}
-                className="text-blue-600 hover:text-blue-500 transition-colors duration-200"
-              />
-              <FooterIcon
-                href="#"
-                className="text-pink-600 hover:text-pink-500 transition-colors duration-200"
-                icon={BsInstagram}
-              />
-            </div>
-          </div>
+    <footer className="bg-gray-50 border-t border-gray-200 mt-5">
+      <div className="max-w-6xl mx-auto px-6 py-10 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+        {/* ✅ Logo / Brand */}
+        <div>
+          <h2 className="text-2xl font-bold text-gray-800 tracking-wide">
+            H-<span className="text-[#56cfe1]">Cases</span>
+          </h2>
+          <p className="text-gray-500 text-sm mt-1">
+            Premium Cases & Accessories
+          </p>
         </div>
-      </Footer>
-    </div>
+
+
+        {/* ✅ Socials */}
+
+<div className="flex justify-center gap-4">
+
+  <Link to="https://www.instagram.com/etshcases.eg/" className="text-gray-500 hover:text-pink-600 transition text-xl">
+    <BsInstagram />
+  </Link>
+  <Link to="https://www.tiktok.com/@etshcases.eg?_t=ZS-90hv1RahXDZ&_r=1" className="text-gray-500 hover:text-black transition text-xl">
+    <BsTiktok />
+  </Link>
+</div>
+      </div>
+
+      {/* ✅ Divider */}
+      <div className="border-t border-gray-200 py-4 text-center text-sm text-gray-500">
+        © {new Date().getFullYear()} H-Cases — Developed by{" "}
+        <span className="">Hisham Hani</span>
+      </div>
+    </footer>
   );
 };
 

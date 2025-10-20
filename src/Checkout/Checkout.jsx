@@ -3,19 +3,13 @@ import { CartContext } from "../CartContext";
 import axios from "axios";
 import NavBar from "../NavBar/NavBar";
 import { Trash2 } from "lucide-react";
+import Footerr from "../Footerr/Footerr";
 
 const Checkout = () => {
 const { cart, discount = 0, deleteFromCart } = useContext(CartContext);
 
 // ✅ جلب المنتج القادم من زر "Buy It Now" لو موجود
 const [buyNowItem, setBuyNowItem] = useState(null);
-
-// useEffect(() => {
-// //   const storedItem = localStorage.getItem("checkout_item");
-// //   if (storedItem) {
-// //     setBuyNowItem(JSON.parse(storedItem));
-// //   }
-// // }, []);
 
   const provinces = [
     { name: "Cairo", shipping: 60 },
@@ -61,6 +55,16 @@ const [buyNowItem, setBuyNowItem] = useState(null);
   const [paymentScreenshot, setPaymentScreenshot] = useState(null);
   const [loading, setLoading] = useState(false); // ✅ حالة التحميل الجديدة
 
+  useEffect(() => {
+  const storedItem = localStorage.getItem("checkout_item");
+  if (storedItem) {
+    setBuyNowItem(JSON.parse(storedItem));
+    localStorage.removeItem("checkout_item"); // 🧹 علشان يمسحها بعد الاستخدام
+  }
+}, []);
+
+
+
  const subtotal = buyNowItem
   ? buyNowItem.price * buyNowItem.quantity
   : cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
@@ -72,8 +76,8 @@ const [buyNowItem, setBuyNowItem] = useState(null);
   const deposit = total / 2;
   const paymentAmount = paymentType === "full" ? total : deposit;
 
-  const TELEGRAM_BOT_TOKEN = "7627147252:AAELRiOLp440ZlUulyMf_R2b8LqIQZXSzBs";
-  const TELEGRAM_CHAT_ID = "6762937189";
+ const TELEGRAM_BOT_TOKEN = "8392530573:AAE7Vsm4TmiLJrdPvgAr0nswYpNdJTwdfeU";
+  const TELEGRAM_CHAT_ID = "5006473010";
 
 const handlePayment = async () => {
   if (
@@ -177,13 +181,25 @@ const handlePayment = async () => {
     formData.append("media", JSON.stringify(mediaArray));
 
     // 📤 نرسل الطلب
-    await axios.post(
-      `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMediaGroup`,
-      formData,
-      {
-        headers: { "Content-Type": "multipart/form-data" },
-      }
-    );
+  // 📨 1️⃣ أولًا: أرسل التفاصيل كنص منفصل
+await axios.post(
+  `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
+  {
+    chat_id: TELEGRAM_CHAT_ID,
+    text: message,
+    parse_mode: "Markdown",
+  }
+);
+
+// 🖼️ 2️⃣ بعد كده: أرسل الصور (المنتجات + الإيصال)
+await axios.post(
+  `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMediaGroup`,
+  formData,
+  {
+    headers: { "Content-Type": "multipart/form-data" },
+  }
+);
+
 
     alert("✅ تم إرسال الطلب بنجاح!");
   } catch (err) {
@@ -251,15 +267,23 @@ const handlePayment = async () => {
 
 
     </div>
-    <button
-  onClick={() =>
-    deleteFromCart(item.id, item.size, item.phoneModel, item.province)
-  }
-    className="text-red-500 hover:text-red-700 transition"
+<button
+  onClick={() => {
+    if (buyNowItem) {
+      // ✅ امسح منتج البيبي شارك (Buy Now)
+      setBuyNowItem(null);
+      localStorage.removeItem("checkout_item");
+    } else {
+      // ✅ امسح المنتج من السلة العادية
+      deleteFromCart(item.id, item.size, item.phoneModel, item.province);
+    }
+  }}
+  className="text-red-500 hover:text-red-700 transition"
   title="Remove item"
 >
   <Trash2 size={20} />
 </button>
+
 
   </div>
 ))}
@@ -329,25 +353,42 @@ const handlePayment = async () => {
                   </option>
                 ))}
               </select>
+{/* ✅ Responsive Address Field */}
+<textarea
+  placeholder="Address"
+  value={customer.address}
+  onChange={(e) =>
+    setCustomer({ ...customer, address: e.target.value })
+  }
+  rows={3}
+  onInput={(e) => {
+    // يجعل التيكست ايريا تكبر حسب النص المكتوب
+    e.target.style.height = "auto";
+    e.target.style.height = `${e.target.scrollHeight}px`;
+  }}
+  className="w-full border rounded-lg px-4 py-2 shadow-sm resize-none focus:ring-2 focus:ring-blue-300"
+  style={{ minHeight: "60px", maxHeight: "200px" }}
+/>
 
-              <input
-                type="text"
-                placeholder="Address"
-                value={customer.address}
-                onChange={(e) =>
-                  setCustomer({ ...customer, address: e.target.value })
-                }
-                className="w-full border rounded-lg px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-300"
-              />
-              <input
-                type="tel"
-                placeholder="Phone Number"
-                value={customer.phone}
-                onChange={(e) =>
-                  setCustomer({ ...customer, phone: e.target.value })
-                }
-                className="w-full border rounded-lg px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-300"
-              />
+{/* ✅ Phone Number Field (11 digits validation) */}
+<input
+  type="tel"
+  placeholder="Phone Number (11 digits)"
+  value={customer.phone}
+  onChange={(e) => {
+    const value = e.target.value.replace(/\D/g, ""); // يمنع إدخال حروف
+    if (value.length <= 11) {
+      setCustomer({ ...customer, phone: value });
+    }
+  }}
+  onBlur={() => {
+    if (customer.phone.length !== 11) {
+      alert("Check You Phone Number");
+    }
+  }}
+  className="w-full border rounded-lg px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-300"
+/>
+
 
               {/* اختيار الدفع */}
               <div className="flex gap-6 items-center">
@@ -449,6 +490,8 @@ const handlePayment = async () => {
           </div>
         </div>
       </div>
+            <div><Footerr/></div>
+      
     </div>
   );
 };

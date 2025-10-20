@@ -6,6 +6,7 @@ import { CartContext } from "../CartContext";
 import { FavoritesContext } from "../FavoritesProvider";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
+import Footerr from "../Footerr/Footerr";
 
 const products = [
       {
@@ -105,21 +106,20 @@ const handleAddToCart = () => {
   addToFavorites(favoriteItem);
 };
 
- const handleBuyNow = () => {
+const handleBuyNow = () => {
 
-  const checkoutItem = {
+  const buyNowProduct = {
     id: product.id,
     name: product.name,
     image: product.image,
     price: product.price,
-    size: selectedSize,
-    quantity: quantity,
+    quantity: quantity, // ✅ الكمية
   };
 
-  // ✅ حفظ المنتج مؤقتًا في localStorage عشان صفحة الشيك أوت تقدر تقراه
-  localStorage.setItem("checkout_item", JSON.stringify(checkoutItem));
+  // ✅ نحفظ المنتج في localStorage علشان نستخدمه في صفحة Checkout
+  localStorage.setItem("checkout_item", JSON.stringify(buyNowProduct));
 
-  // ✅ الانتقال مباشرة لصفحة الشيك أوت
+  // ✅ بعد كده ننتقل مباشرة لصفحة الـ Checkout
   navigate("/checkout");
 };
 
@@ -314,6 +314,8 @@ const handleAddToCart = () => {
                 ))}
               </Swiper>
             </div>
+                  <div><Footerr/></div>
+            
       
     </div>
   );

@@ -6,6 +6,7 @@ import { CartContext } from "../CartContext";
 import { FavoritesContext } from "../FavoritesProvider";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
+import Footerr from "../Footerr/Footerr";
 
 const products = [
        { id: 26, title: "LV", price: 130, oldPrice: 160, image: "/top pick photos/photo_8_2025-10-10_07-18-14.jpg" },
@@ -209,19 +210,23 @@ const product = products.find((p) => p.id === Number(id));
     };
     addToFavorites(favoriteItem);
   };
-
-  const handleBuyNow = () => {
-    const checkoutItem = {
-      id: product.id,
-      name: product.title,
-      image: product.image,
-      price: product.price,
-      brand: selectedBrand,
-      model: selectedModel,
-      quantity,
-    };
-    navigate("/checkout");
+const handleBuyNow = () => {
+  const checkoutItem = {
+    id: product.id,
+    name: product.title,
+    image: product.image,
+    price: product.price,
+    phoneBrand: selectedBrand,   // ✅ لازم الاسم كده علشان CartContext و Checkout يقرؤوه صح
+    phoneModel: selectedModel,   // ✅ نفس الشيء
+    quantity,
   };
+
+  // ✅ خزن المنتج في localStorage
+  localStorage.setItem("checkout_item", JSON.stringify(checkoutItem));
+
+  // ✅ روح لصفحة الدفع
+  navigate("/checkout");
+};
 
   return (
     <div className="min-h-screen bg-gray-50 mb-20">
@@ -404,6 +409,8 @@ const product = products.find((p) => p.id === Number(id));
           ))}
         </Swiper>
       </div>
+            <div><Footerr/></div>
+      
     </div>
   );
 };

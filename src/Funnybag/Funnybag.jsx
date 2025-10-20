@@ -3,6 +3,7 @@ import React from "react";
 import { Heart, ShoppingBag } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
+import Footerr from "../Footerr/Footerr";
 
 const products =  [
  {
@@ -91,6 +92,8 @@ const Laptopsleeve = () => {
         </div>
       ))}
     </div>
+          <div><Footerr/></div>
+    
     </div>
   );
 };

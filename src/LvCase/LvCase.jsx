@@ -6,16 +6,9 @@ import { AuthContext } from "../AuthProvider";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
 
-import {
-  FooterCopyright,
-  FooterDivider,
-  FooterIcon,
-  FooterLink,
-  FooterLinkGroup,
-  FooterTitle,
-  Footer,
-} from "flowbite-react";
+
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
+import Footerr from "../Footerr/Footerr";
 
 // Provinces + shipping
 
@@ -74,16 +67,15 @@ const LvCase = () => {
     if (!selectedPhoneType) return alert("Please choose your phone model.");
 
 
-    addToCart({
-      name: "",
-      price: selectedProduct.price,
-      image: selectedProduct.src,
-      brand: selectedBrand,
-      phoneModel: selectedPhoneType,
-
-      quantity,
-    });
-
+  addToCart({
+  id: selectedProduct.id,
+  name: selectedProduct.name,
+  price: selectedProduct.price,
+  image: selectedProduct.src,
+  phoneBrand: selectedBrand,   // ✅ لازم الاسم كده بالضبط
+  phoneModel: selectedPhoneType, // ✅ لازم الاسم كده كمان
+  quantity,
+});
     // Reset drawer state
     setDrawerOpen(false);
     setSelectedProduct(null);
@@ -110,8 +102,18 @@ const LvCase = () => {
         src={product.src}
         alt={`BabeShark ${idx + 1}`}
         className="w-full h-auto object-cover transition-transform duration-300 hover:scale-105"
-        onClick={() => handleAddToCartClick(product)}
-      />
+    onClick={(e) => {
+      e.stopPropagation();
+      if (product.id >= 1 && product.id <= 11) {
+        navigate(`/laptopsleeve/${product.id}`);
+      } else if (product.id >= 12 && product.id <= 17) {
+        navigate(`/funnybagdetails/${product.id}`);
+      } else if (product.id >= 18 && product.id <= 25) {
+        navigate(`/minibagdetails/${product.id}`);
+      } else {
+        navigate(`/phonedetails/${product.id}`);
+      }
+    }}      />
 
       {/* اسم وسعر المنتج */}
       <div className="p-2  text-center bg-white">
@@ -267,70 +269,75 @@ const LvCase = () => {
       </div>
 
       {/* ✅ Confirm Button */}
-      <button
-        onClick={() => {
-          if (!selectedBrand) return alert("Please choose a brand.");
-          if (!selectedPhoneType) return alert("Please choose your phone model.");
+{/* ✅ Confirm + Buy Now Buttons */}
+<div className="mt-auto flex flex-col gap-3">
+  {/* Add to Cart */}
+  <button
+    onClick={() => {
+      if (!selectedBrand) return alert("Please choose a brand.");
+      if (!selectedPhoneType) return alert("Please choose your phone model.");
 
-        addToCart({
-  name: selectedProduct.name ,
-  price: selectedProduct.price,
+      addToCart({
+        name: selectedProduct.name,
+        price: selectedProduct.price,
+        image: selectedProduct.src,
+        brand: selectedBrand,
+        model: selectedPhoneType,
+        quantity,
+      });
+
+      setDrawerOpen(false);
+      setSelectedProduct(null);
+      setSelectedBrand("");
+      setSelectedPhoneType("");
+      setQuantity(1);
+    }}
+    className="w-full bg-black text-white py-3 font-thin rounded-lg shadow-md hover:scale-[1.02] transition-all"
+  >
+  Confirm Add To Cart
+  </button>
+
+  {/* Buy Now */}
+  <button
+    onClick={() => {
+      if (!selectedBrand) return alert("Please choose a brand.");
+      if (!selectedPhoneType) return alert("Please choose your phone model.");
+const buyNowProduct = {
+  id: selectedProduct.id,
+  name: selectedProduct.name,
   image: selectedProduct.src,
-  brand: selectedBrand,
-  model: selectedPhoneType,
+  price: selectedProduct.price,
+  phoneBrand: selectedBrand,
+  phoneModel: selectedPhoneType,
   quantity,
-});
+};
 
-          setDrawerOpen(false);
-          setSelectedProduct(null);
-          setSelectedBrand("");
-          setSelectedPhoneType("");
-          setQuantity(1);
-        }}
-                className="mt-auto w-full bg-black font-thin text-white  py-3 rounded-lg shadow-md hover:scale-105 transition"
-      >
-        Confirm Add to Cart
-      </button>
+localStorage.setItem("checkout_item", JSON.stringify(buyNowProduct));
+setDrawerOpen(false);
+navigate("/checkout");
+
+
+localStorage.setItem("checkout_item", JSON.stringify(buyNowProduct));
+setDrawerOpen(false);
+navigate("/checkout");
+
+
+      localStorage.setItem("checkout_item", JSON.stringify(buyNowProduct));
+      setDrawerOpen(false);
+      navigate("/checkout");
+    }}
+    className="w-full bg-[#56cfe1] text-white font-thin py-3 rounded-lg shadow-md hover:bg-orange-600 hover:scale-[1.02] transition-all"
+  >
+    Buy It Now
+  </button>
+</div>
     </div>
   </div>
 )}
-        {/* Footer */}
-        <Footer container>
-          <div className="w-full">
-            <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
-              <div className="grid grid-cols-2 gap-8 sm:mt-4 sm:grid-cols-3 sm:gap-6">
-                <div>
-                  <FooterTitle title="Follow us" />
-                  <FooterLinkGroup col>
-                    <FooterLink href="#">Instagram</FooterLink>
-                    <FooterLink href="#">Facebook</FooterLink>
-                  </FooterLinkGroup>
-                </div>
-                <div>
-                  <FooterTitle title="Legal" />
-                  <FooterLinkGroup col>
-                    <FooterLink href="#">Privacy Policy</FooterLink>
-                    <FooterLink href="#">Terms & Conditions</FooterLink>
-                  </FooterLinkGroup>
-                </div>
-              </div>
-            </div>
-            <FooterDivider />
-            <div className="w-full sm:flex sm:items-center sm:justify-between">
-              <FooterCopyright
-                href="#"
-                by="H-Cases"
-                year={new Date().getFullYear()}
-              />
-              <div className="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
-                <FooterIcon href="#" icon={BsFacebook} />
-                <FooterIcon href="#" icon={BsInstagram} />
-                <FooterIcon href="#" icon={BsTwitter} />
-              </div>
-            </div>
-          </div>
-        </Footer>
+
       </div>
+            <div><Footerr/></div>
+      
     </div>
   );
 };

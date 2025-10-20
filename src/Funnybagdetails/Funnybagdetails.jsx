@@ -55,7 +55,8 @@ const ProductDetails = () => {
   const product = products.find((p) => p.id === Number(id));
 
   const { addToCart } = useContext(CartContext);
-  const { addToFavorites } = useContext(FavoritesContext);
+const { favorites, addToFavorites, removeFromFavorites } = useContext(FavoritesContext);
+  const isFavorite = (id) => favorites.some((fav) => fav.id === id);
 
   const [quantity, setQuantity] = useState(1);
   const relatedProducts = products.filter((p) => p.id !== product.id);
@@ -95,8 +96,11 @@ const ProductDetails = () => {
     quantity: quantity,
   };
 
-  addToFavorites(favoriteItem);
-};
+ if (isFavorite(product.id)) {
+    removeFromFavorites(product.id);
+  } else {
+    addToFavorites(favoriteItem);
+  }};
 
 const handleBuyNow = () => {
 
@@ -208,13 +212,18 @@ const handleBuyNow = () => {
 
             {/* الأزرار */}
             <div className="flex flex-wrap gap-4 mt-4">
-              <button
-                onClick={handleFavorite}
-                className="flex items-center justify-center gap-2 border border-gray-300 bg-white hover:bg-gray-100 text-gray-800 px-5 py-3 rounded-full font-medium shadow-sm"
-              >
-                <Heart className="text-green-500" />
-                Add To Favorites
-              </button>
+    <button
+        onClick={handleFavorite}
+        className="flex items-center justify-center gap-2 border border-gray-300 bg-white hover:bg-gray-100 text-gray-800 px-5 py-3 rounded-full font-medium shadow-sm transition-all"
+      >
+        <Heart
+          className="transition"
+          size={22}
+          fill={isFavorite(product.id) ? "rgb(236,72,153)" : "none"}   // يتملي لو مضاف
+        color={isFavorite(product.id) ? "rgb(236,72,153)" : "rgb(236,72,153)"}  // اللون الأساسي بينك دايمًا
+        />
+        Add to Favorites
+      </button>
 
               <button
                 onClick={handleAddToCart}

@@ -174,10 +174,12 @@ const Phonecoverdetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 const product = products.find((p) => p.id === Number(id));
+const isFavorite = (id) => favorites.some((fav) => fav.id === id);
+
   const relatedProducts = products.filter((p) => p.id !== product.id);
 
   const { addToCart } = useContext(CartContext);
-  const { addToFavorites } = useContext(FavoritesContext);
+const { favorites, addToFavorites, removeFromFavorites } = useContext(FavoritesContext);
 
   const [quantity, setQuantity] = useState(1);
   const [selectedBrand, setSelectedBrand] = useState("");
@@ -198,18 +200,21 @@ const product = products.find((p) => p.id === Number(id));
     addToCart(cartItem);
   };
 
-  const handleFavorite = () => {
-    const favoriteItem = {
-      id: product.id,
-      name: product.title,
-      image: product.image,
-      price: product.price,
-      brand: selectedBrand,
-      model: selectedModel,
-      quantity,
-    };
-    addToFavorites(favoriteItem);
+const handleFavorite = () => {
+  const favoriteItem = {
+    id: product.id,
+    name: product.title,
+    image: product.image,
+    price: product.price,
   };
+
+  if (isFavorite(product.id)) {
+    removeFromFavorites(product.id);
+  } else {
+    addToFavorites(favoriteItem);
+  }
+};
+
 const handleBuyNow = () => {
   const checkoutItem = {
     id: product.id,
@@ -324,13 +329,19 @@ const handleBuyNow = () => {
 
           {/* الأزرار */}
           <div className="flex flex-wrap gap-4 mt-6">
-            <button
-              onClick={handleFavorite}
-              className="flex items-center justify-center gap-2 border border-gray-300 bg-white hover:bg-gray-100 text-gray-800 px-5 py-3 rounded-full font-medium shadow-sm transition-all"
-            >
-              <Heart className="text-pink-500" />
-              Add to Favorites
-            </button>
+<button
+  onClick={handleFavorite}
+  className="flex items-center justify-center gap-2 border border-gray-300 bg-white hover:bg-gray-100 text-gray-800 px-5 py-3 rounded-full font-medium shadow-sm transition-all"
+>
+  <Heart
+    className="transition"
+    size={22}
+    fill={isFavorite(product.id) ? "rgb(236,72,153)" : "none"}   // يتملي لو مضاف
+  color={isFavorite(product.id) ? "rgb(236,72,153)" : "rgb(236,72,153)"}  // اللون الأساسي بينك دايمًا
+  />
+  Add to Favorites
+</button>
+
 
             <button
               onClick={handleAddToCart}

@@ -1198,7 +1198,7 @@ const LvCase = () => {
               setSelectedBrand(e.target.value);
               setSelectedPhoneType("");
             }}
-            className="w-full sm:overflow-y appearance-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-10 text-gray-800 shadow-md focus:ring-2 transition-all outline-none"
+            className="w-full sm:overflow-y-scroll appearance-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-10 text-gray-800 shadow-md focus:ring-2 transition-all outline-none"
           >
             <option value="">Choose your phone brand</option>
             {Object.keys(phoneBrands).map((brand) => (
@@ -1223,7 +1223,7 @@ const LvCase = () => {
             <select
               value={selectedPhoneType}
               onChange={(e) => setSelectedPhoneType(e.target.value)}
-              className="w-full sm:overflow-y appearance-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-10 text-gray-800 shadow-md  transition-all outline-none"
+              className="w-full sm:overflow-y-scroll appearance-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-10 text-gray-800 shadow-md  transition-all outline-none"
             >
               <option value="">Choose phone model</option>
               {phoneBrands[selectedBrand].map((model) => (

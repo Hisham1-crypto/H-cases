@@ -1308,7 +1308,7 @@ const Phonecoverdetails = () => {
                   setShowModelDropdown(!showModelDropdown);
                   setShowBrandDropdown(false);
                 }}
-  className="w-full border text-gray-400 rounded-lg p-3 flex items-center justify-between focus:ring-2 focus:ring-green-400 outline-none cursor-pointer bg-white"
+                 className="w-full border text-gray-400 rounded-lg p-3 flex items-center justify-between focus:ring-2 focus:ring-green-400 outline-none cursor-pointer bg-white"
               >
                 {selectedModel || "-- Choose Model --"}
                   <span className="text-gray-400">▼</span>

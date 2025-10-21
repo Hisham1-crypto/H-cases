@@ -34,6 +34,7 @@ import Funnybagdetails from "./Funnybagdetails/Funnybagdetails"
 import Minibagdetails from "./Minibagdetails/Minibagdetails"
 import Phonecoverdetails from "./Phonecoverdetails/Phonecoverdetails";
 import ScrollToTop from "./ScrollToTop";
+import PhonecoverPage from "./PhonecoverPage/PhonecoverPage";
 
 const ProtectedRoute = ({ children }) => {
   const { user } = useContext(AuthContext);
@@ -73,6 +74,7 @@ const App = () => {
               <Route path="/laptopsleeve" element={<Laptopsleeve/>}/>
               <Route path="/laptopsleeve/:id" element={<Laptopsleeve1/>}/>
               <Route path="/phonedetails/:id" element={<Phonecoverdetails/>}/>
+              <Route path="/phonecover" element={<PhonecoverPage/>}/>
 
 
               <Route

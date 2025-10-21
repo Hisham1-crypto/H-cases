@@ -586,15 +586,10 @@ const firstgrid = [
     image: "/top pick photos/photo_2_2025-10-10_07-18-14.jpg",
   },
 ];
-// Phone Brands & Models
-const phoneData = {
-  iPhone: ["iPhone 14 Pro", "iPhone 14 Pro Max", "iPhone 14", "iPhone 13"],
-  Samsung: ["Samsung S23", "Samsung S22", "Samsung A72"],
-  Xiaomi: ["Xiaomi 13", "Xiaomi 12", "Xiaomi Note 11"],
-};
+
 
 const Home = () => {
-  const { addToFavorites } = useContext(FavoritesContext);
+  const {favorites, addToFavorites, removeFromFavorites, isFavorite  } = useContext(FavoritesContext);
   // const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -643,8 +638,10 @@ const Home = () => {
 
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  // Modal state
-
+  const handleFavorite = (product) => {
+    if (isFavorite(product.id)) removeFromFavorites(product.id);
+    else addToFavorites(product);
+  };
   // 🟡 Add to Cart Click
   const handleAddToCartClick = (product) => {
     // لو المنتج فيه title بس، نخليه name عشان الدروير يشتغل صح
@@ -815,7 +812,7 @@ const Home = () => {
           {/* 🟤 Phone Cover (Big One) */}
           <div
             className="relative group rounded-3xl overflow-hidden md:row-span-2 h-100 md:col-span-1 col-span-2 cursor-pointer"
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/phonecover")}
           >
             <img
               src="/phone cover.jpg"
@@ -900,10 +897,14 @@ const Home = () => {
             <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-3">
               {/* الزر بتاع القلب */}
               <button
-                onClick={() => addToFavorites(product)}
+                 onClick={() => handleFavorite(product)}
                 className="p-2 bg-white rounded-full shadow hover:scale-110 transition"
               >
-                <Heart className="w-5 h-5 text-red-500" />
+                <Heart
+              className={`w-4 h-4 transition-colors ${
+                isFavorite(product.id) ? "text-pink-500 fill-pink-500" : "text-black"
+              }`}
+                />
               </button>
 
               {/* الزر بتاع العين */}
@@ -982,12 +983,17 @@ const Home = () => {
                 <SwiperSlide key={product.id}>
                   <div className="bg-white py-12 rounded-2xl shadow-md hover:shadow-lg transition overflow-hidden relative group">
                     {/* ❤️ فيفوريت */}
-                    <button
-                      onClick={() => addToFavorites(product)}
-                      className="absolute top-3 left-3 p-2 bg-gray-100 rounded-full shadow hover:scale-110 transition z-10"
-                    >
-                      <Heart className="w-5 h-5 text-black" />
-                    </button>
+                             <button
+                 onClick={() => handleFavorite(product)}
+                        className="absolute top-3 left-3 p-2 bg-gray-100 rounded-full shadow hover:scale-110 transition z-10"
+              >
+                <Heart
+              className={`w-4 h-4 transition-colors ${
+                isFavorite(product.id) ? "text-pink-500 fill-pink-500" : "text-black"
+              }`}
+                />
+              </button>
+
 
                     {/* زرار العين */}
                     <button
@@ -1074,12 +1080,17 @@ const Home = () => {
                 <SwiperSlide key={product.id}>
                   <div className="bg-white rounded-2xl shadow-md hover:shadow-lg transition overflow-hidden relative group">
                     {/* ❤️ Favorite */}
-                    <button
-                      onClick={() => addToFavorites(product)}
-                      className="absolute top-3 left-3 p-2 bg-gray-100 rounded-full shadow hover:scale-110 transition z-10"
-                    >
-                      <Heart className="w-5 h-5 text-black" />
-                    </button>
+              <button
+                 onClick={() => handleFavorite(product)}
+                        className="absolute top-3 left-3 p-2 bg-gray-100 rounded-full shadow hover:scale-110 transition z-10"
+              >
+                <Heart
+              className={`w-4 h-4 transition-colors ${
+                isFavorite(product.id) ? "text-pink-500 fill-pink-500" : "text-black"
+              }`}
+                />
+              </button>
+
 
                     {/* 🛒 زرار العين */}
                     <button
@@ -1180,12 +1191,17 @@ const Home = () => {
                 {/* Overlay on hover */}
                 <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-3">
                   {/* الزر بتاع القلب */}
-                  <button
-                    onClick={() => addToFavorites(product)}
-                    className="p-2 bg-white rounded-full shadow hover:scale-110 transition"
-                  >
-                    <Heart className="w-5 h-5 text-red-500" />
-                  </button>
+              <button
+                 onClick={() => handleFavorite(product)}
+                className="p-2 bg-white rounded-full shadow hover:scale-110 transition"
+              >
+                <Heart
+              className={`w-4 h-4 transition-colors ${
+                isFavorite(product.id) ? "text-pink-500 fill-pink-500" : "text-black"
+              }`}
+                />
+              </button>
+
 
                   {/* الزر بتاع العين */}
                   <button
@@ -1246,12 +1262,16 @@ const Home = () => {
                   <SwiperSlide key={product.id}>
                     <div className="bg-white py-12 rounded-2xl shadow-md hover:shadow-lg transition overflow-hidden relative group">
                       {/* ❤️ فيفوريت */}
-                      <button
-                        onClick={() => addToFavorites(product)}
+              <button
+                 onClick={() => handleFavorite(product)}
                         className="absolute top-3 left-3 p-2 bg-gray-100 rounded-full shadow hover:scale-110 transition z-10"
-                      >
-                        <Heart className="w-5 h-5 text-black" />
-                      </button>
+              >
+                <Heart
+              className={`w-4 h-4 transition-colors ${
+                isFavorite(product.id) ? "text-pink-500 fill-pink-500" : "text-black"
+              }`}
+                />
+              </button>
 
                       {/* زرار العين */}
                       <button

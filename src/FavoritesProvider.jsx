@@ -78,6 +78,7 @@ export const FavoritesProvider = ({ children }) => {
     addToCart(cartItem, cartItem.quantity);
     alert(`🛒 تمت إضافة ${item.name} إلى السلة`);
   };
+const isFavorite = (id) => favorites.some((item) => item.id === id);
 
   return (
     <FavoritesContext.Provider
@@ -86,8 +87,10 @@ export const FavoritesProvider = ({ children }) => {
         addToFavorites,
         removeFromFavorites,
         addFavoriteToCart,
+         isFavorite
       }}
     >
+      
       {children}
     </FavoritesContext.Provider>
   );

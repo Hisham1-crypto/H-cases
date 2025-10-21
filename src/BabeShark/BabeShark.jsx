@@ -1095,7 +1095,7 @@ const phoneBrands = {
 
 const BabeShark = () => {
   const { addToCart } = useContext(CartContext);
-  const { addToFavorites } = useContext(FavoritesContext);
+  const { favorites, addToFavorites, removeFromFavorites } = useContext(FavoritesContext);
   // const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -1162,7 +1162,7 @@ addToCart({
       <img
         src={product.src}
         alt={`BabeShark ${idx + 1}`}
-        className="w-full h-auto object-cover transition-transform duration-300 hover:scale-105"
+        className="w-full h-100 object-cover transition-transform duration-300 hover:scale-105"
             onClick={(e) => {
       e.stopPropagation();
       if (product.id >= 1 && product.id <= 11) {
@@ -1191,7 +1191,7 @@ addToCart({
           <ShoppingBag size={18} />
         </button>
         <button
-          onClick={() => addToFavorites({id: product.id, name:product.name, image: product.src, price: product.price })}
+          onClick={() => addToFavorites({id: product.id, name:product.name, image: product.src, price: product.price } )}
           className="bg-white p-2 rounded-full shadow hover:bg-gray-100"
         >
           <Heart size={18} />
@@ -1200,6 +1200,7 @@ addToCart({
     </div>
   ))}
 </div>
+          {/* className="bg-white p-2 rounded-full shadow hover:bg-gray-100" */}
 
         {/* Pagination */}
         <div className="flex justify-center mt-10 mb-10 gap-3">

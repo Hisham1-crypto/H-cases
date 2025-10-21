@@ -5,7 +5,6 @@ import { CartContext } from "../CartContext";
 import { FavoritesContext } from "../FavoritesProvider";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
-
 import Footerr from "../Footerr/Footerr";
 
 
@@ -1111,11 +1110,6 @@ const [showModelDropdown, setShowModelDropdown] = useState(false);
   const currentImages = currentPage === 1 ? imagesPage1 : imagesPage2;
 
   const handleAddToCartClick = (product) => {
-    // if (!user) {
-    //   alert("You must log in first to add products to the cart.");
-    //   navigate("/login");
-    //   return;
-    // }
     setSelectedProduct(product);
     setDrawerOpen(true);
   };
@@ -1190,12 +1184,29 @@ addToCart({
         >
           <ShoppingBag size={18} />
         </button>
-        <button
-          onClick={() => addToFavorites({id: product.id, name:product.name, image: product.src, price: product.price } )}
-          className="bg-white p-2 rounded-full shadow hover:bg-gray-100"
-        >
-          <Heart size={18} />
-        </button>
+<button
+  onClick={() => {
+    const isFav = favorites.some((fav) => fav.id === product.id);
+    if (isFav) {
+      removeFromFavorites(product.id);
+    } else {
+      addToFavorites({
+        id: product.id,
+        name: product.name,
+        image: product.src,
+        price: product.price,
+      });
+    }
+  }}
+  className="bg-white p-2 rounded-full shadow hover:bg-gray-100"
+>
+  <Heart
+    size={18}
+    color={favorites.some((fav) => fav.id === product.id) ? "rgb(236,72,153)" : "black"} // 💖 بينك أو أسود
+    fill={favorites.some((fav) => fav.id === product.id) ? "rgb(236,72,153)" : "none"}   // 💖 لو في المفضلة يكون ممتليء
+  />
+</button>
+
       </div>
     </div>
   ))}

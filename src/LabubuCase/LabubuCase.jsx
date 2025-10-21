@@ -34,6 +34,7 @@ const LabubuCase = () => {
   const { addToFavorites } = useContext(FavoritesContext);
   // const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+  const { favorites, removeFromFavorites } = useContext(FavoritesContext);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -124,12 +125,28 @@ addToCart({
         >
           <ShoppingBag size={18} />
         </button>
-        <button
-          onClick={() => addToFavorites({id:product.id, name: product.name, image: product.src, price: product.price })}
-          className="bg-white p-2 rounded-full shadow hover:bg-gray-100"
-        >
-          <Heart size={18} />
-        </button>
+<button
+  onClick={() => {
+    const isFav = favorites.some((fav) => fav.id === product.id);
+    if (isFav) {
+      removeFromFavorites(product.id);
+    } else {
+      addToFavorites({
+        id: product.id,
+        name: product.name,
+        image: product.src,
+        price: product.price,
+      });
+    }
+  }}
+  className="bg-white p-2 rounded-full shadow hover:bg-gray-100"
+>
+  <Heart
+    size={18}
+    color={favorites.some((fav) => fav.id === product.id) ? "rgb(236,72,153)" : "black"} // 💖 بينك أو أسود
+    fill={favorites.some((fav) => fav.id === product.id) ? "rgb(236,72,153)" : "none"}   // 💖 لو في المفضلة يكون ممتليء
+  />
+</button>
       </div>
     </div>
   ))}

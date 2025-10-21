@@ -200,7 +200,7 @@ const ShoppingBag = () => {
             </div>
 
             {/* Promo Code Section */}
-            <div className="mt-6">
+            {/* <div className="mt-6">
               <button
                 className="flex items-center gap-2 text-blue-600 hover:underline focus:outline-none"
                 onClick={() => setShowPromo(!showPromo)}
@@ -234,7 +234,7 @@ const ShoppingBag = () => {
                   </button>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             {/* Checkout Button */}
             <Link

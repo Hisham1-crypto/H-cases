@@ -4,13 +4,18 @@ import axios from "axios";
 import NavBar from "../NavBar/NavBar";
 import { Trash2 } from "lucide-react";
 import Footerr from "../Footerr/Footerr";
+import { ChevronDown } from "lucide-react";
 
 const Checkout = () => {
 const { cart, discount = 0, deleteFromCart } = useContext(CartContext);
+  const { setDiscount } = useContext(CartContext);
 
 // ✅ جلب المنتج القادم من زر "Buy It Now" لو موجود
 const [buyNowItem, setBuyNowItem] = useState(null);
 
+  const [showPromo, setShowPromo] = useState(false);
+  const [promoCode, setPromoCode] = useState("");
+  
   const provinces = [
     { name: "Cairo", shipping: 60 },
     { name: "Giza", shipping: 60 },
@@ -486,6 +491,51 @@ await axios.post(
               >
                 {loading ? " Loading... " : "Proceed to Payment"}
               </button>
+              {/* 🏷️ Promo Code Section */}
+<div className="mt-6">
+  <button
+    className="flex items-center gap-2 text-blue-600 hover:underline focus:outline-none"
+    onClick={() => setShowPromo(!showPromo)}
+  >
+    <span>Do you have a promo code?</span>
+    <ChevronDown
+      className={`h-5 w-5 transform transition-transform duration-300 ${
+        showPromo ? "rotate-180" : "rotate-0"
+      }`}
+    />
+  </button>
+
+  <div
+    className={`transition-all duration-500 overflow-hidden ${
+      showPromo ? "max-h-40 opacity-100 mt-3" : "max-h-0 opacity-0"
+    }`}
+  >
+    <div className="space-y-3">
+      <input
+        type="text"
+        value={promoCode}
+        onChange={(e) => setPromoCode(e.target.value)}
+        placeholder="Enter promo code"
+        className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500"
+      />
+      <button
+        onClick={() => {
+          if (promoCode === "DISCOUNT50") {
+            alert("✅ Promo applied: 10% off");
+            setDiscount(subtotal * 0.1);
+          } else {
+            alert("❌ Invalid promo code");
+            setDiscount(0);
+          }
+        }}
+        className="w-full bg-pink-500 text-white font-semibold py-2 rounded-lg hover:bg-pink-600 transition"
+      >
+        Apply Promo
+      </button>
+    </div>
+  </div>
+</div>
+
             </form>
           </div>
         </div>
